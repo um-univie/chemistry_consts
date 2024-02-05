@@ -8,9 +8,9 @@ pub const ELEMENTARY_CHARGE: f64 = 1.602_176_634e-19; // C (Electric charge of a
 pub const AVOGADRO: f64 = 6.022_140_76e23; // mol^-1
 pub const BOLTZMANN: f64 = 1.380_649e-23; // J K^-1
 pub const GAS_CONSTANT: f64 = 8.31446261815324; // J K^-1 mol^-1 (Molar gas constant)
-pub const MOLAR_VOLUME: f64 = 22.413_969_54e-3; // m^3 mol^-1 (Molar volume of an ideal gas at 0°C and 1 atm)
+pub const MOLAR_VOLUME: f64 = 22.413_996_9e-3; // m^3 mol^-1 (Molar volume of an ideal gas at 0°C and 1 atm)
 pub const MOLAR_MASS: f64 = 0.999_999_999_65; // kg mol^-1 (Molar mass of a substance)
-pub const MOLAR_PLANCK: f64 = 3.990_312_72e-10; // J s mol^-1 (Molar Planck constant)
+pub const MOLAR_PLANCK: f64 = 3.990_312_71e-10; // J s mol^-1 (Molar Planck constant)
 pub const AMU: f64 = 1.660_539_066_60e-27; // kg
 
 // Atomic constants
