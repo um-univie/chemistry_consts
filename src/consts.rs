@@ -1,14 +1,12 @@
 use phf::phf_map;
+use lazy_static::lazy_static;
 
 // Physical constants TODO: Add sources
 //https://www.physics.nist.gov/cgi-bin/cuu/Value?eshbar|search_for=elecmag_in!
-pub const ELEMENTARY_CHARGE: f64 = 1.602_176_634e-19; // C (Electric charge of a single electron)
 // Physicochemical constants
 //https://www.physics.nist.gov/cgi-bin/cuu/Value?na|search_for=physchem_in!
 pub const AVOGADRO: f64 = 6.022_140_76e23; // mol^-1
-pub const BOLTZMANN: f64 = 1.380_649e-23; // J K^-1
-pub const GAS_CONSTANT: f64 = 8.31446261815324; // J K^-1 mol^-1 (Molar gas constant)
-pub const MOLAR_VOLUME: f64 = 22.413_996_9e-3; // m^3 mol^-1 (Molar volume of an ideal gas at 0°C and 1 atm)
+pub const BOLTZMANN: f64 = 1.380_649e-23; // J K^-1 pub const GAS_CONSTANT: f64 = 8.31446261815324; // J K^-1 mol^-1 (Molar gas constant) pub const MOLAR_VOLUME: f64 = 22.413_969_9e-3; // m^3 mol^-1 (Molar volume of an ideal gas at 0°C and 1 atm)
 pub const MOLAR_MASS: f64 = 0.999_999_999_65; // kg mol^-1 (Molar mass of a substance)
 pub const MOLAR_PLANCK: f64 = 3.990_312_71e-10; // J s mol^-1 (Molar Planck constant)
 pub const AMU: f64 = 1.660_539_066_60e-27; // kg
@@ -38,6 +36,7 @@ pub const NEWTON: f64 = 6.674_30E-11; // m^3 kg^-1 s^-2
 // Earth's gravity
 pub const STANDARD_GRAVITY: f64 = 9.80665; // m s^-2
 // https://physics.nist.gov/cgi-bin/cuu/Value?bg|search_for=universal_in!
+pub const ELEMENTARY_CHARGE: f64 = 1.602_176_634e-19; // C (Electric charge of a single electron)
 pub const ELECTRON_VOLT: f64 = 1.602_176_634e-19; // J
 pub const FARADAY: f64 = 96485.33212; // C mol^-1
 pub const COULOMB: f64 = 8.987551787368176e9; // N m^2 C^-2
@@ -45,6 +44,7 @@ pub const CALORIE: f64 = 4.184; // J
 pub const ATMOSPHERE: f64 = 101325.0; // Pa 
 // The padding is necessary to make the array index match the atomic number 
 // The values are taken from: https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&isotype=some
+// Some elements are not stable and therefore do not have a standard atomic weight
 pub const STANDARD_ATOMIC_WEIGHTS: [Option<f64>; 118] = [
 None,//Dummy value
 Some(1.007975),//H
@@ -167,37 +167,157 @@ None,//Og
 ];
 
 
-// Only single bonds are considered, and the values are taken from: https://chemistry-europe.onlinelibrary.wiley.com/doi/10.1002/chem.200800987
-pub static ATOMIC_RADII: [f64; 55] = [
-    0.0, 0.32, 0.46, 1.33, 1.02, 0.85, 0.75, 0.75, 0.73, 0.72, 0.58, 1.60, 1.39, 1.26, 1.16, 1.11,
-    1.03, 0.99, 0.97, 2.03, 1.74, 1.44, 1.32, 1.22, 1.18, 1.17, 1.17, 1.16, 1.15, 1.17, 1.25, 1.26,
-    1.22, 1.21, 1.16, 1.14, 1.12, 2.16, 1.91, 1.62, 1.45, 1.34, 1.29, 1.27, 1.25, 1.25, 1.20, 1.39,
-    1.44, 1.42, 1.39, 1.39, 1.38, 1.39, 1.40, // XE
+// This array represent the covalent radii of the elements in angstroms (Å) only single bond radii are used as they are the largest and therefore most restrictive
+// The values up to CM are taken from:https://doi.org/10.1002/chem.200800987
+// The values from CF to OG are taken from: https://en.wikipedia.org/wiki/Atomic_radii_of_the_elements_(data_page)
+pub const COVALENT_RADII: [f64; 119] = [
+    0.0, // Dummy value
+    0.31, // H
+    0.28, // HE
+    1.28, // LI
+    0.96, // BE
+    0.84, // B
+    0.76, // C
+    0.71, // N
+    0.66, // O
+    0.57, // F
+    0.58, // NE
+    1.66, // NA
+    1.41, // MG
+    1.21, // AL
+    1.11, // SI
+    1.07, // P
+    1.05, // S
+    1.02, // CL
+    1.06, // AR
+    2.03, // K
+    1.76, // CA
+    1.70, // SC
+    1.60, // TI
+    1.53, // V
+    1.39, // CR
+    1.39, // MN
+    1.32, // FE
+    1.26, // CO
+    1.24, // NI
+    1.32, // CU
+    1.22, // ZN
+    1.22, // GA
+    1.20, // GE
+    1.19, // AS
+    1.20, // SE
+    1.20, // BR
+    1.16, // KR
+    2.20, // RB
+    1.95, // SR
+    1.90, // Y
+    1.75, // ZR
+    1.64, // NB
+    1.54, // MO
+    1.47, // TC
+    1.46, // RU
+    1.42, // RH
+    1.39, // PD
+    1.45, // AG
+    1.44, // CD
+    1.42, // IN
+    1.39, // SN
+    1.39, // SB
+    1.38, // TE
+    1.39, // I
+    1.40, // XE
+    2.44, // CS
+    2.15, // BA
+    2.07, // LA
+    2.04, // CE
+    2.03, // PR
+    2.01, // ND
+    1.99, // PM
+    1.98, // SM
+    1.98, // EU
+    1.96, // GD
+    1.94, // TB
+    1.92, // DY
+    1.92, // HO
+    1.89, // ER
+    1.90, // TM
+    1.87, // YB
+    1.75, // LU
+    1.87, // HF
+    1.70, // TA
+    1.62, // W
+    1.51, // RE
+    1.44, // OS
+    1.41, // IR
+    1.36, // PT
+    1.36, // AU
+    1.32, // HG
+    1.45, // TL
+    1.46, // PB
+    1.48, // BI
+    1.40, // PO
+    1.50, // AT
+    1.50, // RN
+    2.60, // FR
+    2.21, // RA
+    2.15, // AC
+    2.06, // TH
+    2.05, // PA
+    1.96, // U
+    1.90, // NP
+    1.87, // PU
+    1.80, // AM
+    1.69, // CM
+    1.69, // BK
+    1.68, // CF
+    1.65, // ES
+    1.67, // FM
+    1.73, // MD
+    1.76, // NO
+    1.61, // LR
+    1.57, // RF
+    1.49, // DB
+    1.43, // SG
+    1.41, // BH
+    1.34, // HS
+    1.29, // MT
+    1.28, // DS
+    1.21, // RG
+    1.22, // CN
+    1.36, // NH
+    1.43, // FL
+    1.62, // MC
+    1.75, // LV
+    1.65, // TS
+    1.57, // OG
 ];
 
-// This is a heuristic based on experience, and is not (officially) based on any scientific data yet
-// We will add an initial check soon that will try to find the initial valence of each atom
-pub const VALENCIES: [i8; 33] = [
+// This is a heuristic based on experience, and is not (officially) based on any scientific data yet, for transition metals this does not work well
+pub const VALENCIES: [i8; 24] = [
     0, // Dummy value
     1, // H
     0, // HE
     1, // LI
-    2, // ...
-    3, 
-    4, 
-    3, 
-    2, 
-    1, 
-    0, 
-    1, 
-    2, 
-    3, 
-    4, 
-    3, 
-    2, 
-    1, 
-    0, 
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 3, 4,
+    2, // BE
+    3, // B 
+    4, // C 
+    3, // N
+    2, // O
+    1, // F 
+    0, // NE 
+    1, // NA
+    2, // MG 
+    3, // AL 
+    4, // SI 
+    3, // P
+    2, // S 
+    1, // CL 
+    0, // AR 
+    1, // K 
+    2, // CA 
+    3, // SC
+    4, // TI 
+    5, // V 
 ];
 
 // Taken from: https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses
@@ -439,21 +559,508 @@ pub const ATOMIC_NUMBERS: phf::Map<&'static str, u8> = phf_map! {
 "OG" => 118,
 };
 
-// Electronegativities based on the Pauling scale, scaled by a factor of 100 to avoid floating point errors
-pub const ELECTRONEGATIVITIES: [u32; 103] = [
-    0, 220, 0, 98, 157, 204, 255, 304, 350, 398, 0, 93, 131, 161, 190, 219, 258, 316, 0, 82, 100,
-    136, 154, 163, 166, 155, 183, 188, 191, 190, 165, 181, 201, 218, 255, 296, 300, 82, 95, 122,
-    133, 160, 216, 190, 220, 228, 220, 193, 169, 178, 196, 205, 210, 266, 260, 79, 89, 110, 112,
-    113, 114, 0, 117, 0, 120, 0, 122, 123, 124, 125, 0, 127, 130, 150, 236, 190, 220, 220, 228,
-    254, 200, 162, 233, 202, 200, 220, 0, 0, 90, 110, 130, 150, 138, 136, 128, 130, 130, 130, 130,
-    130, 130, 130, 130,
+// Electronegativities baused on the Pauling scale, scaled by a factor of 100 to avoid floating point errors
+// 
+pub const ELECTRONEGATIVITIES_PAULING: [Option<u32>; 119] = [
+None, // Dummy value
+Some(220), // H
+None, // HE
+Some(98), // LI
+Some(157), // BE
+Some(204), // B
+Some(254), // C
+Some(304), // N
+Some(350), // O
+Some(398), // F
+None, // NE
+Some(93), // NA
+Some(131), // MG
+Some(161), // AL
+Some(190), // SI
+Some(219), // P
+Some(258), // S
+Some(316), // CL
+None, // AR
+Some(82), // K
+Some(100), // CA
+Some(136), // SC
+Some(154), // TI
+Some(163), // V
+Some(166), // CR
+Some(155), // MN
+Some(183), // FE
+Some(188), // CO
+Some(191), // NI
+Some(190), // CU
+Some(165), // ZN
+Some(181), // GA
+Some(200), // GE
+Some(218), // AS
+Some(254), // SE
+Some(296), // BR
+Some(300), // KR
+Some(82), // RB
+Some(95), // SR
+Some(122), // Y
+Some(133), // ZR
+Some(160), // NB
+Some(216), // MO
+Some(190), // TC
+Some(220), // RU
+Some(227), // RH
+Some(220), // PD
+Some(193), // AG
+Some(169), // CD
+Some(178), // IN
+Some(196), // SN
+Some(204), // SB
+Some(210), // TE
+Some(266), // I
+Some(260), // XE
+Some(79), // CS
+Some(89), // BA
+Some(110), // LA
+Some(112), // CE
+Some(112), // PR
+Some(113), // ND
+None, // PM
+Some(117), // SM
+None, // EU
+Some(120), // GD
+None, // TB
+Some(122), // DY
+Some(123), // HO
+Some(124), // ER
+Some(125), // TM
+None, // YB
+Some(127), // LU
+Some(130), // HF
+Some(150), // TA
+Some(236), // W
+Some(190), // RE
+Some(220), // OS
+Some(220), // IR
+Some(227), // PT
+Some(254), // AU
+Some(200), // HG
+Some(162), // TL
+Some(233), // PB
+Some(202), // BI
+Some(200), // PO
+Some(220), // AT
+None, // RN
+None, // FR
+Some(90), // RA
+Some(110), // AC
+Some(130), // TH
+Some(150), // PA
+Some(138), // U
+Some(136), // NP
+Some(128), // PU
+Some(130), // AM
+Some(130), // CM
+Some(130), // BK
+Some(130), // CF
+Some(130), // ES
+Some(130), // FM
+Some(130), // MD
+Some(130), // NO
+None, // LR
+None, // RF
+None, // DB
+None, // SG
+None, // BH
+None, // HS
+None, // MT
+None, // DS
+None, // RG
+None, // CN
+None, // NH
+None, // FL
+None, // MC
+None, // LV
+None, // TS
+None, // OG
 ];
 
+pub const ELECTRONEGATIVITIES_ALLEN: [Option<u32>; 119] = [
+None, // Dummy value 
+Some(2300), // H
+Some(4160), // HE
+Some(912), // LI
+Some(1576), // BE
+Some(2051), // B
+Some(2544), // C
+Some(3066), // N
+Some(3610), // O
+Some(4193), // F
+Some(4787), // NE
+Some(869), // NA
+Some(1293), // MG
+Some(1613), // AL
+Some(1916), // SI
+Some(2253), // P
+Some(2589), // S
+Some(2869), // CL
+Some(3242), // AR
+Some(734), // K
+Some(1034), // CA
+Some(1190), // SC
+Some(1380), // TI
+Some(1530), // V
+Some(1650), // CR
+Some(1750), // MN
+Some(1800), // FE
+Some(1840), // CO
+Some(1880), // NI
+Some(1850), // CU
+Some(1588), // ZN
+Some(1756), // GA
+Some(1994), // GE
+Some(2211), // AS
+Some(2424), // SE
+Some(2685), // BR
+Some(2966), // KR
+Some(706), // RB
+Some(963), // SR
+Some(1120), // Y
+Some(1320), // ZR
+Some(1410), // NB
+Some(1470), // MO
+Some(1510), // TC
+Some(1540), // RU
+Some(1560), // RH
+Some(1580), // PD
+Some(1870), // AG
+Some(1521), // CD
+Some(1656), // IN
+Some(1824), // SN
+Some(1984), // SB
+Some(2158), // TE
+Some(2359), // I
+Some(2582), // XE
+Some(659), // CS
+Some(881), // BA
+None, // LA
+None, // CE
+None, // PR
+None, // ND
+None, // PM
+None, // SM
+None, // EU
+None, // GD
+None, // TB
+None, // DY
+None, // HO
+None, // ER
+None, // TM
+None, // YB
+Some(1090), // LU
+Some(1160), // HF
+Some(1340), // TA
+Some(1470), // W
+Some(1600), // RE
+Some(1650), // OS
+Some(1680), // IR
+Some(1720), // PT
+Some(1920), // AU
+Some(1765), // HG
+Some(1789), // TL
+Some(1854), // PB
+Some(2009), // BI
+Some(2190), // PO
+Some(2390), // AT
+Some(2600), // RN
+Some(670), // FR
+Some(890), // RA
+None, // AC
+None, // TH
+None, // PA
+None, // U
+None, // NP
+None, // PU
+None, // AM
+None, // CM
+None, // BK
+None, // CF
+None, // ES
+None, // FM
+None, // MD
+None, // NO
+None, // LR
+None, // RF
+None, // DB
+None, // SG
+None, // BH
+None, // HS
+None, // MT
+None, // DS
+None, // RG
+None, // CN
+None, // NH
+None, // FL
+None, // MC
+None, // LV
+None, // TS
+None, // OG
+    ];
+
+// This list is taken from Wikipedia, and only includes the major oxidation states: https://en.wikipedia.org/wiki/Oxidation_state#List_of_oxidation_states_of_the_elements
+lazy_static! {
+    pub static ref OXIDATION_STATES: [Option<Vec<i8>>;119] = [
+None, // Dummy value
+Some(vec![-1, 1]), // H
+Some(vec![0]), // HE
+Some(vec![1]), // LI
+Some(vec![2]), // BE
+Some(vec![3]), // B
+Some(vec![-4, -3, -2, -1, 0, 1, 2, 3, 4]), // C
+Some(vec![-3, 3, 5]), // N
+Some(vec![-2]), // O
+Some(vec![-1]), // F
+Some(vec![0]), // NE
+Some(vec![1]), // NA
+Some(vec![2]), // MG
+Some(vec![3]), // AL
+Some(vec![4]), // SI
+Some(vec![-3, 3, 5]), // P
+Some(vec![-2, 2, 4, 6]), // S
+Some(vec![-1, 1, 3, 5, 7]), // CL
+Some(vec![0]), // AR
+Some(vec![1]), // K
+Some(vec![2]), // CA
+Some(vec![3]), // SC
+Some(vec![2, 3, 4]), // TI
+Some(vec![2, 3, 4, 5]), // V
+Some(vec![2, 3, 6]), // CR
+Some(vec![2, 3, 4, 6, 7]), // MN
+Some(vec![2, 3]), // FE
+Some(vec![2, 3]), // CO
+Some(vec![2]), // NI
+Some(vec![1, 2]), // CU
+Some(vec![2]), // ZN
+Some(vec![3]), // GA
+Some(vec![2, 4]), // GE
+Some(vec![-3, 3, 5]), // AS
+Some(vec![-2, 2, 4, 6]), // SE
+Some(vec![-1, 1, 3, 5]), // BR
+Some(vec![0]), // KR
+Some(vec![1]), // RB
+Some(vec![2]), // SR
+Some(vec![3]), // Y
+Some(vec![4]), // ZR
+Some(vec![5]), // NB
+Some(vec![4, 6]), // MO
+Some(vec![4, 7]), // TC
+Some(vec![3, 4]), // RU
+Some(vec![3]), // RH
+Some(vec![0, 2, 4]), // PD
+Some(vec![1]), // AG
+Some(vec![2]), // CD
+Some(vec![3]), // IN
+Some(vec![2, 4]), // SN
+Some(vec![3, 5]), // SB
+Some(vec![-2, 2, 4, 6]), // TE
+Some(vec![-1, 1, 3, 5, 7]), // I
+Some(vec![0]), // XE
+Some(vec![1]), // CS
+Some(vec![2]), // BA
+Some(vec![3]), // LA
+Some(vec![3, 4]), // CE
+Some(vec![3]), // PR
+Some(vec![3]), // ND
+Some(vec![3]), // PM
+Some(vec![3]), // SM
+Some(vec![2, 3]), // EU
+Some(vec![3]), // GD
+Some(vec![3]), // TB
+Some(vec![3]), // DY
+Some(vec![3]), // HO
+Some(vec![3]), // ER
+Some(vec![3]), // TM
+Some(vec![3]), // YB
+Some(vec![3]), // LU
+Some(vec![4]), // HF
+Some(vec![5]), // TA
+Some(vec![4, 6]), // W
+Some(vec![3, 4, 7]), // RE
+Some(vec![2, 3, 4, 8]), // OS
+Some(vec![1, 3, 4]), // IR
+Some(vec![2, 4]), // PT
+Some(vec![1, 3]), // AU
+Some(vec![1, 2]), // HG
+Some(vec![1, 3]), // TL
+Some(vec![2, 4]), // PB
+Some(vec![3]), // BI
+Some(vec![-2, 2, 4]), // PO
+Some(vec![-1, 1]), // AT
+Some(vec![2]), // RN
+Some(vec![1]), // FR
+Some(vec![2]), // RA
+Some(vec![3]), // AC
+Some(vec![4]), // TH
+Some(vec![5]), // PA
+Some(vec![4, 6]), // U
+Some(vec![5]), // NP
+Some(vec![4]), // PU
+Some(vec![3]), // AM
+Some(vec![3]), // CM
+Some(vec![3]), // BK
+Some(vec![3]), // CF
+Some(vec![3]), // ES
+Some(vec![3]), // FM
+Some(vec![3]), // MD
+Some(vec![2]), // NO
+Some(vec![3]), // LR
+Some(vec![4]), // RF
+Some(vec![5]), // DB
+Some(vec![6]), // SG
+Some(vec![7]), // BH
+Some(vec![8]), // HS
+None, // MT
+None, // DS
+None, // RG
+Some(vec![2]), // CN
+None, // NH
+None, // FL
+None, // MC
+None, // LV
+None, // TS
+None, // OG
+];
+}
+
+// This array provides all known oxidation states for each element based on the wikipedia entry
+    // which lists many sources 
+lazy_static! {
+    pub static ref OXIDATION_STATES_EXHAUSTIVE: [Option<Vec<i8>>;119] = [
+None, // Padding
+Some(vec![-1, 0, 1]), // H
+Some(vec![0]), // HE
+Some(vec![0, 1]), // LI
+Some(vec![0, 1, 2]), // BE
+Some(vec![-5, -1, 0, 1, 2, 3]), // B
+Some(vec![-4, -3, -2, -1, 0, 1, 2, 3, 4]), // C
+Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5]), // N
+Some(vec![-2, -1, 0, 1, 2]), // O
+Some(vec![-1, 0]), // F
+Some(vec![0]), // NE
+Some(vec![-1, 0, 1]), // NA
+Some(vec![0, 1, 2]), // MG
+Some(vec![-2, -1, 0, 1, 2, 3]), // AL
+Some(vec![-4, -3, -2, -1, 0, 1, 2, 3, 4]), // SI
+Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5]), // P
+Some(vec![-2, -1, 0, 1, 2, 3, 4, 5, 6]), // S
+Some(vec![-1, 0, 1, 2, 3, 4, 5, 6, 7]), // CL
+Some(vec![0]), // AR
+Some(vec![-1, 1]), // K
+Some(vec![1, 2]), // CA
+Some(vec![0, 1, 2, 3]), // SC
+Some(vec![-2, -1, 0, 1, 2, 3, 4]), // TI
+Some(vec![-3, -1, 0, 1, 2, 3, 4, 5]), // V
+Some(vec![-4, -2, -1, 0, 1, 2, 3, 4, 5, 6]), // CR
+Some(vec![-3, -1, 0, 1, 2, 3, 4, 5, 6, 7]), // MN
+Some(vec![-4, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7]), // FE
+Some(vec![-3, -1, 0, 1, 2, 3, 4, 5]), // CO
+Some(vec![-2, -1, 0, 1, 2, 3, 4]), // NI
+Some(vec![-2, 0, 1, 2, 3, 4]), // CU
+Some(vec![-2, 0, 1, 2]), // ZN
+Some(vec![-5, -4, -3, -2, -1, 0, 1, 2, 3]), // GA
+Some(vec![-4, -3, -2, -1, 0, 1, 2, 3, 4]), // GE
+Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5]), // AS
+Some(vec![-2, -1, 0, 1, 2, 3, 4, 5, 6]), // SE
+Some(vec![-1, 0, 1, 2, 3, 4, 5, 7]), // BR
+Some(vec![0, 1, 2]), // KR
+Some(vec![-1, 1]), // RB
+Some(vec![1, 2]), // SR
+Some(vec![0, 1, 2, 3]), // Y
+Some(vec![-2, 0, 1, 2, 3, 4]), // ZR
+Some(vec![-3, -1, 0, 1, 2, 3, 4, 5]), // NB
+Some(vec![-4, -2, -1, 0, 1, 2, 3, 4, 5, 6]), // MO
+Some(vec![-1, 0, 1, 2, 3, 4, 5, 6, 7]), // TC
+Some(vec![-4, -2, 0, 1, 2, 3, 4, 5, 6, 7, 8]), // RU
+Some(vec![-3, -1, 0, 1, 2, 3, 4, 5, 6, 7]), // RH
+Some(vec![0, 1, 2, 3, 4, 5]), // PD
+Some(vec![-2, -1, 0, 1, 2, 3]), // AG
+Some(vec![-2, 1, 2]), // CD
+Some(vec![-5, -2, -1, 0, 1, 2, 3]), // IN
+Some(vec![-4, -3, -2, -1, 0, 1, 2, 3, 4]), // SN
+Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5]), // SB
+Some(vec![-2, -1, 0, 1, 2, 3, 4, 5, 6]), // TE
+Some(vec![-1, 0, 1, 2, 3, 4, 5, 6, 7]), // I
+Some(vec![0, 2, 4, 6, 8]), // XE
+Some(vec![-1, 1]), // CS
+Some(vec![1, 2]), // BA
+Some(vec![0, 1, 2, 3]), // LA
+Some(vec![2, 3, 4]), // CE
+Some(vec![0, 1, 2, 3, 4, 5]), // PR
+Some(vec![0, 2, 3, 4]), // ND
+Some(vec![2, 3]), // PM
+Some(vec![0, 1, 2, 3]), // SM
+Some(vec![0, 2, 3]), // EU
+Some(vec![0, 1, 2, 3]), // GD
+Some(vec![0, 1, 2, 3, 4]), // TB
+Some(vec![0, 2, 3, 4]), // DY
+Some(vec![0, 2, 3]), // HO
+Some(vec![0, 2, 3]), // ER
+Some(vec![0, 1, 2, 3]), // TM
+Some(vec![0, 1, 2, 3]), // YB
+Some(vec![0, 2, 3]), // LU
+Some(vec![-2, 0, 1, 2, 3, 4]), // HF
+Some(vec![-3, -1, 0, 1, 2, 3, 4, 5]), // TA
+Some(vec![-4, -2, -1, 0, 1, 2, 3, 4, 5, 6]), // W
+Some(vec![-3, -1, 0, 1, 2, 3, 4, 5, 6, 7]), // RE
+Some(vec![-4, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8]), // OS
+Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]), // IR
+Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5, 6]), // PT
+Some(vec![-3, -2, -1, 0, 1, 2, 3, 5]), // AU
+Some(vec![-2, 1, 2]), // HG
+Some(vec![-5, -2, -1, 1, 2, 3]), // TL
+Some(vec![-4, -2, -1, 0, 1, 2, 3, 4]), // PB
+Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5]), // BI
+Some(vec![-2, 2, 4, 5, 6]), // PO
+Some(vec![-1, 1, 3, 5, 7]), // AT
+Some(vec![2, 6]), // RN
+Some(vec![1]), // FR
+Some(vec![2]), // RA
+Some(vec![3]), // AC
+Some(vec![-1, 1, 2, 3, 4]), // TH
+Some(vec![2, 3, 4, 5]), // PA
+Some(vec![-1, 1, 2, 3, 4, 5, 6]), // U
+Some(vec![2, 3, 4, 5, 6, 7]), // NP
+Some(vec![2, 3, 4, 5, 6, 7, 8]), // PU
+Some(vec![2, 3, 4, 5, 6, 7]), // AM
+Some(vec![3, 4, 5, 6]), // CM
+Some(vec![2, 3, 4, 5]), // BK
+Some(vec![2, 3, 4, 5]), // CF
+Some(vec![2, 3, 4]), // ES
+Some(vec![2, 3]), // FM
+Some(vec![2, 3]), // MD
+Some(vec![2, 3]), // NO
+Some(vec![3]), // LR
+Some(vec![4]), // RF
+Some(vec![5]), // DB
+Some(vec![0, 6]), // SG
+Some(vec![7]), // BH
+Some(vec![8]), // HS
+None, // MT
+None, // DS
+None, // RG
+Some(vec![2]), // CN
+None, // NH
+None, // FL
+None, // MC
+None, // LV
+None, // TS
+None, // OG
+];
+}
 pub struct Isotope {
     pub mass: f64,
     pub abundance: f64,
 }
 
+// This is to shorten the isotopes array
 const fn iso(mass: f64, abundance: f64) -> Isotope {
     Isotope { mass, abundance }
 }
