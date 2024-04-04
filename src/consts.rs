@@ -23,24 +23,24 @@ pub const FINE_STRUCTURE: f64 = 7.297_352_569_3e-3; // Dimensionless
 pub const RYDBERG: f64 = 10_973_731.568_160; // m^-1
                                              // Fundamental physical constants
                                              // https://physics.nist.gov/cgi-bin/cuu/Value?c|search_for=universal_in!
-pub const PLANCK: f64 = 6.62607015e-34; // J s
+pub const PLANCK: f64 = 6.626_070_15e-34; // J s
 pub const HBAR: f64 = 1.0545718e-34; // J s reduced Planck constant
 pub const PLANCK_LENGTH: f64 = 1.616255e-35; // m
 pub const PLANCK_MASS: f64 = 2.176434e-8; // kg
 pub const PLANCK_TIME: f64 = 5.391247e-44; // s
-pub const SPEED_OF_LIGHT: f64 = 299792458.0; // m s^-1
+pub const SPEED_OF_LIGHT: f64 = 299_792_458.0; // m s^-1
 pub const VACUUM_PERMITTIVITY: f64 = 8.854_187_812_8e-12; // F m^-1
-pub const VACUUM_PERMEABILITY: f64 = 1.25663706212e-6; // N A^-2
+pub const VACUUM_PERMEABILITY: f64 = 1.256_637_062_12e-6; // N A^-2
 pub const NEWTON: f64 = 6.674_30E-11; // m^3 kg^-1 s^-2
                                       // Earth's gravity
-pub const STANDARD_GRAVITY: f64 = 9.80665; // m s^-2
-                                           // https://physics.nist.gov/cgi-bin/cuu/Value?bg|search_for=universal_in!
+pub const STANDARD_GRAVITY: f64 = 9.806_65; // m s^-2
+                                            // https://physics.nist.gov/cgi-bin/cuu/Value?bg|search_for=universal_in!
 pub const ELEMENTARY_CHARGE: f64 = 1.602_176_634e-19; // C (Electric charge of a single electron)
 pub const ELECTRON_VOLT: f64 = 1.602_176_634e-19; // J
-pub const FARADAY: f64 = 96485.33212; // C mol^-1
-pub const COULOMB: f64 = 8.987551787368176e9; // N m^2 C^-2
+pub const FARADAY: f64 = 96_485.332_12; // C mol^-1
+pub const COULOMB: f64 = 8.987_551_787_368_176e9; // N m^2 C^-2
 pub const CALORIE: f64 = 4.184; // J
-pub const ATMOSPHERE: f64 = 101325.0; // Pa
+pub const ATMOSPHERE: f64 = 101_325.0; // Pa
 
 // The values are taken from: https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&isotype=some
 // The padding is necessary to make the array index match the atomic number
@@ -467,7 +467,6 @@ macro_rules! generate_match {
     };
 }
 
-
 pub fn atomic_numbers(symbol: &str) -> Option<u8> {
     generate_match!(symbol;  
    ("H" ,1),
@@ -572,7 +571,6 @@ pub fn atomic_numbers(symbol: &str) -> Option<u8> {
    ( "TS", 117),
    ( "OG", 118),)
 }
-
 
 // Electronegativities baused on the Pauling scale, scaled by a factor of 100 to avoid floating point errors
 //
@@ -1523,26 +1521,3 @@ pub const ISOTOPES: [[Option<Isotope>; 4]; 119] = [
     [None, None, None, None], // TS
     [None, None, None, None], // OG
 ];
-
-macro_rules! match_bond_energies {
-    ($lookup_val:expr, $((($key1:expr,$key2:expr,$key3:expr),$val1:expr))*) => { match $lookup_val {
-            $(($key1,$key2,$key3) => Some($val1),)*
-            _ => None
-        }
-    }
-}
-
-pub const fn bond_energy(atomic_numbers: (u8, u8), bond_order: u8) -> Option<f64> {
-    if atomic_numbers.0 > atomic_numbers.1 {
-        bond_energy_map((atomic_numbers.1, atomic_numbers.0), bond_order)
-    } else {
-        bond_energy_map(atomic_numbers, bond_order)
-    }
-}
-
-const fn bond_energy_map(atomic_numbers: (u8, u8), bond_order: u8) -> Option<f64> {
-    let search = (atomic_numbers.0, atomic_numbers.1, bond_order);
-    match_bond_energies! {search,
-        ((0,0,0),1.0) // CC
-    }
-}
