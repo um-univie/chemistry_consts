@@ -292,9 +292,133 @@ pub const COVALENT_RADII: [f64; 119] = [
     1.57, // OG
 ];
 
+lazy_static! {
+    // The following values were taken from rdkit and are subject to change (Source: https://raw.githubusercontent.com/rdkit/rdkit/9e1dbd2f336b8c381d4e7ef8d8ce8b9641ec3bc8/Code/GraphMol/atomic_data.cpp)
+pub static ref VALENCIES: [Option<Vec<i8>>; 119] = [
+None, // Dummy value
+Some(vec![1]), // H
+Some(vec![0]), // HE
+Some(vec![1, -1]), // LI
+Some(vec![2]), // BE
+Some(vec![3]), // B
+Some(vec![4]), // C
+Some(vec![3]), // N
+Some(vec![2]), // O
+Some(vec![1]), // F
+Some(vec![0]), // NE
+Some(vec![1, -1]), // NA
+Some(vec![2, -1]), // MG
+Some(vec![3, 6]), // AL
+Some(vec![4, 6]), // SI
+Some(vec![3, 5, 7]), // P
+Some(vec![2, 4, 6]), // S
+Some(vec![1]), // CL
+Some(vec![0]), // AR
+Some(vec![1, -1]), // K
+Some(vec![2, -1]), // CA
+None, // SC
+None, // TI
+None, // V
+None, // CR
+None, // MN
+None, // FE
+None, // CO
+None, // NI
+None, // CU
+None, // ZN
+Some(vec![3]), // GA
+Some(vec![4]), // GE
+Some(vec![3, 5, 7]), // AS
+Some(vec![2, 4, 6]), // SE
+Some(vec![1]), // BR
+Some(vec![0]), // KR
+Some(vec![1]), // RB
+Some(vec![2, -1]), // SR
+None, // Y
+None, // ZR
+None, // NB
+None, // MO
+None, // TC
+None, // RU
+None, // RH
+None, // PD
+None, // AG
+None, // CD
+Some(vec![3]), // IN
+Some(vec![2, 4]), // SN
+Some(vec![3, 5, 7]), // SB
+Some(vec![2, 4, 6]), // TE
+Some(vec![1, 3, 5]), // I
+Some(vec![0, 2, 4, 6]), // XE
+Some(vec![1]), // CS
+Some(vec![2, -1]), // BA
+None, // LA
+None, // CE
+None, // PR
+None, // ND
+None, // PM
+None, // SM
+None, // EU
+None, // GD
+None, // TB
+None, // DY
+None, // HO
+None, // ER
+None, // TM
+None, // YB
+None, // LU
+None, // HF
+None, // TA
+None, // W
+None, // RE
+None, // OS
+None, // IR
+None, // PT
+None, // AU
+None, // HG
+Some(vec![3]), // TL
+Some(vec![2, 4]), // PB
+Some(vec![3, 5, 7]), // BI
+Some(vec![2, 4, 6]), // PO
+Some(vec![1, 3, 5]), // AT
+Some(vec![0]), // RN
+Some(vec![1]), // FR
+Some(vec![2, -1]), // RA
+None, // AC
+None, // TH
+None, // PA
+None, // U
+None, // NP
+None, // PU
+None, // AM
+None, // CM
+None, // BK
+None, // CF
+None, // ES
+None, // FM
+None, // MD
+None, // NO
+None, // LR
+None, // RF
+None, // DB
+None, // SG
+None, // BH
+None, // HS
+None, // MT
+None, // DS
+None, // RG
+None, // CN
+None, // NH
+None, // FL
+None, // MC
+None, // LV
+None, // TS
+None, // OG
+];
+}
 
 // This is a heuristic based on experience, and is not (officially) based on any scientific data yet, for transition metals this does not work well
-pub const VALENCIES: [i8; 24] = [
+pub const MOST_COMMON_VALENCIES: [i8; 24] = [
     0, // Dummy value
     1, // H
     0, // HE
