@@ -1,9 +1,9 @@
 use lazy_static::lazy_static;
 
 // Physical constants TODO: Add sources
-//https://www.physics.nist.gov/cgi-bin/cuu/Value?eshbar|search_for=elecmag_in!
+// https://www.physics.nist.gov/cgi-bin/cuu/Value?eshbar|search_for=elecmag_in!
 // Physicochemical constants
-//https://www.physics.nist.gov/cgi-bin/cuu/Value?na|search_for=physchem_in!
+// https://www.physics.nist.gov/cgi-bin/cuu/Value?na|search_for=physchem_in!
 pub const AVOGADRO: f64 = 6.022_140_76e23; // mol^-1
 pub const BOLTZMANN: f64 = 1.380_649e-23; // J K^-1 pub const GAS_CONSTANT: f64 = 8.31446261815324; // J K^-1 mol^-1 (Molar gas constant) pub const MOLAR_VOLUME: f64 = 22.413_969_9e-3; // m^3 mol^-1 (Molar volume of an ideal gas at 0°C and 1 atm)
 pub const MOLAR_MASS: f64 = 0.999_999_999_65; // kg mol^-1 (Molar mass of a substance)
@@ -11,7 +11,7 @@ pub const MOLAR_PLANCK: f64 = 3.990_312_71e-10; // J s mol^-1 (Molar Planck cons
 pub const AMU: f64 = 1.660_539_066_60e-27; // kg
 
 // Atomic constants
-// https://www.physics.nist.gov/cgi-bin/cuu/Value?bohrrada0|search_for=atomnuc!
+// https:// www.physics.nist.gov/cgi-bin/cuu/Value?bohrrada0|search_for=atomnuc!
 pub const HARTREE: f64 = 4.359_744_722_207_1; // eV
 pub const HARTREE_EV: f64 = 27.211_386_245_988; // eV
 pub const BOHR_MAGNETON: f64 = 9.274_009_994_57e-24; // J T^-1
@@ -22,7 +22,7 @@ pub const ELECTRON_MASS: f64 = 9.109_383_701_5e-31; // kg
 pub const FINE_STRUCTURE: f64 = 7.297_352_569_3e-3; // Dimensionless
 pub const RYDBERG: f64 = 10_973_731.568_160; // m^-1
                                              // Fundamental physical constants
-                                             // https://physics.nist.gov/cgi-bin/cuu/Value?c|search_for=universal_in!
+                                             // https:// physics.nist.gov/cgi-bin/cuu/Value?c|search_for=universal_in!
 pub const PLANCK: f64 = 6.626_070_15e-34; // J s
 pub const HBAR: f64 = 1.0545718e-34; // J s reduced Planck constant
 pub const PLANCK_LENGTH: f64 = 1.616255e-35; // m
@@ -34,7 +34,7 @@ pub const VACUUM_PERMEABILITY: f64 = 1.256_637_062_12e-6; // N A^-2
 pub const NEWTON: f64 = 6.674_30E-11; // m^3 kg^-1 s^-2
                                       // Earth's gravity
 pub const STANDARD_GRAVITY: f64 = 9.806_65; // m s^-2
-                                            // https://physics.nist.gov/cgi-bin/cuu/Value?bg|search_for=universal_in!
+                                            // https:// physics.nist.gov/cgi-bin/cuu/Value?bg|search_for=universal_in!
 pub const ELEMENTARY_CHARGE: f64 = 1.602_176_634e-19; // C (Electric charge of a single electron)
 pub const ELECTRON_VOLT: f64 = 1.602_176_634e-19; // J
 pub const FARADAY: f64 = 96_485.332_12; // C mol^-1
@@ -42,133 +42,134 @@ pub const COULOMB: f64 = 8.987_551_787_368_176e9; // N m^2 C^-2
 pub const CALORIE: f64 = 4.184; // J
 pub const ATMOSPHERE: f64 = 101_325.0; // Pa
 
-// The values are taken from: https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&isotype=some
+// The values are taken from: https:// physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&isotype=some
 // The padding is necessary to make the array index match the atomic number
 // Some elements are not stable and therefore do not have a standard atomic weight
-pub const STANDARD_ATOMIC_WEIGHTS: [Option<f64>; 118] = [
-    None,                     //Dummy value
-    Some(1.007975),           //H
-    Some(4.002602),           //He
-    Some(6.967499999999999),  //Li
-    Some(9.0121831),          //Be
-    Some(10.8135),            //B
-    Some(12.0106),            //C
-    Some(14.006855),          //N
-    Some(15.9994),            //O
-    Some(18.998403163),       //F
-    Some(20.1797),            //Ne
-    Some(22.98976928),        //Na
-    Some(24.3055),            //Mg
-    Some(26.9815385),         //Al
-    Some(28.085),             //Si
-    Some(30.973761998),       //P
-    Some(32.067499999999995), //S
-    Some(35.451499999999996), //Cl Some(39.948),//Ar
-    Some(39.0983),            //K
-    Some(40.078),             //Ca
-    Some(44.955908),          //Sc
-    Some(47.867),             //Ti
-    Some(50.9415),            //V
-    Some(51.9961),            //Cr
-    Some(54.938044),          //Mn
-    Some(55.845),             //Fe
-    Some(58.933194),          //Co
-    Some(58.6934),            //Ni
-    Some(63.546),             //Cu
-    Some(65.38),              //Zn
-    Some(69.723),             //Ga
-    Some(72.63),              //Ge
-    Some(74.921595),          //As
-    Some(78.971),             //Se
-    Some(79.904),             //Br
-    Some(83.798),             //Kr
-    Some(85.4678),            //Rb
-    Some(87.62),              //Sr
-    Some(88.90584),           //Y
-    Some(91.224),             //Zr
-    Some(92.90637),           //Nb
-    Some(95.95),              //Mo
-    Some(98.0),               //Tc
-    Some(101.07),             //Ru
-    Some(102.9055),           //Rh
-    Some(106.42),             //Pd
-    Some(107.8682),           //Ag
-    Some(112.414),            //Cd
-    Some(114.818),            //In
-    Some(118.71),             //Sn
-    Some(121.76),             //Sb
-    Some(127.6),              //Te
-    Some(126.90447),          //I
-    Some(131.293),            //Xe
-    Some(132.90545196),       //Cs
-    Some(137.327),            //Ba
-    Some(138.90547),          //La
-    Some(140.116),            //Ce
-    Some(140.90766),          //Pr
-    Some(144.242),            //Nd
-    Some(145.0),              //Pm
-    Some(150.36),             //Sm
-    Some(151.964),            //Eu
-    Some(157.25),             //Gd
-    Some(158.92535),          //Tb
-    Some(162.5),              //Dy
-    Some(164.93033),          //Ho
-    Some(167.259),            //Er
-    Some(168.93422),          //Tm
-    Some(173.054),            //Yb
-    Some(174.9668),           //Lu
-    Some(178.49),             //Hf
-    Some(180.94788),          //Ta
-    Some(183.84),             //W
-    Some(186.207),            //Re
-    Some(190.23),             //Os
-    Some(192.217),            //Ir
-    Some(195.084),            //Pt
-    Some(196.966569),         //Au
-    Some(200.592),            //Hg
-    Some(204.3835),           //Tl
-    Some(207.2),              //Pb
-    Some(208.9804),           //Bi
-    Some(209.0),              //Po
-    Some(210.0),              //At
-    Some(222.0),              //Rn
-    Some(223.0),              //Fr
-    Some(226.0),              //Ra
-    Some(227.0),              //Ac
-    Some(232.0377),           //Th
-    Some(231.03588),          //Pa
-    Some(238.02891),          //U
-    Some(237.0),              //Np
-    Some(244.0),              //Pu
-    None,                     //Am
-    None,                     //Cm
-    None,                     //Bk
-    None,                     //Cf
-    None,                     //Es
-    None,                     //Fm
-    None,                     //Md
-    None,                     //No
-    None,                     //Lr
-    None,                     //Rf
-    None,                     //Db
-    None,                     //Sg
-    None,                     //Bh
-    None,                     //Hs
-    None,                     //Mt
-    None,                     //Ds
-    None,                     //Rg
-    None,                     //Cn
-    None,                     //Nh
-    None,                     //Fl
-    None,                     //Mc
-    None,                     //Lv
-    None,                     //Ts
-    None,                     //Og
+pub const STANDARD_ATOMIC_WEIGHTS: [Option<f64>; 119] = [
+    None,                     // Dummy value
+    Some(1.007975),           // H
+    Some(4.002602),           // He
+    Some(6.967499999999999),  // Li
+    Some(9.0121831),          // Be
+    Some(10.8135),            // B
+    Some(12.0106),            // C
+    Some(14.006855),          // N
+    Some(15.9994),            // O
+    Some(18.998403163),       // F
+    Some(20.1797),            // Ne
+    Some(22.98976928),        // Na
+    Some(24.3055),            // Mg
+    Some(26.9815385),         // Al
+    Some(28.085),             // Si
+    Some(30.973761998),       // P
+    Some(32.067499999999995), // S
+    Some(35.451499999999996), // Cl 
+    Some(39.948),             // Ar
+    Some(39.0983),            // K
+    Some(40.078),             // Ca
+    Some(44.955908),          // Sc
+    Some(47.867),             // Ti
+    Some(50.9415),            // V
+    Some(51.9961),            // Cr
+    Some(54.938044),          // Mn
+    Some(55.845),             // Fe
+    Some(58.933194),          // Co
+    Some(58.6934),            // Ni
+    Some(63.546),             // Cu
+    Some(65.38),              // Zn
+    Some(69.723),             // Ga
+    Some(72.63),              // Ge
+    Some(74.921595),          // As
+    Some(78.971),             // Se
+    Some(79.904),             // Br
+    Some(83.798),             // Kr
+    Some(85.4678),            // Rb
+    Some(87.62),              // Sr
+    Some(88.90584),           // Y
+    Some(91.224),             // Zr
+    Some(92.90637),           // Nb
+    Some(95.95),              // Mo
+    Some(98.0),               // Tc
+    Some(101.07),             // Ru
+    Some(102.9055),           // Rh
+    Some(106.42),             // Pd
+    Some(107.8682),           // Ag
+    Some(112.414),            // Cd
+    Some(114.818),            // In
+    Some(118.71),             // Sn
+    Some(121.76),             // Sb
+    Some(127.6),              // Te
+    Some(126.90447),          // I
+    Some(131.293),            // Xe
+    Some(132.90545196),       // Cs
+    Some(137.327),            // Ba
+    Some(138.90547),          // La
+    Some(140.116),            // Ce
+    Some(140.90766),          // Pr
+    Some(144.242),            // Nd
+    Some(145.0),              // Pm
+    Some(150.36),             // Sm
+    Some(151.964),            // Eu
+    Some(157.25),             // Gd
+    Some(158.92535),          // Tb
+    Some(162.5),              // Dy
+    Some(164.93033),          // Ho
+    Some(167.259),            // Er
+    Some(168.93422),          // Tm
+    Some(173.054),            // Yb
+    Some(174.9668),           // Lu
+    Some(178.49),             // Hf
+    Some(180.94788),          // Ta
+    Some(183.84),             // W
+    Some(186.207),            // Re
+    Some(190.23),             // Os
+    Some(192.217),            // Ir
+    Some(195.084),            // Pt
+    Some(196.966569),         // Au
+    Some(200.592),            // Hg
+    Some(204.3835),           // Tl
+    Some(207.2),              // Pb
+    Some(208.9804),           // Bi
+    Some(209.0),              // Po
+    Some(210.0),              // At
+    Some(222.0),              // Rn
+    Some(223.0),              // Fr
+    Some(226.0),              // Ra
+    Some(227.0),              // Ac
+    Some(232.0377),           // Th
+    Some(231.03588),          // Pa
+    Some(238.02891),          // U
+    Some(237.0),              // Np
+    Some(244.0),              // Pu
+    None,                     // Am
+    None,                     // Cm
+    None,                     // Bk
+    None,                     // Cf
+    None,                     // Es
+    None,                     // Fm
+    None,                     // Md
+    None,                     // No
+    None,                     // Lr
+    None,                     // Rf
+    None,                     // Db
+    None,                     // Sg
+    None,                     // Bh
+    None,                     // Hs
+    None,                     // Mt
+    None,                     // Ds
+    None,                     // Rg
+    None,                     // Cn
+    None,                     // Nh
+    None,                     // Fl
+    None,                     // Mc
+    None,                     // Lv
+    None,                     // Ts
+    None,                     // Og
 ];
 
 // This array represent the covalent radii of the elements in angstroms (Å) only single bond radii are used as they are the largest and therefore most restrictive
-// The values up to CM are taken from:https://doi.org/10.1002/chem.200800987
-// The values from CF to OG are taken from: https://en.wikipedia.org/wiki/Atomic_radii_of_the_elements_(data_page)
+// The values up to CM are taken from:https:// doi.org/10.1002/chem.200800987
+// The values from CF to OG are taken from: https:// en.wikipedia.org/wiki/Atomic_radii_of_the_elements_(data_page)
 pub const COVALENT_RADII: [f64; 119] = [
     0.0,  // Dummy value
     0.31, // H
@@ -291,6 +292,7 @@ pub const COVALENT_RADII: [f64; 119] = [
     1.57, // OG
 ];
 
+
 // This is a heuristic based on experience, and is not (officially) based on any scientific data yet, for transition metals this does not work well
 pub const VALENCIES: [i8; 24] = [
     0, // Dummy value
@@ -319,7 +321,7 @@ pub const VALENCIES: [i8; 24] = [
     5, // V
 ];
 
-// Taken from: https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses
+// Taken from: https:// www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses
 // The first element is not used, but is included for completeness
 pub const MONOISOTOPIC_MASSES: [f64; 119] = [
     0.00000000000, // Dummy value
@@ -442,6 +444,130 @@ pub const MONOISOTOPIC_MASSES: [f64; 119] = [
     292.20746,     // TS
     294.21392,     // OG
 ];
+
+// These values are simply based on the respective elements group in the periodic table
+pub const VALENCE_ELECTRONS: [u8; 119] = [
+0, // Dummy value
+1, // H
+2, // HE
+1, // LI
+2, // BE
+3, // B
+4, // C
+5, // N
+6, // O
+7, // F
+8, // NE
+1, // NA
+2, // MG
+3, // AL
+4, // SI
+5, // P
+6, // S
+7, // CL
+8, // AR
+1, // K
+2, // CA
+3, // SC
+4, // TI
+5, // V
+6, // CR
+7, // MN
+8, // FE
+9, // CO
+10, // NI
+11, // CU
+2, // ZN
+3, // GA
+4, // GE
+5, // AS
+6, // SE
+7, // BR
+8, // KR
+1, // RB
+2, // SR
+3, // Y
+4, // ZR
+5, // NB
+6, // MO
+7, // TC
+8, // RU
+9, // RH
+10,// PD
+11,// AG
+2, // CD
+3, // IN
+4, // SN
+5, // SB
+6, // TE
+7, // I
+8, // XE
+1, // CS
+2, // BA
+3, // LA
+4, // CE
+3, // PR
+4, // ND
+5, // PM
+6, // SM
+7, // EU
+8, // GD
+9, // TB
+10, // DY
+11, // HO
+12, // ER
+13, // TM
+14, // YB
+15, // LU
+4, // HF
+5, // TA
+6, // W
+7, // RE
+8, // OS
+9, // IR
+10, // PT
+11, // AU
+2, // HG
+3, // TL
+4, // PB
+5, // BI
+6, // PO
+7, // AT
+8, // RN
+1, // FR
+2, // RA
+3, // AC
+4, // TH
+3, // PA
+4, // U
+5, // NP
+6, // PU
+7, // AM
+8, // CM
+9, // BK
+10, // CF
+11, // ES
+12, // FM
+13, // MD
+14, // NO
+3, // LR
+4, // RF
+5, // DB
+6, // SG
+7, // BH
+8, // HS
+9, // MT
+10, // DS
+11, // RG
+12, // CN
+3, // NH
+4, // FL
+5, // MC
+6, // LV
+7, // TS
+8, // OG
+];
+
 
 pub const ATOMIC_SYMBOLS: [&str; 119] = [
     "None", "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S",
@@ -818,7 +944,7 @@ pub const ELECTRONEGATIVITIES_ALLEN: [Option<u32>; 119] = [
     None,       // OG
 ];
 
-// This list is taken from Wikipedia, and only includes the major oxidation states: https://en.wikipedia.org/wiki/Oxidation_state#List_of_oxidation_states_of_the_elements
+// This list is taken from Wikipedia, and only includes the major oxidation states: https:// en.wikipedia.org/wiki/Oxidation_state#List_of_oxidation_states_of_the_elements
 lazy_static! {
     pub static ref OXIDATION_STATES: [Option<Vec<i8>>;119] = [
 None, // Dummy value
@@ -1068,6 +1194,7 @@ None, // TS
 None, // OG
 ];
 }
+
 pub struct Isotope {
     pub mass: f64,
     pub abundance: f64,
@@ -1077,7 +1204,7 @@ pub struct Isotope {
 const fn iso(mass: f64, abundance: f64) -> Isotope {
     Isotope { mass, abundance }
 }
-// Taken from: https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&all=all&ascii=ascii&isotype=some
+// Taken from: https:// physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&all=all&ascii=ascii&isotype=some
 // Zero padding is used to make the array index match the atomic number
 pub const ISOTOPES: [[Option<Isotope>; 4]; 119] = [
     [None, None, None, None], // Padding
