@@ -34,7 +34,6 @@ pub const VACUUM_PERMEABILITY: f64 = 1.256_637_062_12e-6; // N A^-2
 pub const NEWTON: f64 = 6.674_30E-11; // m^3 kg^-1 s^-2
                                       // Earth's gravity
 pub const STANDARD_GRAVITY: f64 = 9.806_65; // m s^-2
-                                            // https:// physics.nist.gov/cgi-bin/cuu/Value?bg|search_for=universal_in!
 pub const ELEMENTARY_CHARGE: f64 = 1.602_176_634e-19; // C (Electric charge of a single electron)
 pub const ELECTRON_VOLT: f64 = 1.602_176_634e-19; // J
 pub const FARADAY: f64 = 96_485.332_12; // C mol^-1
