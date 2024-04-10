@@ -3810,3 +3810,51 @@ impl ElementProperties for u8 {
         MONOISOTOPIC_MASSES.get(*self as usize).copied()
     }
 }
+
+impl ElementProperties for u16 {
+    fn atomic_number(&self) -> Option<u8> {
+        if *self < 1 || *self > 118 {
+            None
+        } else {
+            Some(*self as u8)
+        }
+    }
+    fn atomic_symbol(&self) -> Option<&str> {
+        ATOMIC_SYMBOLS.get(*self as usize).copied()
+    }
+    fn monoisotopic_mass(&self) -> Option<f64> {
+        MONOISOTOPIC_MASSES.get(*self as usize).copied()
+    }
+}
+
+impl ElementProperties for u32 {
+    fn atomic_number(&self) -> Option<u8> {
+        if *self < 1 || *self > 118 {
+            None
+        } else {
+            Some(*self as u8)
+        }
+    }
+    fn atomic_symbol(&self) -> Option<&str> {
+        ATOMIC_SYMBOLS.get(*self as usize).copied()
+    }
+    fn monoisotopic_mass(&self) -> Option<f64> {
+        MONOISOTOPIC_MASSES.get(*self as usize).copied()
+    }
+}
+
+impl ElementProperties for u64 {
+    fn atomic_number(&self) -> Option<u8> {
+        if *self < 1 || *self > 118 {
+            None
+        } else {
+            Some(*self as u8)
+        }
+    }
+    fn atomic_symbol(&self) -> Option<&str> {
+        ATOMIC_SYMBOLS.get(*self as usize).copied()
+    }
+    fn monoisotopic_mass(&self) -> Option<f64> {
+        MONOISOTOPIC_MASSES.get(*self as usize).copied()
+    }
+}
