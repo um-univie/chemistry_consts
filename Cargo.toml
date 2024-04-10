@@ -6,8 +6,3 @@ license = "MIT"
 description = "A library for most constants in chemistry"
 repository = "https://github.com/um-univie/chemistry_consts/"
 readme = "README.md"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-lazy_static = "1.4.0"

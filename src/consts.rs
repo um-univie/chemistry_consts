@@ -1,5 +1,3 @@
-use lazy_static::lazy_static;
-
 // Physical constants TODO: Add sources
 // https://www.physics.nist.gov/cgi-bin/cuu/Value?eshbar|search_for=elecmag_in!
 // Physicochemical constants
@@ -62,7 +60,7 @@ pub const STANDARD_ATOMIC_WEIGHTS: [Option<f64>; 119] = [
     Some(28.085),             // Si
     Some(30.973761998),       // P
     Some(32.067499999999995), // S
-    Some(35.451499999999996), // Cl 
+    Some(35.451499999999996), // Cl
     Some(39.948),             // Ar
     Some(39.0983),            // K
     Some(40.078),             // Ca
@@ -291,130 +289,246 @@ pub const COVALENT_RADII: [f64; 119] = [
     1.57, // OG
 ];
 
-lazy_static! {
-    // The following values were taken from rdkit and are subject to change (Source: https://raw.githubusercontent.com/rdkit/rdkit/9e1dbd2f336b8c381d4e7ef8d8ce8b9641ec3bc8/Code/GraphMol/atomic_data.cpp)
-pub static ref VALENCIES: [Option<Vec<i8>>; 119] = [
-None, // Dummy value
-Some(vec![1]), // H
-Some(vec![0]), // HE
-Some(vec![1, -1]), // LI
-Some(vec![2]), // BE
-Some(vec![3]), // B
-Some(vec![4]), // C
-Some(vec![3]), // N
-Some(vec![2]), // O
-Some(vec![1]), // F
-Some(vec![0]), // NE
-Some(vec![1, -1]), // NA
-Some(vec![2, -1]), // MG
-Some(vec![3, 6]), // AL
-Some(vec![4, 6]), // SI
-Some(vec![3, 5, 7]), // P
-Some(vec![2, 4, 6]), // S
-Some(vec![1]), // CL
-Some(vec![0]), // AR
-Some(vec![1, -1]), // K
-Some(vec![2, -1]), // CA
-None, // SC
-None, // TI
-None, // V
-None, // CR
-None, // MN
-None, // FE
-None, // CO
-None, // NI
-None, // CU
-None, // ZN
-Some(vec![3]), // GA
-Some(vec![4]), // GE
-Some(vec![3, 5, 7]), // AS
-Some(vec![2, 4, 6]), // SE
-Some(vec![1]), // BR
-Some(vec![0]), // KR
-Some(vec![1]), // RB
-Some(vec![2, -1]), // SR
-None, // Y
-None, // ZR
-None, // NB
-None, // MO
-None, // TC
-None, // RU
-None, // RH
-None, // PD
-None, // AG
-None, // CD
-Some(vec![3]), // IN
-Some(vec![2, 4]), // SN
-Some(vec![3, 5, 7]), // SB
-Some(vec![2, 4, 6]), // TE
-Some(vec![1, 3, 5]), // I
-Some(vec![0, 2, 4, 6]), // XE
-Some(vec![1]), // CS
-Some(vec![2, -1]), // BA
-None, // LA
-None, // CE
-None, // PR
-None, // ND
-None, // PM
-None, // SM
-None, // EU
-None, // GD
-None, // TB
-None, // DY
-None, // HO
-None, // ER
-None, // TM
-None, // YB
-None, // LU
-None, // HF
-None, // TA
-None, // W
-None, // RE
-None, // OS
-None, // IR
-None, // PT
-None, // AU
-None, // HG
-Some(vec![3]), // TL
-Some(vec![2, 4]), // PB
-Some(vec![3, 5, 7]), // BI
-Some(vec![2, 4, 6]), // PO
-Some(vec![1, 3, 5]), // AT
-Some(vec![0]), // RN
-Some(vec![1]), // FR
-Some(vec![2, -1]), // RA
-None, // AC
-None, // TH
-None, // PA
-None, // U
-None, // NP
-None, // PU
-None, // AM
-None, // CM
-None, // BK
-None, // CF
-None, // ES
-None, // FM
-None, // MD
-None, // NO
-None, // LR
-None, // RF
-None, // DB
-None, // SG
-None, // BH
-None, // HS
-None, // MT
-None, // DS
-None, // RG
-None, // CN
-None, // NH
-None, // FL
-None, // MC
-None, // LV
-None, // TS
-None, // OG
+// The following values were taken from rdkit and are subject to change (Source: https://raw.githubusercontent.com/rdkit/rdkit/9e1dbd2f336b8c381d4e7ef8d8ce8b9641ec3bc8/Code/GraphMol/atomic_data.cpp)
+pub const VALENCIES: [Option<[Option<i8>;4]>; 119] = [
+None, //Padding
+
+Some([Some(1), None, None, None]), //H
+
+Some([Some(0), None, None, None]), //HE
+
+Some([Some(1), Some(-1), None, None]), //LI
+
+Some([Some(2), None, None, None]), //BE
+
+Some([Some(3), None, None, None]), //B
+
+Some([Some(4), None, None, None]), //C
+
+Some([Some(3), None, None, None]), //N
+
+Some([Some(2), None, None, None]), //O
+
+Some([Some(1), None, None, None]), //F
+
+Some([Some(0), None, None, None]), //NE
+
+Some([Some(1), Some(-1), None, None]), //NA
+
+Some([Some(2), Some(-1), None, None]), //MG
+
+Some([Some(3), Some(6), None, None]), //AL
+
+Some([Some(4), Some(6), None, None]), //SI
+
+Some([Some(3), Some(5), Some(7), None]), //P
+
+Some([Some(2), Some(4), Some(6), None]), //S
+
+Some([Some(1), None, None, None]), //CL
+
+Some([Some(0), None, None, None]), //AR
+
+Some([Some(1), Some(-1), None, None]), //K
+
+Some([Some(2), Some(-1), None, None]), //CA
+
+None, //SC
+
+None, //TI
+
+None, //V
+
+None, //CR
+
+None, //MN
+
+None, //FE
+
+None, //CO
+
+None, //NI
+
+None, //CU
+
+None, //ZN
+
+Some([Some(3), None, None, None]), //GA
+
+Some([Some(4), None, None, None]), //GE
+
+Some([Some(3), Some(5), Some(7), None]), //AS
+
+Some([Some(2), Some(4), Some(6), None]), //SE
+
+Some([Some(1), None, None, None]), //BR
+
+Some([Some(0), None, None, None]), //KR
+
+Some([Some(1), None, None, None]), //RB
+
+Some([Some(2), Some(-1), None, None]), //SR
+
+None, //Y
+
+None, //ZR
+
+None, //NB
+
+None, //MO
+
+None, //TC
+
+None, //RU
+
+None, //RH
+
+None, //PD
+
+None, //AG
+
+None, //CD
+
+Some([Some(3), None, None, None]), //IN
+
+Some([Some(2), Some(4), None, None]), //SN
+
+Some([Some(3), Some(5), Some(7), None]), //SB
+
+Some([Some(2), Some(4), Some(6), None]), //TE
+
+Some([Some(1), Some(3), Some(5), None]), //I
+
+Some([Some(0), Some(2), Some(4), Some(6)]), //XE
+
+Some([Some(1), None, None, None]), //CS
+
+Some([Some(2), Some(-1), None, None]), //BA
+
+None, //LA
+
+None, //CE
+
+None, //PR
+
+None, //ND
+
+None, //PM
+
+None, //SM
+
+None, //EU
+
+None, //GD
+
+None, //TB
+
+None, //DY
+
+None, //HO
+
+None, //ER
+
+None, //TM
+
+None, //YB
+
+None, //LU
+
+None, //HF
+
+None, //TA
+
+None, //W
+
+None, //RE
+
+None, //OS
+
+None, //IR
+
+None, //PT
+
+None, //AU
+
+None, //HG
+
+Some([Some(3), None, None, None]), //TL
+
+Some([Some(2), Some(4), None, None]), //PB
+
+Some([Some(3), Some(5), Some(7), None]), //BI
+
+Some([Some(2), Some(4), Some(6), None]), //PO
+
+Some([Some(1), Some(3), Some(5), None]), //AT
+
+Some([Some(0), None, None, None]), //RN
+
+Some([Some(1), None, None, None]), //FR
+
+Some([Some(2), Some(-1), None, None]), //RA
+
+None, //AC
+
+None, //TH
+
+None, //PA
+
+None, //U
+
+None, //NP
+
+None, //PU
+
+None, //AM
+
+None, //CM
+
+None, //BK
+
+None, //CF
+
+None, //ES
+
+None, //FM
+
+None, //MD
+
+None, //NO
+
+None, //LR
+
+None, //RF
+
+None, //DB
+
+None, //SG
+
+None, //BH
+
+None, //HS
+
+None, //MT
+
+None, //DS
+
+None, //RG
+
+None, //CN
+
+None, //NH
+
+None, //FL
+
+None, //MC
+
+None, //LV
+
+None, //TS
+
+None, //OG
 ];
-}
 
 // This is a heuristic based on experience, and is not (officially) based on any scientific data yet, for transition metals this does not work well
 pub const MOST_COMMON_VALENCIES: [i8; 24] = [
@@ -447,250 +561,249 @@ pub const MOST_COMMON_VALENCIES: [i8; 24] = [
 // Taken from: https:// www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses
 // The first element is not used, but is included for completeness
 pub const MONOISOTOPIC_MASSES: [f64; 119] = [
-    0.00000000000, // Dummy value
-    1.00782503223, // H
-    3.0160293201,  // HE
-    6.0151228874,  // LI
-    9.012183065,   // BE
-    10.01293695,   // B
-    12.0000000,    // C
-    14.00307400443,// N
-    15.99491461957,// O
-    18.99840316273,// F
-    19.9924401762, // NE
-    22.989769282,  // NA
-    23.985041697,  // MG
-    26.98153853,   // AL
-    27.97692653465,// SI
-    30.97376199842,// P
-    31.9720711744, // S
-    34.968852682,  // CL
-    35.967545105,  // AR
-    38.9637064864, // K
-    39.962590863,  // CA
-    44.95590828,   // SC
-    45.95262772,   // TI
-    49.94715601,   // V
-    49.94604183,   // CR
-    54.93804391,   // MN
-    53.93960899,   // FE
-    58.93319429,   // CO
-    57.93534241,   // NI
-    62.92959772,   // CU
-    63.92914201,   // ZN
-    68.9255735,    // GA
-    69.92424875,   // GE
-    74.92159457,   // AS
-    73.922475934,  // SE
-    78.9183376,    // BR
-    77.92036494,   // KR
-    84.9117897379, // RB
-    83.9134191,    // SR
-    88.9058403,    // Y
-    89.9046977,    // ZR
-    92.906373,     // NB
-    91.90680796,   // MO
-    96.9063667,    // TC
-    95.90759025,   // RU
-    102.905498,    // RH
-    101.9056022,   // PD
-    106.9050916,   // AG
-    105.9064599,   // CD
-    112.90406184,  // IN
-    111.90482387,  // SN
-    120.903812,    // SB
-    119.9040593,   // TE
-    126.9044719,   // I
-    123.905892,    // XE
-    132.905451961, // CS
-    129.9063207,   // BA
-    137.9071149,   // LA
-    135.90712921,  // CE
-    140.9076576,   // PR
-    141.907729,    // ND
-    144.9127559,   // PM
-    143.9120065,   // SM
-    150.9198578,   // EU
-    151.9197995,   // GD
-    158.9253547,   // TB
-    155.9242847,   // DY
-    164.9303288,   // HO
-    161.9287884,   // ER
-    168.9342179,   // TM
-    167.9338896,   // YB
-    174.9407752,   // LU
-    173.9400461,   // HF
-    179.9474648,   // TA
-    179.9467108,   // W
-    184.9529545,   // RE
-    183.9524885,   // OS
-    190.9605893,   // IR
-    189.9599297,   // PT
-    196.96656879,  // AU
-    195.9658326,   // HG
-    202.9723446,   // TL
-    203.973044,    // PB
-    208.9803991,   // BI
-    208.9824308,   // PO
-    209.9871479,   // AT
-    210.9906011,   // RN
-    223.019736,    // FR
-    223.0185023,   // RA
-    227.0277523,   // AC
-    230.0331341,   // TH
-    231.0358842,   // PA
-    233.0396355,   // U
-    236.04657,     // NP
-    238.0495601,   // PU
-    241.0568293,   // AM
-    243.0613893,   // CM
-    247.0703073,   // BK
-    249.0748539,   // CF
-    252.08298,     // ES
-    257.0951061,   // FM
-    258.0984315,   // MD
-    259.10103,     // NO
-    262.10961,     // LR
-    267.12179,     // RF
-    268.12567,     // DB
-    271.13393,     // SG
-    272.13826,     // BH
-    270.13429,     // HS
-    276.15159,     // MT
-    281.16451,     // DS
-    280.16514,     // RG
-    285.17712,     // CN
-    284.17873,     // NH
-    289.19042,     // FL
-    288.19274,     // MC
-    293.20449,     // LV
-    292.20746,     // TS
-    294.21392,     // OG
+    0.00000000000,  // Dummy value
+    1.00782503223,  // H
+    3.0160293201,   // HE
+    6.0151228874,   // LI
+    9.012183065,    // BE
+    10.01293695,    // B
+    12.0000000,     // C
+    14.00307400443, // N
+    15.99491461957, // O
+    18.99840316273, // F
+    19.9924401762,  // NE
+    22.989769282,   // NA
+    23.985041697,   // MG
+    26.98153853,    // AL
+    27.97692653465, // SI
+    30.97376199842, // P
+    31.9720711744,  // S
+    34.968852682,   // CL
+    35.967545105,   // AR
+    38.9637064864,  // K
+    39.962590863,   // CA
+    44.95590828,    // SC
+    45.95262772,    // TI
+    49.94715601,    // V
+    49.94604183,    // CR
+    54.93804391,    // MN
+    53.93960899,    // FE
+    58.93319429,    // CO
+    57.93534241,    // NI
+    62.92959772,    // CU
+    63.92914201,    // ZN
+    68.9255735,     // GA
+    69.92424875,    // GE
+    74.92159457,    // AS
+    73.922475934,   // SE
+    78.9183376,     // BR
+    77.92036494,    // KR
+    84.9117897379,  // RB
+    83.9134191,     // SR
+    88.9058403,     // Y
+    89.9046977,     // ZR
+    92.906373,      // NB
+    91.90680796,    // MO
+    96.9063667,     // TC
+    95.90759025,    // RU
+    102.905498,     // RH
+    101.9056022,    // PD
+    106.9050916,    // AG
+    105.9064599,    // CD
+    112.90406184,   // IN
+    111.90482387,   // SN
+    120.903812,     // SB
+    119.9040593,    // TE
+    126.9044719,    // I
+    123.905892,     // XE
+    132.905451961,  // CS
+    129.9063207,    // BA
+    137.9071149,    // LA
+    135.90712921,   // CE
+    140.9076576,    // PR
+    141.907729,     // ND
+    144.9127559,    // PM
+    143.9120065,    // SM
+    150.9198578,    // EU
+    151.9197995,    // GD
+    158.9253547,    // TB
+    155.9242847,    // DY
+    164.9303288,    // HO
+    161.9287884,    // ER
+    168.9342179,    // TM
+    167.9338896,    // YB
+    174.9407752,    // LU
+    173.9400461,    // HF
+    179.9474648,    // TA
+    179.9467108,    // W
+    184.9529545,    // RE
+    183.9524885,    // OS
+    190.9605893,    // IR
+    189.9599297,    // PT
+    196.96656879,   // AU
+    195.9658326,    // HG
+    202.9723446,    // TL
+    203.973044,     // PB
+    208.9803991,    // BI
+    208.9824308,    // PO
+    209.9871479,    // AT
+    210.9906011,    // RN
+    223.019736,     // FR
+    223.0185023,    // RA
+    227.0277523,    // AC
+    230.0331341,    // TH
+    231.0358842,    // PA
+    233.0396355,    // U
+    236.04657,      // NP
+    238.0495601,    // PU
+    241.0568293,    // AM
+    243.0613893,    // CM
+    247.0703073,    // BK
+    249.0748539,    // CF
+    252.08298,      // ES
+    257.0951061,    // FM
+    258.0984315,    // MD
+    259.10103,      // NO
+    262.10961,      // LR
+    267.12179,      // RF
+    268.12567,      // DB
+    271.13393,      // SG
+    272.13826,      // BH
+    270.13429,      // HS
+    276.15159,      // MT
+    281.16451,      // DS
+    280.16514,      // RG
+    285.17712,      // CN
+    284.17873,      // NH
+    289.19042,      // FL
+    288.19274,      // MC
+    293.20449,      // LV
+    292.20746,      // TS
+    294.21392,      // OG
 ];
 
 // These values are simply based on the respective elements group in the periodic table
 pub const VALENCE_ELECTRONS: [u8; 119] = [
-0, // Dummy value
-1, // H
-2, // HE
-1, // LI
-2, // BE
-3, // B
-4, // C
-5, // N
-6, // O
-7, // F
-8, // NE
-1, // NA
-2, // MG
-3, // AL
-4, // SI
-5, // P
-6, // S
-7, // CL
-8, // AR
-1, // K
-2, // CA
-3, // SC
-4, // TI
-5, // V
-6, // CR
-7, // MN
-8, // FE
-9, // CO
-10, // NI
-11, // CU
-2, // ZN
-3, // GA
-4, // GE
-5, // AS
-6, // SE
-7, // BR
-8, // KR
-1, // RB
-2, // SR
-3, // Y
-4, // ZR
-5, // NB
-6, // MO
-7, // TC
-8, // RU
-9, // RH
-10,// PD
-11,// AG
-2, // CD
-3, // IN
-4, // SN
-5, // SB
-6, // TE
-7, // I
-8, // XE
-1, // CS
-2, // BA
-3, // LA
-4, // CE
-3, // PR
-4, // ND
-5, // PM
-6, // SM
-7, // EU
-8, // GD
-9, // TB
-10, // DY
-11, // HO
-12, // ER
-13, // TM
-14, // YB
-15, // LU
-4, // HF
-5, // TA
-6, // W
-7, // RE
-8, // OS
-9, // IR
-10, // PT
-11, // AU
-2, // HG
-3, // TL
-4, // PB
-5, // BI
-6, // PO
-7, // AT
-8, // RN
-1, // FR
-2, // RA
-3, // AC
-4, // TH
-3, // PA
-4, // U
-5, // NP
-6, // PU
-7, // AM
-8, // CM
-9, // BK
-10, // CF
-11, // ES
-12, // FM
-13, // MD
-14, // NO
-3, // LR
-4, // RF
-5, // DB
-6, // SG
-7, // BH
-8, // HS
-9, // MT
-10, // DS
-11, // RG
-12, // CN
-3, // NH
-4, // FL
-5, // MC
-6, // LV
-7, // TS
-8, // OG
+    0,  // Dummy value
+    1,  // H
+    2,  // HE
+    1,  // LI
+    2,  // BE
+    3,  // B
+    4,  // C
+    5,  // N
+    6,  // O
+    7,  // F
+    8,  // NE
+    1,  // NA
+    2,  // MG
+    3,  // AL
+    4,  // SI
+    5,  // P
+    6,  // S
+    7,  // CL
+    8,  // AR
+    1,  // K
+    2,  // CA
+    3,  // SC
+    4,  // TI
+    5,  // V
+    6,  // CR
+    7,  // MN
+    8,  // FE
+    9,  // CO
+    10, // NI
+    11, // CU
+    2,  // ZN
+    3,  // GA
+    4,  // GE
+    5,  // AS
+    6,  // SE
+    7,  // BR
+    8,  // KR
+    1,  // RB
+    2,  // SR
+    3,  // Y
+    4,  // ZR
+    5,  // NB
+    6,  // MO
+    7,  // TC
+    8,  // RU
+    9,  // RH
+    10, // PD
+    11, // AG
+    2,  // CD
+    3,  // IN
+    4,  // SN
+    5,  // SB
+    6,  // TE
+    7,  // I
+    8,  // XE
+    1,  // CS
+    2,  // BA
+    3,  // LA
+    4,  // CE
+    3,  // PR
+    4,  // ND
+    5,  // PM
+    6,  // SM
+    7,  // EU
+    8,  // GD
+    9,  // TB
+    10, // DY
+    11, // HO
+    12, // ER
+    13, // TM
+    14, // YB
+    15, // LU
+    4,  // HF
+    5,  // TA
+    6,  // W
+    7,  // RE
+    8,  // OS
+    9,  // IR
+    10, // PT
+    11, // AU
+    2,  // HG
+    3,  // TL
+    4,  // PB
+    5,  // BI
+    6,  // PO
+    7,  // AT
+    8,  // RN
+    1,  // FR
+    2,  // RA
+    3,  // AC
+    4,  // TH
+    3,  // PA
+    4,  // U
+    5,  // NP
+    6,  // PU
+    7,  // AM
+    8,  // CM
+    9,  // BK
+    10, // CF
+    11, // ES
+    12, // FM
+    13, // MD
+    14, // NO
+    3,  // LR
+    4,  // RF
+    5,  // DB
+    6,  // SG
+    7,  // BH
+    8,  // HS
+    9,  // MT
+    10, // DS
+    11, // RG
+    12, // CN
+    3,  // NH
+    4,  // FL
+    5,  // MC
+    6,  // LV
+    7,  // TS
+    8,  // OG
 ];
-
 
 pub const ATOMIC_SYMBOLS: [&str; 119] = [
     "None", "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S",
@@ -717,7 +830,7 @@ macro_rules! generate_match {
 }
 
 pub fn atomic_numbers(symbol: &str) -> Option<u8> {
-    generate_match!(symbol;  
+    generate_match!(symbol; 
    ("H" ,1),
    ("HE", 2),
    ("LI", 3),
@@ -823,7 +936,7 @@ pub fn atomic_numbers(symbol: &str) -> Option<u8> {
 
 // Electronegativities baused on the Pauling scale, scaled by a factor of 100 to avoid floating point errors
 //
-pub const ELECTRONEGATIVITIES_PAULING: [Option<u32>; 119] = [
+pub const ELECTRONEGATIVITIES_PAULING: [Option<u16>; 119] = [
     None,      // Dummy value
     Some(220), // H
     None,      // HE
@@ -945,7 +1058,7 @@ pub const ELECTRONEGATIVITIES_PAULING: [Option<u32>; 119] = [
     None,      // OG
 ];
 
-pub const ELECTRONEGATIVITIES_ALLEN: [Option<u32>; 119] = [
+pub const ELECTRONEGATIVITIES_ALLEN: [Option<u16>; 119] = [
     None,       // Dummy value
     Some(2300), // H
     Some(4160), // HE
@@ -1068,260 +1181,2087 @@ pub const ELECTRONEGATIVITIES_ALLEN: [Option<u32>; 119] = [
 ];
 
 // This list is taken from Wikipedia, and only includes the major oxidation states: https:// en.wikipedia.org/wiki/Oxidation_state#List_of_oxidation_states_of_the_elements
-lazy_static! {
-    pub static ref OXIDATION_STATES: [Option<Vec<i8>>;119] = [
-None, // Dummy value
-Some(vec![-1, 1]), // H
-Some(vec![0]), // HE
-Some(vec![1]), // LI
-Some(vec![2]), // BE
-Some(vec![3]), // B
-Some(vec![-4, -3, -2, -1, 0, 1, 2, 3, 4]), // C
-Some(vec![-3, 3, 5]), // N
-Some(vec![-2]), // O
-Some(vec![-1]), // F
-Some(vec![0]), // NE
-Some(vec![1]), // NA
-Some(vec![2]), // MG
-Some(vec![3]), // AL
-Some(vec![4]), // SI
-Some(vec![-3, 3, 5]), // P
-Some(vec![-2, 2, 4, 6]), // S
-Some(vec![-1, 1, 3, 5, 7]), // CL
-Some(vec![0]), // AR
-Some(vec![1]), // K
-Some(vec![2]), // CA
-Some(vec![3]), // SC
-Some(vec![2, 3, 4]), // TI
-Some(vec![2, 3, 4, 5]), // V
-Some(vec![2, 3, 6]), // CR
-Some(vec![2, 3, 4, 6, 7]), // MN
-Some(vec![2, 3]), // FE
-Some(vec![2, 3]), // CO
-Some(vec![2]), // NI
-Some(vec![1, 2]), // CU
-Some(vec![2]), // ZN
-Some(vec![3]), // GA
-Some(vec![2, 4]), // GE
-Some(vec![-3, 3, 5]), // AS
-Some(vec![-2, 2, 4, 6]), // SE
-Some(vec![-1, 1, 3, 5]), // BR
-Some(vec![0]), // KR
-Some(vec![1]), // RB
-Some(vec![2]), // SR
-Some(vec![3]), // Y
-Some(vec![4]), // ZR
-Some(vec![5]), // NB
-Some(vec![4, 6]), // MO
-Some(vec![4, 7]), // TC
-Some(vec![3, 4]), // RU
-Some(vec![3]), // RH
-Some(vec![0, 2, 4]), // PD
-Some(vec![1]), // AG
-Some(vec![2]), // CD
-Some(vec![3]), // IN
-Some(vec![2, 4]), // SN
-Some(vec![3, 5]), // SB
-Some(vec![-2, 2, 4, 6]), // TE
-Some(vec![-1, 1, 3, 5, 7]), // I
-Some(vec![0]), // XE
-Some(vec![1]), // CS
-Some(vec![2]), // BA
-Some(vec![3]), // LA
-Some(vec![3, 4]), // CE
-Some(vec![3]), // PR
-Some(vec![3]), // ND
-Some(vec![3]), // PM
-Some(vec![3]), // SM
-Some(vec![2, 3]), // EU
-Some(vec![3]), // GD
-Some(vec![3]), // TB
-Some(vec![3]), // DY
-Some(vec![3]), // HO
-Some(vec![3]), // ER
-Some(vec![3]), // TM
-Some(vec![3]), // YB
-Some(vec![3]), // LU
-Some(vec![4]), // HF
-Some(vec![5]), // TA
-Some(vec![4, 6]), // W
-Some(vec![3, 4, 7]), // RE
-Some(vec![2, 3, 4, 8]), // OS
-Some(vec![1, 3, 4]), // IR
-Some(vec![2, 4]), // PT
-Some(vec![1, 3]), // AU
-Some(vec![1, 2]), // HG
-Some(vec![1, 3]), // TL
-Some(vec![2, 4]), // PB
-Some(vec![3]), // BI
-Some(vec![-2, 2, 4]), // PO
-Some(vec![-1, 1]), // AT
-Some(vec![2]), // RN
-Some(vec![1]), // FR
-Some(vec![2]), // RA
-Some(vec![3]), // AC
-Some(vec![4]), // TH
-Some(vec![5]), // PA
-Some(vec![4, 6]), // U
-Some(vec![5]), // NP
-Some(vec![4]), // PU
-Some(vec![3]), // AM
-Some(vec![3]), // CM
-Some(vec![3]), // BK
-Some(vec![3]), // CF
-Some(vec![3]), // ES
-Some(vec![3]), // FM
-Some(vec![3]), // MD
-Some(vec![2]), // NO
-Some(vec![3]), // LR
-Some(vec![4]), // RF
-Some(vec![5]), // DB
-Some(vec![6]), // SG
-Some(vec![7]), // BH
-Some(vec![8]), // HS
-None, // MT
-None, // DS
-None, // RG
-Some(vec![2]), // CN
-None, // NH
-None, // FL
-None, // MC
-None, // LV
-None, // TS
-None, // OG
+pub const OXIDATION_STATES: [Option<[Option<i8>; 9]>; 119] = [
+    None, //Padding
+    Some([Some(-1), Some(1), None, None, None, None, None, None, None]), //H
+    Some([Some(0), None, None, None, None, None, None, None, None]), //HE
+    Some([Some(1), None, None, None, None, None, None, None, None]), //LI
+    Some([Some(2), None, None, None, None, None, None, None, None]), //BE
+    Some([Some(3), None, None, None, None, None, None, None, None]), //B
+    Some([
+        Some(-4),
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+    ]), //C
+    Some([
+        Some(-3),
+        Some(3),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //N
+    Some([Some(-2), None, None, None, None, None, None, None, None]), //O
+    Some([Some(-1), None, None, None, None, None, None, None, None]), //F
+    Some([Some(0), None, None, None, None, None, None, None, None]), //NE
+    Some([Some(1), None, None, None, None, None, None, None, None]), //NA
+    Some([Some(2), None, None, None, None, None, None, None, None]), //MG
+    Some([Some(3), None, None, None, None, None, None, None, None]), //AL
+    Some([Some(4), None, None, None, None, None, None, None, None]), //SI
+    Some([
+        Some(-3),
+        Some(3),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //P
+    Some([
+        Some(-2),
+        Some(2),
+        Some(4),
+        Some(6),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //S
+    Some([
+        Some(-1),
+        Some(1),
+        Some(3),
+        Some(5),
+        Some(7),
+        None,
+        None,
+        None,
+        None,
+    ]), //CL
+    Some([Some(0), None, None, None, None, None, None, None, None]), //AR
+    Some([Some(1), None, None, None, None, None, None, None, None]), //K
+    Some([Some(2), None, None, None, None, None, None, None, None]), //CA
+    Some([Some(3), None, None, None, None, None, None, None, None]), //SC
+    Some([
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //TI
+    Some([
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //V
+    Some([
+        Some(2),
+        Some(3),
+        Some(6),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //CR
+    Some([
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(6),
+        Some(7),
+        None,
+        None,
+        None,
+        None,
+    ]), //MN
+    Some([Some(2), Some(3), None, None, None, None, None, None, None]), //FE
+    Some([Some(2), Some(3), None, None, None, None, None, None, None]), //CO
+    Some([Some(2), None, None, None, None, None, None, None, None]), //NI
+    Some([Some(1), Some(2), None, None, None, None, None, None, None]), //CU
+    Some([Some(2), None, None, None, None, None, None, None, None]), //ZN
+    Some([Some(3), None, None, None, None, None, None, None, None]), //GA
+    Some([Some(2), Some(4), None, None, None, None, None, None, None]), //GE
+    Some([
+        Some(-3),
+        Some(3),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //AS
+    Some([
+        Some(-2),
+        Some(2),
+        Some(4),
+        Some(6),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //SE
+    Some([
+        Some(-1),
+        Some(1),
+        Some(3),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //BR
+    Some([Some(0), None, None, None, None, None, None, None, None]), //KR
+    Some([Some(1), None, None, None, None, None, None, None, None]), //RB
+    Some([Some(2), None, None, None, None, None, None, None, None]), //SR
+    Some([Some(3), None, None, None, None, None, None, None, None]), //Y
+    Some([Some(4), None, None, None, None, None, None, None, None]), //ZR
+    Some([Some(5), None, None, None, None, None, None, None, None]), //NB
+    Some([Some(4), Some(6), None, None, None, None, None, None, None]), //MO
+    Some([Some(4), Some(7), None, None, None, None, None, None, None]), //TC
+    Some([Some(3), Some(4), None, None, None, None, None, None, None]), //RU
+    Some([Some(3), None, None, None, None, None, None, None, None]), //RH
+    Some([
+        Some(0),
+        Some(2),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //PD
+    Some([Some(1), None, None, None, None, None, None, None, None]), //AG
+    Some([Some(2), None, None, None, None, None, None, None, None]), //CD
+    Some([Some(3), None, None, None, None, None, None, None, None]), //IN
+    Some([Some(2), Some(4), None, None, None, None, None, None, None]), //SN
+    Some([Some(3), Some(5), None, None, None, None, None, None, None]), //SB
+    Some([
+        Some(-2),
+        Some(2),
+        Some(4),
+        Some(6),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //TE
+    Some([
+        Some(-1),
+        Some(1),
+        Some(3),
+        Some(5),
+        Some(7),
+        None,
+        None,
+        None,
+        None,
+    ]), //I
+    Some([Some(0), None, None, None, None, None, None, None, None]), //XE
+    Some([Some(1), None, None, None, None, None, None, None, None]), //CS
+    Some([Some(2), None, None, None, None, None, None, None, None]), //BA
+    Some([Some(3), None, None, None, None, None, None, None, None]), //LA
+    Some([Some(3), Some(4), None, None, None, None, None, None, None]), //CE
+    Some([Some(3), None, None, None, None, None, None, None, None]), //PR
+    Some([Some(3), None, None, None, None, None, None, None, None]), //ND
+    Some([Some(3), None, None, None, None, None, None, None, None]), //PM
+    Some([Some(3), None, None, None, None, None, None, None, None]), //SM
+    Some([Some(2), Some(3), None, None, None, None, None, None, None]), //EU
+    Some([Some(3), None, None, None, None, None, None, None, None]), //GD
+    Some([Some(3), None, None, None, None, None, None, None, None]), //TB
+    Some([Some(3), None, None, None, None, None, None, None, None]), //DY
+    Some([Some(3), None, None, None, None, None, None, None, None]), //HO
+    Some([Some(3), None, None, None, None, None, None, None, None]), //ER
+    Some([Some(3), None, None, None, None, None, None, None, None]), //TM
+    Some([Some(3), None, None, None, None, None, None, None, None]), //YB
+    Some([Some(3), None, None, None, None, None, None, None, None]), //LU
+    Some([Some(4), None, None, None, None, None, None, None, None]), //HF
+    Some([Some(5), None, None, None, None, None, None, None, None]), //TA
+    Some([Some(4), Some(6), None, None, None, None, None, None, None]), //W
+    Some([
+        Some(3),
+        Some(4),
+        Some(7),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //RE
+    Some([
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(8),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //OS
+    Some([
+        Some(1),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //IR
+    Some([Some(2), Some(4), None, None, None, None, None, None, None]), //PT
+    Some([Some(1), Some(3), None, None, None, None, None, None, None]), //AU
+    Some([Some(1), Some(2), None, None, None, None, None, None, None]), //HG
+    Some([Some(1), Some(3), None, None, None, None, None, None, None]), //TL
+    Some([Some(2), Some(4), None, None, None, None, None, None, None]), //PB
+    Some([Some(3), None, None, None, None, None, None, None, None]), //BI
+    Some([
+        Some(-2),
+        Some(2),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //PO
+    Some([Some(-1), Some(1), None, None, None, None, None, None, None]), //AT
+    Some([Some(2), None, None, None, None, None, None, None, None]), //RN
+    Some([Some(1), None, None, None, None, None, None, None, None]), //FR
+    Some([Some(2), None, None, None, None, None, None, None, None]), //RA
+    Some([Some(3), None, None, None, None, None, None, None, None]), //AC
+    Some([Some(4), None, None, None, None, None, None, None, None]), //TH
+    Some([Some(5), None, None, None, None, None, None, None, None]), //PA
+    Some([Some(4), Some(6), None, None, None, None, None, None, None]), //U
+    Some([Some(5), None, None, None, None, None, None, None, None]), //NP
+    Some([Some(4), None, None, None, None, None, None, None, None]), //PU
+    Some([Some(3), None, None, None, None, None, None, None, None]), //AM
+    Some([Some(3), None, None, None, None, None, None, None, None]), //CM
+    Some([Some(3), None, None, None, None, None, None, None, None]), //BK
+    Some([Some(3), None, None, None, None, None, None, None, None]), //CF
+    Some([Some(3), None, None, None, None, None, None, None, None]), //ES
+    Some([Some(3), None, None, None, None, None, None, None, None]), //FM
+    Some([Some(3), None, None, None, None, None, None, None, None]), //MD
+    Some([Some(2), None, None, None, None, None, None, None, None]), //NO
+    Some([Some(3), None, None, None, None, None, None, None, None]), //LR
+    Some([Some(4), None, None, None, None, None, None, None, None]), //RF
+    Some([Some(5), None, None, None, None, None, None, None, None]), //DB
+    Some([Some(6), None, None, None, None, None, None, None, None]), //SG
+    Some([Some(7), None, None, None, None, None, None, None, None]), //BH
+    Some([Some(8), None, None, None, None, None, None, None, None]), //HS
+    None, //MT
+    None, //DS
+    None, //RG
+    Some([Some(2), None, None, None, None, None, None, None, None]), //CN
+    None, //NH
+    None, //FL
+    None, //MC
+    None, //LV
+    None, //TS
+    None, //OG
 ];
-}
 
 // This array provides all known oxidation states for each element based on the wikipedia entry
 // which lists many sources
-lazy_static! {
-    pub static ref OXIDATION_STATES_EXHAUSTIVE: [Option<Vec<i8>>;119] = [
-None, // Padding
-Some(vec![-1, 0, 1]), // H
-Some(vec![0]), // HE
-Some(vec![0, 1]), // LI
-Some(vec![0, 1, 2]), // BE
-Some(vec![-5, -1, 0, 1, 2, 3]), // B
-Some(vec![-4, -3, -2, -1, 0, 1, 2, 3, 4]), // C
-Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5]), // N
-Some(vec![-2, -1, 0, 1, 2]), // O
-Some(vec![-1, 0]), // F
-Some(vec![0]), // NE
-Some(vec![-1, 0, 1]), // NA
-Some(vec![0, 1, 2]), // MG
-Some(vec![-2, -1, 0, 1, 2, 3]), // AL
-Some(vec![-4, -3, -2, -1, 0, 1, 2, 3, 4]), // SI
-Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5]), // P
-Some(vec![-2, -1, 0, 1, 2, 3, 4, 5, 6]), // S
-Some(vec![-1, 0, 1, 2, 3, 4, 5, 6, 7]), // CL
-Some(vec![0]), // AR
-Some(vec![-1, 1]), // K
-Some(vec![1, 2]), // CA
-Some(vec![0, 1, 2, 3]), // SC
-Some(vec![-2, -1, 0, 1, 2, 3, 4]), // TI
-Some(vec![-3, -1, 0, 1, 2, 3, 4, 5]), // V
-Some(vec![-4, -2, -1, 0, 1, 2, 3, 4, 5, 6]), // CR
-Some(vec![-3, -1, 0, 1, 2, 3, 4, 5, 6, 7]), // MN
-Some(vec![-4, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7]), // FE
-Some(vec![-3, -1, 0, 1, 2, 3, 4, 5]), // CO
-Some(vec![-2, -1, 0, 1, 2, 3, 4]), // NI
-Some(vec![-2, 0, 1, 2, 3, 4]), // CU
-Some(vec![-2, 0, 1, 2]), // ZN
-Some(vec![-5, -4, -3, -2, -1, 0, 1, 2, 3]), // GA
-Some(vec![-4, -3, -2, -1, 0, 1, 2, 3, 4]), // GE
-Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5]), // AS
-Some(vec![-2, -1, 0, 1, 2, 3, 4, 5, 6]), // SE
-Some(vec![-1, 0, 1, 2, 3, 4, 5, 7]), // BR
-Some(vec![0, 1, 2]), // KR
-Some(vec![-1, 1]), // RB
-Some(vec![1, 2]), // SR
-Some(vec![0, 1, 2, 3]), // Y
-Some(vec![-2, 0, 1, 2, 3, 4]), // ZR
-Some(vec![-3, -1, 0, 1, 2, 3, 4, 5]), // NB
-Some(vec![-4, -2, -1, 0, 1, 2, 3, 4, 5, 6]), // MO
-Some(vec![-1, 0, 1, 2, 3, 4, 5, 6, 7]), // TC
-Some(vec![-4, -2, 0, 1, 2, 3, 4, 5, 6, 7, 8]), // RU
-Some(vec![-3, -1, 0, 1, 2, 3, 4, 5, 6, 7]), // RH
-Some(vec![0, 1, 2, 3, 4, 5]), // PD
-Some(vec![-2, -1, 0, 1, 2, 3]), // AG
-Some(vec![-2, 1, 2]), // CD
-Some(vec![-5, -2, -1, 0, 1, 2, 3]), // IN
-Some(vec![-4, -3, -2, -1, 0, 1, 2, 3, 4]), // SN
-Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5]), // SB
-Some(vec![-2, -1, 0, 1, 2, 3, 4, 5, 6]), // TE
-Some(vec![-1, 0, 1, 2, 3, 4, 5, 6, 7]), // I
-Some(vec![0, 2, 4, 6, 8]), // XE
-Some(vec![-1, 1]), // CS
-Some(vec![1, 2]), // BA
-Some(vec![0, 1, 2, 3]), // LA
-Some(vec![2, 3, 4]), // CE
-Some(vec![0, 1, 2, 3, 4, 5]), // PR
-Some(vec![0, 2, 3, 4]), // ND
-Some(vec![2, 3]), // PM
-Some(vec![0, 1, 2, 3]), // SM
-Some(vec![0, 2, 3]), // EU
-Some(vec![0, 1, 2, 3]), // GD
-Some(vec![0, 1, 2, 3, 4]), // TB
-Some(vec![0, 2, 3, 4]), // DY
-Some(vec![0, 2, 3]), // HO
-Some(vec![0, 2, 3]), // ER
-Some(vec![0, 1, 2, 3]), // TM
-Some(vec![0, 1, 2, 3]), // YB
-Some(vec![0, 2, 3]), // LU
-Some(vec![-2, 0, 1, 2, 3, 4]), // HF
-Some(vec![-3, -1, 0, 1, 2, 3, 4, 5]), // TA
-Some(vec![-4, -2, -1, 0, 1, 2, 3, 4, 5, 6]), // W
-Some(vec![-3, -1, 0, 1, 2, 3, 4, 5, 6, 7]), // RE
-Some(vec![-4, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8]), // OS
-Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]), // IR
-Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5, 6]), // PT
-Some(vec![-3, -2, -1, 0, 1, 2, 3, 5]), // AU
-Some(vec![-2, 1, 2]), // HG
-Some(vec![-5, -2, -1, 1, 2, 3]), // TL
-Some(vec![-4, -2, -1, 0, 1, 2, 3, 4]), // PB
-Some(vec![-3, -2, -1, 0, 1, 2, 3, 4, 5]), // BI
-Some(vec![-2, 2, 4, 5, 6]), // PO
-Some(vec![-1, 1, 3, 5, 7]), // AT
-Some(vec![2, 6]), // RN
-Some(vec![1]), // FR
-Some(vec![2]), // RA
-Some(vec![3]), // AC
-Some(vec![-1, 1, 2, 3, 4]), // TH
-Some(vec![2, 3, 4, 5]), // PA
-Some(vec![-1, 1, 2, 3, 4, 5, 6]), // U
-Some(vec![2, 3, 4, 5, 6, 7]), // NP
-Some(vec![2, 3, 4, 5, 6, 7, 8]), // PU
-Some(vec![2, 3, 4, 5, 6, 7]), // AM
-Some(vec![3, 4, 5, 6]), // CM
-Some(vec![2, 3, 4, 5]), // BK
-Some(vec![2, 3, 4, 5]), // CF
-Some(vec![2, 3, 4]), // ES
-Some(vec![2, 3]), // FM
-Some(vec![2, 3]), // MD
-Some(vec![2, 3]), // NO
-Some(vec![3]), // LR
-Some(vec![4]), // RF
-Some(vec![5]), // DB
-Some(vec![0, 6]), // SG
-Some(vec![7]), // BH
-Some(vec![8]), // HS
-None, // MT
-None, // DS
-None, // RG
-Some(vec![2]), // CN
-None, // NH
-None, // FL
-None, // MC
-None, // LV
-None, // TS
-None, // OG
+pub const OXIDATION_STATES_EXHAUSTIVE: [Option<[Option<i8>; 13]>; 119] = [
+    None, //Padding
+    Some([
+        Some(-1),
+        Some(0),
+        Some(1),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //H
+    Some([
+        Some(0),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //HE
+    Some([
+        Some(0),
+        Some(1),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //LI
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //BE
+    Some([
+        Some(-5),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //B
+    Some([
+        Some(-4),
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+    ]), //C
+    Some([
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+    ]), //N
+    Some([
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //O
+    Some([
+        Some(-1),
+        Some(0),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //F
+    Some([
+        Some(0),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //NE
+    Some([
+        Some(-1),
+        Some(0),
+        Some(1),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //NA
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //MG
+    Some([
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //AL
+    Some([
+        Some(-4),
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+    ]), //SI
+    Some([
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+    ]), //P
+    Some([
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        None,
+        None,
+        None,
+        None,
+    ]), //S
+    Some([
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        None,
+        None,
+        None,
+        None,
+    ]), //CL
+    Some([
+        Some(0),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //AR
+    Some([
+        Some(-1),
+        Some(1),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //K
+    Some([
+        Some(1),
+        Some(2),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //CA
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //SC
+    Some([
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //TI
+    Some([
+        Some(-3),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //V
+    Some([
+        Some(-4),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        None,
+        None,
+        None,
+    ]), //CR
+    Some([
+        Some(-3),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        None,
+        None,
+        None,
+    ]), //MN
+    Some([
+        Some(-4),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        None,
+        None,
+    ]), //FE
+    Some([
+        Some(-3),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //CO
+    Some([
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //NI
+    Some([
+        Some(-2),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //CU
+    Some([
+        Some(-2),
+        Some(0),
+        Some(1),
+        Some(2),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //ZN
+    Some([
+        Some(-5),
+        Some(-4),
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+    ]), //GA
+    Some([
+        Some(-4),
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+    ]), //GE
+    Some([
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+    ]), //AS
+    Some([
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        None,
+        None,
+        None,
+        None,
+    ]), //SE
+    Some([
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(7),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //BR
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //KR
+    Some([
+        Some(-1),
+        Some(1),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //RB
+    Some([
+        Some(1),
+        Some(2),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //SR
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //Y
+    Some([
+        Some(-2),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //ZR
+    Some([
+        Some(-3),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //NB
+    Some([
+        Some(-4),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        None,
+        None,
+        None,
+    ]), //MO
+    Some([
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        None,
+        None,
+        None,
+        None,
+    ]), //TC
+    Some([
+        Some(-4),
+        Some(-2),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        Some(8),
+        None,
+        None,
+    ]), //RU
+    Some([
+        Some(-3),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        None,
+        None,
+        None,
+    ]), //RH
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //PD
+    Some([
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //AG
+    Some([
+        Some(-2),
+        Some(1),
+        Some(2),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //CD
+    Some([
+        Some(-5),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //IN
+    Some([
+        Some(-4),
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+    ]), //SN
+    Some([
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+    ]), //SB
+    Some([
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        None,
+        None,
+        None,
+        None,
+    ]), //TE
+    Some([
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        None,
+        None,
+        None,
+        None,
+    ]), //I
+    Some([
+        Some(0),
+        Some(2),
+        Some(4),
+        Some(6),
+        Some(8),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //XE
+    Some([
+        Some(-1),
+        Some(1),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //CS
+    Some([
+        Some(1),
+        Some(2),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //BA
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //LA
+    Some([
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //CE
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //PR
+    Some([
+        Some(0),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //ND
+    Some([
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //PM
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //SM
+    Some([
+        Some(0),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //EU
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //GD
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //TB
+    Some([
+        Some(0),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //DY
+    Some([
+        Some(0),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //HO
+    Some([
+        Some(0),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //ER
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //TM
+    Some([
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //YB
+    Some([
+        Some(0),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //LU
+    Some([
+        Some(-2),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //HF
+    Some([
+        Some(-3),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //TA
+    Some([
+        Some(-4),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        None,
+        None,
+        None,
+    ]), //W
+    Some([
+        Some(-3),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        None,
+        None,
+        None,
+    ]), //RE
+    Some([
+        Some(-4),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        Some(8),
+        None,
+    ]), //OS
+    Some([
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        Some(8),
+        Some(9),
+    ]), //IR
+    Some([
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        None,
+        None,
+        None,
+    ]), //PT
+    Some([
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //AU
+    Some([
+        Some(-2),
+        Some(1),
+        Some(2),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //HG
+    Some([
+        Some(-5),
+        Some(-2),
+        Some(-1),
+        Some(1),
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //TL
+    Some([
+        Some(-4),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //PB
+    Some([
+        Some(-3),
+        Some(-2),
+        Some(-1),
+        Some(0),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+    ]), //BI
+    Some([
+        Some(-2),
+        Some(2),
+        Some(4),
+        Some(5),
+        Some(6),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //PO
+    Some([
+        Some(-1),
+        Some(1),
+        Some(3),
+        Some(5),
+        Some(7),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //AT
+    Some([
+        Some(2),
+        Some(6),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //RN
+    Some([
+        Some(1),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //FR
+    Some([
+        Some(2),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //RA
+    Some([
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //AC
+    Some([
+        Some(-1),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //TH
+    Some([
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //PA
+    Some([
+        Some(-1),
+        Some(1),
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //U
+    Some([
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //NP
+    Some([
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        Some(8),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //PU
+    Some([
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        Some(7),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //AM
+    Some([
+        Some(3),
+        Some(4),
+        Some(5),
+        Some(6),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //CM
+    Some([
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //BK
+    Some([
+        Some(2),
+        Some(3),
+        Some(4),
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //CF
+    Some([
+        Some(2),
+        Some(3),
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //ES
+    Some([
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //FM
+    Some([
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //MD
+    Some([
+        Some(2),
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //NO
+    Some([
+        Some(3),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //LR
+    Some([
+        Some(4),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //RF
+    Some([
+        Some(5),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //DB
+    Some([
+        Some(0),
+        Some(6),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //SG
+    Some([
+        Some(7),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //BH
+    Some([
+        Some(8),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //HS
+    None, //MT
+    None, //DS
+    None, //RG
+    Some([
+        Some(2),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    ]), //CN
+    None, //NH
+    None, //FL
+    None, //MC
+    None, //LV
+    None, //TS
+    None, //OG
 ];
-}
 
+#[derive(Clone, Copy)]
 pub struct Isotope {
     pub mass: f64,
     pub abundance: f64,
 }
+
+pub struct IsotopeIter {
+    isotopes: [Option<Isotope>; 4],
+    index: usize,
+}
+
+impl IsotopeIter {
+    pub fn new(isotopes: [Option<Isotope>; 4]) -> IsotopeIter {
+        IsotopeIter { isotopes, index: 0 }
+    }
+}
+
+impl Iterator for IsotopeIter {
+    type Item = Isotope;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        while self.index < self.isotopes.len() {
+            if let Some(isotope) = &self.isotopes[self.index] {
+                self.index += 1;
+                return Some(*isotope);
+            }
+            self.index += 1;
+        }
+        None
+    }
+}
+
+pub struct OxidationStateIter {
+    oxidation_states: [Option<i8>; 9],
+    index: usize,
+}
+
+impl OxidationStateIter {
+    pub fn new(oxidation_states: [Option<i8>; 9]) -> OxidationStateIter {
+        OxidationStateIter {
+            oxidation_states,
+            index: 0,
+        }
+    }
+}
+
+impl Iterator for OxidationStateIter {
+    type Item = i8;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        while self.index < self.oxidation_states.len() {
+            if let Some(oxidation_state) = self.oxidation_states[self.index] {
+                self.index += 1;
+                return Some(oxidation_state);
+            }
+            self.index += 1;
+        }
+        None
+    }
+}
+
+pub struct OxidationStateExhaustiveIter {
+    oxidation_states: [Option<i8>; 13],
+    index: usize,
+}
+
+impl OxidationStateExhaustiveIter {
+    pub fn new(oxidation_states: [Option<i8>; 13]) -> OxidationStateExhaustiveIter {
+        OxidationStateExhaustiveIter {
+            oxidation_states,
+            index: 0,
+        }
+    }
+}
+
+impl Iterator for OxidationStateExhaustiveIter {
+    type Item = i8;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        while self.index < self.oxidation_states.len() {
+            if let Some(oxidation_state) = self.oxidation_states[self.index] {
+                self.index += 1;
+                return Some(oxidation_state);
+            }
+            self.index += 1;
+        }
+        None
+    }
+}
+
+struct ValencyIter {
+    valencies: [Option<i8>; 4],
+    index: usize,
+}
+
+impl ValencyIter {
+    pub fn new(valencies: [Option<i8>; 4]) -> ValencyIter {
+        ValencyIter {
+            valencies,
+            index: 0,
+        }
+    }
+}
+
+impl Iterator for ValencyIter {
+    type Item = i8;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        while self.index < self.valencies.len() {
+            if let Some(valency) = self.valencies[self.index] {
+                self.index += 1;
+                return Some(valency);
+            }
+            self.index += 1;
+        }
+        None
+    }
+}
+
 
 // This is to shorten the isotopes array
 const fn iso(mass: f64, abundance: f64) -> Isotope {
@@ -1771,3 +3711,96 @@ pub const ISOTOPES: [[Option<Isotope>; 4]; 119] = [
     [None, None, None, None], // TS
     [None, None, None, None], // OG
 ];
+
+trait AtomProperties {
+    fn atomic_number(&self) -> Option<u8>;
+    fn atomic_symbol(&self) -> Option<&str>;
+    fn monoisotopic_mass(&self) -> Option<f64>;
+    fn standard_atomic_weight(&self) -> Option<f64> {
+        self.atomic_number()
+            .and_then(|n| STANDARD_ATOMIC_WEIGHTS.get(n as usize).copied())?
+    }
+    /// The Pauling electronegativity of the element
+    /// (https://en.wikipedia.org/wiki/Electronegativities_of_the_elements_(data_page))
+    /// The values are scaled by a factor of 100 to avoid floating point errors
+    /// This means hydrogen has an electronegativity of 100
+    /// The return type was chosen to be u16 as it is the smallest integer type that can hold all the values
+    fn electronegativity(&self) -> Option<u16> {
+        self.atomic_number()
+            .and_then(|n| ELECTRONEGATIVITIES_PAULING.get(n as usize).copied())?
+    }
+    /// The Allen electronegativity of the element
+    /// (https://en.wikipedia.org/wiki/Electronegativities_of_the_elements_(data_page))
+    /// The values are scaled by a factor of 100 to avoid floating point errors
+    /// This means hydrogen has an electronegativity of 100
+    /// The return type was chosen to be u16 as it is the smallest integer type that can hold all the values
+    fn electronegativity_allen(&self) -> Option<u16> {
+        self.atomic_number()
+            .and_then(|n| ELECTRONEGATIVITIES_ALLEN.get(n as usize).copied())?
+    }
+    fn is_valid_element(&self) -> bool {
+        self.atomic_number().is_some()
+    }
+    /// This function returns the typical oxidation states of the element
+    /// The values are sorted in increasing order
+    /// For an exhaustive list of oxidation states use the `oxidation_states_exhaustive` function
+    fn oxidation_states(&self) -> Option<OxidationStateIter> {
+        self.atomic_number().map(|n| {
+            let Some(oxidation_states) = OXIDATION_STATES[n as usize] else {
+                return None;
+            };
+            Some(OxidationStateIter::new(oxidation_states))
+        })?
+    }
+    fn oxidation_states_exhaustive(&self) -> Option<OxidationStateExhaustiveIter> {
+        self.atomic_number().map(|n| {
+            let Some(oxidation_states) = OXIDATION_STATES_EXHAUSTIVE[n as usize] else {
+                return None;
+            };
+            Some(OxidationStateExhaustiveIter::new(oxidation_states))
+        })?
+    }
+    fn isotopes(&self) -> Option<IsotopeIter> {
+        self.atomic_number().map(|n| {
+            let isotopes = ISOTOPES[n as usize];
+            IsotopeIter::new(isotopes)
+        })
+    }
+    fn valencies(&self) -> Option<ValencyIter> {
+        self.atomic_number().map(|n| {
+            let Some(valencies) = VALENCIES[n as usize] else {
+                return None;
+            };
+            Some(ValencyIter::new(valencies))
+        })?
+    }
+}
+
+impl AtomProperties for &str {
+    fn atomic_number(&self) -> Option<u8> {
+        atomic_numbers(self)
+    }
+    fn atomic_symbol(&self) -> Option<&str> {
+        Some(self)
+    }
+    fn monoisotopic_mass(&self) -> Option<f64> {
+        atomic_numbers(self).and_then(|n| MONOISOTOPIC_MASSES.get(n as usize).copied())
+    }
+}
+
+// Can't make this generic due to the &str impl
+impl AtomProperties for u8 {
+    fn atomic_number(&self) -> Option<u8> {
+        if *self < 1 || *self > 118 {
+            None
+        } else {
+            Some(*self)
+        }
+    }
+    fn atomic_symbol(&self) -> Option<&str> {
+        ATOMIC_SYMBOLS.get(*self as usize).copied()
+    }
+    fn monoisotopic_mass(&self) -> Option<f64> {
+        MONOISOTOPIC_MASSES.get(*self as usize).copied()
+    }
+}
