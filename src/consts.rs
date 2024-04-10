@@ -935,7 +935,10 @@ pub fn atomic_numbers(symbol: &str) -> Option<u8> {
 }
 
 // Electronegativities baused on the Pauling scale, scaled by a factor of 100 to avoid floating point errors
-//
+// Sources:
+// L. Pauling, The Nature of the Chemical Bond, Cornell Univ., USA, 3rd ed., 1960.
+// Allred, A. Louis. "Electronegativity values from thermochemical data." Journal of inorganic and nuclear chemistry 17.3-4 (1961): 215-221.
+// Elements 95-102 are based on the work of J. E. Huheey, E. A. Keiter, and R. L. Keiter in their book "Inorganic Chemistry: Principles of Structure and Reactivity"
 pub const ELECTRONEGATIVITIES_PAULING: [Option<u16>; 119] = [
     None,      // Dummy value
     Some(220), // H
@@ -1023,8 +1026,8 @@ pub const ELECTRONEGATIVITIES_PAULING: [Option<u16>; 119] = [
     Some(202), // BI
     Some(200), // PO
     Some(220), // AT
-    None,      // RN
-    None,      // FR
+    Some(220), // RN
+    Some(79),  // FR
     Some(90),  // RA
     Some(110), // AC
     Some(130), // TH
@@ -1040,7 +1043,7 @@ pub const ELECTRONEGATIVITIES_PAULING: [Option<u16>; 119] = [
     Some(130), // FM
     Some(130), // MD
     Some(130), // NO
-    None,      // LR
+    Some(130), // LR
     None,      // RF
     None,      // DB
     None,      // SG
@@ -3712,7 +3715,7 @@ pub const ISOTOPES: [[Option<Isotope>; 4]; 119] = [
     [None, None, None, None], // OG
 ];
 
-pub trait AtomProperties {
+pub trait ElementProperties {
     fn atomic_number(&self) -> Option<u8>;
     fn atomic_symbol(&self) -> Option<&str>;
     fn monoisotopic_mass(&self) -> Option<f64>;
@@ -3731,8 +3734,6 @@ pub trait AtomProperties {
     }
     /// The Allen electronegativity of the element
     /// (https://en.wikipedia.org/wiki/Electronegativities_of_the_elements_(data_page))
-    /// The values are scaled by a factor of 100 to avoid floating point errors
-    /// This means hydrogen has an electronegativity of 100
     /// The return type was chosen to be u16 as it is the smallest integer type that can hold all the values
     fn electronegativity_allen(&self) -> Option<u16> {
         self.atomic_number()
@@ -3774,9 +3775,14 @@ pub trait AtomProperties {
             Some(ValencyIter::new(valencies))
         })?
     }
+    fn covalent_radius(&self) -> Option<f64> {
+        self.atomic_number()
+            .and_then(|n| COVALENT_RADII.get(n as usize).copied())
+    }
+
 }
 
-impl AtomProperties for &str {
+impl ElementProperties for &str {
     fn atomic_number(&self) -> Option<u8> {
         atomic_numbers(self)
     }
@@ -3789,7 +3795,7 @@ impl AtomProperties for &str {
 }
 
 // Can't make this generic due to the &str impl
-impl AtomProperties for u8 {
+impl ElementProperties for u8 {
     fn atomic_number(&self) -> Option<u8> {
         if *self < 1 || *self > 118 {
             None
