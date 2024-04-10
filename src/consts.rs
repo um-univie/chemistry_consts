@@ -3233,13 +3233,13 @@ impl Iterator for OxidationStateExhaustiveIter {
     }
 }
 
-struct ValencyIter {
+pub struct ValencyIter {
     valencies: [Option<i8>; 4],
     index: usize,
 }
 
 impl ValencyIter {
-    pub fn new(valencies: [Option<i8>; 4]) -> ValencyIter {
+    fn new(valencies: [Option<i8>; 4]) -> ValencyIter {
         ValencyIter {
             valencies,
             index: 0,
@@ -3712,7 +3712,7 @@ pub const ISOTOPES: [[Option<Isotope>; 4]; 119] = [
     [None, None, None, None], // OG
 ];
 
-trait AtomProperties {
+pub trait AtomProperties {
     fn atomic_number(&self) -> Option<u8>;
     fn atomic_symbol(&self) -> Option<&str>;
     fn monoisotopic_mass(&self) -> Option<f64>;
