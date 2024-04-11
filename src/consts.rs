@@ -530,34 +530,6 @@ None, //TS
 None, //OG
 ];
 
-// This is a heuristic based on experience, and is not (officially) based on any scientific data yet, for transition metals this does not work well
-pub const MOST_COMMON_VALENCIES: [i8; 24] = [
-    0, // Dummy value
-    1, // H
-    0, // HE
-    1, // LI
-    2, // BE
-    3, // B
-    4, // C
-    3, // N
-    2, // O
-    1, // F
-    0, // NE
-    1, // NA
-    2, // MG
-    3, // AL
-    4, // SI
-    3, // P
-    2, // S
-    1, // CL
-    0, // AR
-    1, // K
-    2, // CA
-    3, // SC
-    4, // TI
-    5, // V
-];
-
 // Taken from: https:// www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses
 // The first element is not used, but is included for completeness
 pub const MONOISOTOPIC_MASSES: [f64; 119] = [
@@ -841,6 +813,17 @@ pub fn atomic_numbers(symbol: &str) -> Option<u8> {
    ( "O" ,8),
    ( "F" ,9),
    ( "NE", 10),
+("NA", 11),
+   ( "MG", 12),
+   ( "AL", 13),
+   ( "SI", 14),
+   ( "P" , 15),
+   ( "S" , 16),
+   ( "CL", 17),
+   ( "AR", 18),
+   ( "K" , 19),
+   ( "CA", 20),
+   ( "SC", 21),
    ( "TI", 22),
    ( "V" ,23),
    ( "CR", 24),
