@@ -1,7 +1,7 @@
 // Physical constants TODO: Add sources
-// https://www.physics.nist.gov/cgi-bin/cuu/Value?eshbar|search_for=elecmag_in!
+// <https://www.physics.nist.gov/cgi-bin/cuu/Value?eshbar|search_for=elecmag_in!>
 // Physicochemical constants
-// https://www.physics.nist.gov/cgi-bin/cuu/Value?na|search_for=physchem_in!
+// <https://www.physics.nist.gov/cgi-bin/cuu/Value?na|search_for=physchem_in!>
 pub const AVOGADRO: f64 = 6.022_140_76e23; // mol^-1
 pub const BOLTZMANN: f64 = 1.380_649e-23; // J K^-1 pub const GAS_CONSTANT: f64 = 8.31446261815324; // J K^-1 mol^-1 (Molar gas constant) pub const MOLAR_VOLUME: f64 = 22.413_969_9e-3; // m^3 mol^-1 (Molar volume of an ideal gas at 0°C and 1 atm)
 pub const MOLAR_MASS: f64 = 0.999_999_999_65; // kg mol^-1 (Molar mass of a substance)
@@ -9,7 +9,7 @@ pub const MOLAR_PLANCK: f64 = 3.990_312_71e-10; // J s mol^-1 (Molar Planck cons
 pub const AMU: f64 = 1.660_539_066_60e-27; // kg
 
 // Atomic constants
-// https:// www.physics.nist.gov/cgi-bin/cuu/Value?bohrrada0|search_for=atomnuc!
+// <https:// www.physics.nist.gov/cgi-bin/cuu/Value?bohrrada0|search_for=atomnuc!>
 pub const HARTREE: f64 = 4.359_744_722_207_1; // eV
 pub const HARTREE_EV: f64 = 27.211_386_245_988; // eV
 pub const BOHR_MAGNETON: f64 = 9.274_009_994_57e-24; // J T^-1
@@ -19,8 +19,9 @@ pub const PROTON_MASS: f64 = 1.672_621_923_69e-27; // kg
 pub const ELECTRON_MASS: f64 = 9.109_383_701_5e-31; // kg
 pub const FINE_STRUCTURE: f64 = 7.297_352_569_3e-3; // Dimensionless
 pub const RYDBERG: f64 = 10_973_731.568_160; // m^-1
-                                             // Fundamental physical constants
-                                             // https:// physics.nist.gov/cgi-bin/cuu/Value?c|search_for=universal_in!
+
+// Fundamental physical constants
+// <https:// physics.nist.gov/cgi-bin/cuu/Value?c|search_for=universal_in!>
 pub const PLANCK: f64 = 6.626_070_15e-34; // J s
 pub const HBAR: f64 = 1.0545718e-34; // J s reduced Planck constant
 pub const PLANCK_LENGTH: f64 = 1.616255e-35; // m
@@ -29,8 +30,6 @@ pub const PLANCK_TIME: f64 = 5.391247e-44; // s
 pub const SPEED_OF_LIGHT: f64 = 299_792_458.0; // m s^-1
 pub const VACUUM_PERMITTIVITY: f64 = 8.854_187_812_8e-12; // F m^-1
 pub const VACUUM_PERMEABILITY: f64 = 1.256_637_062_12e-6; // N A^-2
-pub const NEWTON: f64 = 6.674_30E-11; // m^3 kg^-1 s^-2
-                                      // Earth's gravity
 pub const STANDARD_GRAVITY: f64 = 9.806_65; // m s^-2
 pub const ELEMENTARY_CHARGE: f64 = 1.602_176_634e-19; // C (Electric charge of a single electron)
 pub const ELECTRON_VOLT: f64 = 1.602_176_634e-19; // J
@@ -39,7 +38,7 @@ pub const COULOMB: f64 = 8.987_551_787_368_176e9; // N m^2 C^-2
 pub const CALORIE: f64 = 4.184; // J
 pub const ATMOSPHERE: f64 = 101_325.0; // Pa
 
-// The values are taken from: https:// physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&isotype=some
+// The values are taken from: <https:// physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&isotype=some
 // The padding is necessary to make the array index match the atomic number
 // Some elements are not stable and therefore do not have a standard atomic weight
 pub const STANDARD_ATOMIC_WEIGHTS: [Option<f64>; 119] = [
@@ -165,8 +164,8 @@ pub const STANDARD_ATOMIC_WEIGHTS: [Option<f64>; 119] = [
 ];
 
 // This array represent the covalent radii of the elements in angstroms (Å) only single bond radii are used as they are the largest and therefore most restrictive
-// The values up to CM are taken from:https:// doi.org/10.1002/chem.200800987
-// The values from CF to OG are taken from: https:// en.wikipedia.org/wiki/Atomic_radii_of_the_elements_(data_page)
+// The values up to CM are taken from: <https:// doi.org/10.1002/chem.200800987>
+// The values from CF to OG are taken from: <https:// en.wikipedia.org/wiki/Atomic_radii_of_the_elements_(data_page)>
 pub const COVALENT_RADII: [f64; 119] = [
     0.0,  // Dummy value
     0.31, // H
@@ -289,7 +288,8 @@ pub const COVALENT_RADII: [f64; 119] = [
     1.57, // OG
 ];
 
-// The following values were taken from rdkit and are subject to change (Source: https://raw.githubusercontent.com/rdkit/rdkit/9e1dbd2f336b8c381d4e7ef8d8ce8b9641ec3bc8/Code/GraphMol/atomic_data.cpp)
+// The following values were taken from rdkit and are subject to change
+// Source: <https://raw.githubusercontent.com/rdkit/rdkit/9e1dbd2f336b8c381d4e7ef8d8ce8b9641ec3bc8/Code/GraphMol/atomic_data.cpp>
 pub const VALENCIES: [Option<[Option<i8>;4]>; 119] = [
 None, //Padding
 
@@ -530,7 +530,7 @@ None, //TS
 None, //OG
 ];
 
-// Taken from: https:// www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses
+// Taken from: <https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses>
 // The first element is not used, but is included for completeness
 pub const MONOISOTOPIC_MASSES: [f64; 119] = [
     0.00000000000,  // Dummy value
@@ -1044,6 +1044,7 @@ pub const ELECTRONEGATIVITIES_PAULING: [Option<u16>; 119] = [
     None,      // OG
 ];
 
+// TODO add references
 pub const ELECTRONEGATIVITIES_ALLEN: [Option<u16>; 119] = [
     None,       // Dummy value
     Some(2300), // H
@@ -1166,7 +1167,7 @@ pub const ELECTRONEGATIVITIES_ALLEN: [Option<u16>; 119] = [
     None,       // OG
 ];
 
-// This list is taken from Wikipedia, and only includes the major oxidation states: https:// en.wikipedia.org/wiki/Oxidation_state#List_of_oxidation_states_of_the_elements
+// This list is taken from Wikipedia, and only includes the major oxidation states: <https:// en.wikipedia.org/wiki/Oxidation_state#List_of_oxidation_states_of_the_elements>
 pub const OXIDATION_STATES: [Option<[Option<i8>; 9]>; 119] = [
     None, //Padding
     Some([Some(-1), Some(1), None, None, None, None, None, None, None]), //H
@@ -3253,7 +3254,7 @@ impl Iterator for ValencyIter {
 const fn iso(mass: f64, abundance: f64) -> Isotope {
     Isotope { mass, abundance }
 }
-// Taken from: https:// physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&all=all&ascii=ascii&isotype=some
+// Taken from: <https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&all=all&ascii=ascii&isotype=some>
 // Zero padding is used to make the array index match the atomic number
 pub const ISOTOPES: [[Option<Isotope>; 4]; 119] = [
     [None, None, None, None], // Padding
@@ -3707,7 +3708,7 @@ pub trait ElementProperties {
             .and_then(|n| STANDARD_ATOMIC_WEIGHTS.get(n as usize).copied())?
     }
     /// The Pauling electronegativity of the element
-    /// (https://en.wikipedia.org/wiki/Electronegativities_of_the_elements_(data_page))
+    /// <https://en.wikipedia.org/wiki/Electronegativities_of_the_elements_(data_page)>
     /// The values are scaled by a factor of 100 to avoid floating point errors
     /// This means hydrogen has an electronegativity of 100
     /// The return type was chosen to be u16 as it is the smallest integer type that can hold all the values
@@ -3716,7 +3717,7 @@ pub trait ElementProperties {
             .and_then(|n| ELECTRONEGATIVITIES_PAULING.get(n as usize).copied())?
     }
     /// The Allen electronegativity of the element
-    /// (https://en.wikipedia.org/wiki/Electronegativities_of_the_elements_(data_page))
+    /// <https://en.wikipedia.org/wiki/Electronegativities_of_the_elements_(data_page)>
     /// The return type was chosen to be u16 as it is the smallest integer type that can hold all the values
     fn electronegativity_allen(&self) -> Option<u16> {
         self.atomic_number()
