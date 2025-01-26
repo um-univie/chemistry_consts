@@ -3737,9 +3737,7 @@ pub trait ElementProperties {
     /// For an exhaustive list of oxidation states use the `oxidation_states_exhaustive` function
     fn oxidation_states(&self) -> Option<OxidationStateIter> {
         self.atomic_number().map(|n| {
-            let Some(oxidation_states) = OXIDATION_STATES[n as usize] else {
-                return None;
-            };
+            let oxidation_states = OXIDATION_STATES[n as usize]?;
             Some(OxidationStateIter::new(oxidation_states))
         })?
     }
