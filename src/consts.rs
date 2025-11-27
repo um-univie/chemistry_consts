@@ -290,244 +290,126 @@ pub const COVALENT_RADII: [f64; 119] = [
 
 // The following values were taken from rdkit and are subject to change
 // Source: <https://raw.githubusercontent.com/rdkit/rdkit/9e1dbd2f336b8c381d4e7ef8d8ce8b9641ec3bc8/Code/GraphMol/atomic_data.cpp>
-pub const VALENCIES: [Option<[Option<i8>;4]>; 119] = [
-None, //Padding
-
-Some([Some(1), None, None, None]), //H
-
-Some([Some(0), None, None, None]), //HE
-
-Some([Some(1), Some(-1), None, None]), //LI
-
-Some([Some(2), None, None, None]), //BE
-
-Some([Some(3), None, None, None]), //B
-
-Some([Some(4), None, None, None]), //C
-
-Some([Some(3), None, None, None]), //N
-
-Some([Some(2), None, None, None]), //O
-
-Some([Some(1), None, None, None]), //F
-
-Some([Some(0), None, None, None]), //NE
-
-Some([Some(1), Some(-1), None, None]), //NA
-
-Some([Some(2), Some(-1), None, None]), //MG
-
-Some([Some(3), Some(6), None, None]), //AL
-
-Some([Some(4), Some(6), None, None]), //SI
-
-Some([Some(3), Some(5), Some(7), None]), //P
-
-Some([Some(2), Some(4), Some(6), None]), //S
-
-Some([Some(1), None, None, None]), //CL
-
-Some([Some(0), None, None, None]), //AR
-
-Some([Some(1), Some(-1), None, None]), //K
-
-Some([Some(2), Some(-1), None, None]), //CA
-
-None, //SC
-
-None, //TI
-
-None, //V
-
-None, //CR
-
-None, //MN
-
-None, //FE
-
-None, //CO
-
-None, //NI
-
-None, //CU
-
-None, //ZN
-
-Some([Some(3), None, None, None]), //GA
-
-Some([Some(4), None, None, None]), //GE
-
-Some([Some(3), Some(5), Some(7), None]), //AS
-
-Some([Some(2), Some(4), Some(6), None]), //SE
-
-Some([Some(1), None, None, None]), //BR
-
-Some([Some(0), None, None, None]), //KR
-
-Some([Some(1), None, None, None]), //RB
-
-Some([Some(2), Some(-1), None, None]), //SR
-
-None, //Y
-
-None, //ZR
-
-None, //NB
-
-None, //MO
-
-None, //TC
-
-None, //RU
-
-None, //RH
-
-None, //PD
-
-None, //AG
-
-None, //CD
-
-Some([Some(3), None, None, None]), //IN
-
-Some([Some(2), Some(4), None, None]), //SN
-
-Some([Some(3), Some(5), Some(7), None]), //SB
-
-Some([Some(2), Some(4), Some(6), None]), //TE
-
-Some([Some(1), Some(3), Some(5), None]), //I
-
-Some([Some(0), Some(2), Some(4), Some(6)]), //XE
-
-Some([Some(1), None, None, None]), //CS
-
-Some([Some(2), Some(-1), None, None]), //BA
-
-None, //LA
-
-None, //CE
-
-None, //PR
-
-None, //ND
-
-None, //PM
-
-None, //SM
-
-None, //EU
-
-None, //GD
-
-None, //TB
-
-None, //DY
-
-None, //HO
-
-None, //ER
-
-None, //TM
-
-None, //YB
-
-None, //LU
-
-None, //HF
-
-None, //TA
-
-None, //W
-
-None, //RE
-
-None, //OS
-
-None, //IR
-
-None, //PT
-
-None, //AU
-
-None, //HG
-
-Some([Some(3), None, None, None]), //TL
-
-Some([Some(2), Some(4), None, None]), //PB
-
-Some([Some(3), Some(5), Some(7), None]), //BI
-
-Some([Some(2), Some(4), Some(6), None]), //PO
-
-Some([Some(1), Some(3), Some(5), None]), //AT
-
-Some([Some(0), None, None, None]), //RN
-
-Some([Some(1), None, None, None]), //FR
-
-Some([Some(2), Some(-1), None, None]), //RA
-
-None, //AC
-
-None, //TH
-
-None, //PA
-
-None, //U
-
-None, //NP
-
-None, //PU
-
-None, //AM
-
-None, //CM
-
-None, //BK
-
-None, //CF
-
-None, //ES
-
-None, //FM
-
-None, //MD
-
-None, //NO
-
-None, //LR
-
-None, //RF
-
-None, //DB
-
-None, //SG
-
-None, //BH
-
-None, //HS
-
-None, //MT
-
-None, //DS
-
-None, //RG
-
-None, //CN
-
-None, //NH
-
-None, //FL
-
-None, //MC
-
-None, //LV
-
-None, //TS
-
-None, //OG
+pub const VALENCIES: [Option<[Option<i8>; 4]>; 119] = [
+    None,                              //Padding
+    Some([Some(1), None, None, None]), //H
+    Some([Some(0), None, None, None]), //HE
+    Some([Some(1), Some(-1), None, None]), //LI
+    Some([Some(2), None, None, None]), //BE
+    Some([Some(3), None, None, None]), //B
+    Some([Some(4), None, None, None]), //C
+    Some([Some(3), None, None, None]), //N
+    Some([Some(2), None, None, None]), //O
+    Some([Some(1), None, None, None]), //F
+    Some([Some(0), None, None, None]), //NE
+    Some([Some(1), Some(-1), None, None]), //NA
+    Some([Some(2), Some(-1), None, None]), //MG
+    Some([Some(3), Some(6), None, None]), //AL
+    Some([Some(4), Some(6), None, None]), //SI
+    Some([Some(3), Some(5), Some(7), None]), //P
+    Some([Some(2), Some(4), Some(6), None]), //S
+    Some([Some(1), None, None, None]), //CL
+    Some([Some(0), None, None, None]), //AR
+    Some([Some(1), Some(-1), None, None]), //K
+    Some([Some(2), Some(-1), None, None]), //CA
+    None,                              //SC
+    None,                              //TI
+    None,                              //V
+    None,                              //CR
+    None,                              //MN
+    None,                              //FE
+    None,                              //CO
+    None,                              //NI
+    None,                              //CU
+    None,                              //ZN
+    Some([Some(3), None, None, None]), //GA
+    Some([Some(4), None, None, None]), //GE
+    Some([Some(3), Some(5), Some(7), None]), //AS
+    Some([Some(2), Some(4), Some(6), None]), //SE
+    Some([Some(1), None, None, None]), //BR
+    Some([Some(0), None, None, None]), //KR
+    Some([Some(1), None, None, None]), //RB
+    Some([Some(2), Some(-1), None, None]), //SR
+    None,                              //Y
+    None,                              //ZR
+    None,                              //NB
+    None,                              //MO
+    None,                              //TC
+    None,                              //RU
+    None,                              //RH
+    None,                              //PD
+    None,                              //AG
+    None,                              //CD
+    Some([Some(3), None, None, None]), //IN
+    Some([Some(2), Some(4), None, None]), //SN
+    Some([Some(3), Some(5), Some(7), None]), //SB
+    Some([Some(2), Some(4), Some(6), None]), //TE
+    Some([Some(1), Some(3), Some(5), None]), //I
+    Some([Some(0), Some(2), Some(4), Some(6)]), //XE
+    Some([Some(1), None, None, None]), //CS
+    Some([Some(2), Some(-1), None, None]), //BA
+    None,                              //LA
+    None,                              //CE
+    None,                              //PR
+    None,                              //ND
+    None,                              //PM
+    None,                              //SM
+    None,                              //EU
+    None,                              //GD
+    None,                              //TB
+    None,                              //DY
+    None,                              //HO
+    None,                              //ER
+    None,                              //TM
+    None,                              //YB
+    None,                              //LU
+    None,                              //HF
+    None,                              //TA
+    None,                              //W
+    None,                              //RE
+    None,                              //OS
+    None,                              //IR
+    None,                              //PT
+    None,                              //AU
+    None,                              //HG
+    Some([Some(3), None, None, None]), //TL
+    Some([Some(2), Some(4), None, None]), //PB
+    Some([Some(3), Some(5), Some(7), None]), //BI
+    Some([Some(2), Some(4), Some(6), None]), //PO
+    Some([Some(1), Some(3), Some(5), None]), //AT
+    Some([Some(0), None, None, None]), //RN
+    Some([Some(1), None, None, None]), //FR
+    Some([Some(2), Some(-1), None, None]), //RA
+    None,                              //AC
+    None,                              //TH
+    None,                              //PA
+    None,                              //U
+    None,                              //NP
+    None,                              //PU
+    None,                              //AM
+    None,                              //CM
+    None,                              //BK
+    None,                              //CF
+    None,                              //ES
+    None,                              //FM
+    None,                              //MD
+    None,                              //NO
+    None,                              //LR
+    None,                              //RF
+    None,                              //DB
+    None,                              //SG
+    None,                              //BH
+    None,                              //HS
+    None,                              //MT
+    None,                              //DS
+    None,                              //RG
+    None,                              //CN
+    None,                              //NH
+    None,                              //FL
+    None,                              //MC
+    None,                              //LV
+    None,                              //TS
+    None,                              //OG
 ];
 
 // Taken from: <https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses>
@@ -802,7 +684,7 @@ macro_rules! generate_match {
 }
 
 pub fn atomic_numbers(symbol: &str) -> Option<u8> {
-    generate_match!(symbol; 
+    generate_match!(symbol;
    ("H" ,1),
    ("HE", 2),
    ("LI", 3),
@@ -1175,12 +1057,12 @@ pub const ELECTRONEGATIVITIES_ALLEN: [Option<u16>; 119] = [
 
 // This list is taken from Wikipedia, and only includes the major oxidation states: <https:// en.wikipedia.org/wiki/Oxidation_state#List_of_oxidation_states_of_the_elements>
 pub const OXIDATION_STATES: [Option<[Option<i8>; 9]>; 119] = [
-    None, //Padding
+    None,                                                                //Padding
     Some([Some(-1), Some(1), None, None, None, None, None, None, None]), //H
-    Some([Some(0), None, None, None, None, None, None, None, None]), //HE
-    Some([Some(1), None, None, None, None, None, None, None, None]), //LI
-    Some([Some(2), None, None, None, None, None, None, None, None]), //BE
-    Some([Some(3), None, None, None, None, None, None, None, None]), //B
+    Some([Some(0), None, None, None, None, None, None, None, None]),     //HE
+    Some([Some(1), None, None, None, None, None, None, None, None]),     //LI
+    Some([Some(2), None, None, None, None, None, None, None, None]),     //BE
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //B
     Some([
         Some(-4),
         Some(-3),
@@ -1203,13 +1085,13 @@ pub const OXIDATION_STATES: [Option<[Option<i8>; 9]>; 119] = [
         None,
         None,
     ]), //N
-    Some([Some(-2), None, None, None, None, None, None, None, None]), //O
-    Some([Some(-1), None, None, None, None, None, None, None, None]), //F
-    Some([Some(0), None, None, None, None, None, None, None, None]), //NE
-    Some([Some(1), None, None, None, None, None, None, None, None]), //NA
-    Some([Some(2), None, None, None, None, None, None, None, None]), //MG
-    Some([Some(3), None, None, None, None, None, None, None, None]), //AL
-    Some([Some(4), None, None, None, None, None, None, None, None]), //SI
+    Some([Some(-2), None, None, None, None, None, None, None, None]),    //O
+    Some([Some(-1), None, None, None, None, None, None, None, None]),    //F
+    Some([Some(0), None, None, None, None, None, None, None, None]),     //NE
+    Some([Some(1), None, None, None, None, None, None, None, None]),     //NA
+    Some([Some(2), None, None, None, None, None, None, None, None]),     //MG
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //AL
+    Some([Some(4), None, None, None, None, None, None, None, None]),     //SI
     Some([
         Some(-3),
         Some(3),
@@ -1243,10 +1125,10 @@ pub const OXIDATION_STATES: [Option<[Option<i8>; 9]>; 119] = [
         None,
         None,
     ]), //CL
-    Some([Some(0), None, None, None, None, None, None, None, None]), //AR
-    Some([Some(1), None, None, None, None, None, None, None, None]), //K
-    Some([Some(2), None, None, None, None, None, None, None, None]), //CA
-    Some([Some(3), None, None, None, None, None, None, None, None]), //SC
+    Some([Some(0), None, None, None, None, None, None, None, None]),     //AR
+    Some([Some(1), None, None, None, None, None, None, None, None]),     //K
+    Some([Some(2), None, None, None, None, None, None, None, None]),     //CA
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //SC
     Some([
         Some(2),
         Some(3),
@@ -1291,13 +1173,13 @@ pub const OXIDATION_STATES: [Option<[Option<i8>; 9]>; 119] = [
         None,
         None,
     ]), //MN
-    Some([Some(2), Some(3), None, None, None, None, None, None, None]), //FE
-    Some([Some(2), Some(3), None, None, None, None, None, None, None]), //CO
-    Some([Some(2), None, None, None, None, None, None, None, None]), //NI
-    Some([Some(1), Some(2), None, None, None, None, None, None, None]), //CU
-    Some([Some(2), None, None, None, None, None, None, None, None]), //ZN
-    Some([Some(3), None, None, None, None, None, None, None, None]), //GA
-    Some([Some(2), Some(4), None, None, None, None, None, None, None]), //GE
+    Some([Some(2), Some(3), None, None, None, None, None, None, None]),  //FE
+    Some([Some(2), Some(3), None, None, None, None, None, None, None]),  //CO
+    Some([Some(2), None, None, None, None, None, None, None, None]),     //NI
+    Some([Some(1), Some(2), None, None, None, None, None, None, None]),  //CU
+    Some([Some(2), None, None, None, None, None, None, None, None]),     //ZN
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //GA
+    Some([Some(2), Some(4), None, None, None, None, None, None, None]),  //GE
     Some([
         Some(-3),
         Some(3),
@@ -1331,16 +1213,16 @@ pub const OXIDATION_STATES: [Option<[Option<i8>; 9]>; 119] = [
         None,
         None,
     ]), //BR
-    Some([Some(0), None, None, None, None, None, None, None, None]), //KR
-    Some([Some(1), None, None, None, None, None, None, None, None]), //RB
-    Some([Some(2), None, None, None, None, None, None, None, None]), //SR
-    Some([Some(3), None, None, None, None, None, None, None, None]), //Y
-    Some([Some(4), None, None, None, None, None, None, None, None]), //ZR
-    Some([Some(5), None, None, None, None, None, None, None, None]), //NB
-    Some([Some(4), Some(6), None, None, None, None, None, None, None]), //MO
-    Some([Some(4), Some(7), None, None, None, None, None, None, None]), //TC
-    Some([Some(3), Some(4), None, None, None, None, None, None, None]), //RU
-    Some([Some(3), None, None, None, None, None, None, None, None]), //RH
+    Some([Some(0), None, None, None, None, None, None, None, None]),     //KR
+    Some([Some(1), None, None, None, None, None, None, None, None]),     //RB
+    Some([Some(2), None, None, None, None, None, None, None, None]),     //SR
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //Y
+    Some([Some(4), None, None, None, None, None, None, None, None]),     //ZR
+    Some([Some(5), None, None, None, None, None, None, None, None]),     //NB
+    Some([Some(4), Some(6), None, None, None, None, None, None, None]),  //MO
+    Some([Some(4), Some(7), None, None, None, None, None, None, None]),  //TC
+    Some([Some(3), Some(4), None, None, None, None, None, None, None]),  //RU
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //RH
     Some([
         Some(0),
         Some(2),
@@ -1352,11 +1234,11 @@ pub const OXIDATION_STATES: [Option<[Option<i8>; 9]>; 119] = [
         None,
         None,
     ]), //PD
-    Some([Some(1), None, None, None, None, None, None, None, None]), //AG
-    Some([Some(2), None, None, None, None, None, None, None, None]), //CD
-    Some([Some(3), None, None, None, None, None, None, None, None]), //IN
-    Some([Some(2), Some(4), None, None, None, None, None, None, None]), //SN
-    Some([Some(3), Some(5), None, None, None, None, None, None, None]), //SB
+    Some([Some(1), None, None, None, None, None, None, None, None]),     //AG
+    Some([Some(2), None, None, None, None, None, None, None, None]),     //CD
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //IN
+    Some([Some(2), Some(4), None, None, None, None, None, None, None]),  //SN
+    Some([Some(3), Some(5), None, None, None, None, None, None, None]),  //SB
     Some([
         Some(-2),
         Some(2),
@@ -1379,27 +1261,27 @@ pub const OXIDATION_STATES: [Option<[Option<i8>; 9]>; 119] = [
         None,
         None,
     ]), //I
-    Some([Some(0), None, None, None, None, None, None, None, None]), //XE
-    Some([Some(1), None, None, None, None, None, None, None, None]), //CS
-    Some([Some(2), None, None, None, None, None, None, None, None]), //BA
-    Some([Some(3), None, None, None, None, None, None, None, None]), //LA
-    Some([Some(3), Some(4), None, None, None, None, None, None, None]), //CE
-    Some([Some(3), None, None, None, None, None, None, None, None]), //PR
-    Some([Some(3), None, None, None, None, None, None, None, None]), //ND
-    Some([Some(3), None, None, None, None, None, None, None, None]), //PM
-    Some([Some(3), None, None, None, None, None, None, None, None]), //SM
-    Some([Some(2), Some(3), None, None, None, None, None, None, None]), //EU
-    Some([Some(3), None, None, None, None, None, None, None, None]), //GD
-    Some([Some(3), None, None, None, None, None, None, None, None]), //TB
-    Some([Some(3), None, None, None, None, None, None, None, None]), //DY
-    Some([Some(3), None, None, None, None, None, None, None, None]), //HO
-    Some([Some(3), None, None, None, None, None, None, None, None]), //ER
-    Some([Some(3), None, None, None, None, None, None, None, None]), //TM
-    Some([Some(3), None, None, None, None, None, None, None, None]), //YB
-    Some([Some(3), None, None, None, None, None, None, None, None]), //LU
-    Some([Some(4), None, None, None, None, None, None, None, None]), //HF
-    Some([Some(5), None, None, None, None, None, None, None, None]), //TA
-    Some([Some(4), Some(6), None, None, None, None, None, None, None]), //W
+    Some([Some(0), None, None, None, None, None, None, None, None]),     //XE
+    Some([Some(1), None, None, None, None, None, None, None, None]),     //CS
+    Some([Some(2), None, None, None, None, None, None, None, None]),     //BA
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //LA
+    Some([Some(3), Some(4), None, None, None, None, None, None, None]),  //CE
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //PR
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //ND
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //PM
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //SM
+    Some([Some(2), Some(3), None, None, None, None, None, None, None]),  //EU
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //GD
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //TB
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //DY
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //HO
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //ER
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //TM
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //YB
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //LU
+    Some([Some(4), None, None, None, None, None, None, None, None]),     //HF
+    Some([Some(5), None, None, None, None, None, None, None, None]),     //TA
+    Some([Some(4), Some(6), None, None, None, None, None, None, None]),  //W
     Some([
         Some(3),
         Some(4),
@@ -1433,12 +1315,12 @@ pub const OXIDATION_STATES: [Option<[Option<i8>; 9]>; 119] = [
         None,
         None,
     ]), //IR
-    Some([Some(2), Some(4), None, None, None, None, None, None, None]), //PT
-    Some([Some(1), Some(3), None, None, None, None, None, None, None]), //AU
-    Some([Some(1), Some(2), None, None, None, None, None, None, None]), //HG
-    Some([Some(1), Some(3), None, None, None, None, None, None, None]), //TL
-    Some([Some(2), Some(4), None, None, None, None, None, None, None]), //PB
-    Some([Some(3), None, None, None, None, None, None, None, None]), //BI
+    Some([Some(2), Some(4), None, None, None, None, None, None, None]),  //PT
+    Some([Some(1), Some(3), None, None, None, None, None, None, None]),  //AU
+    Some([Some(1), Some(2), None, None, None, None, None, None, None]),  //HG
+    Some([Some(1), Some(3), None, None, None, None, None, None, None]),  //TL
+    Some([Some(2), Some(4), None, None, None, None, None, None, None]),  //PB
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //BI
     Some([
         Some(-2),
         Some(2),
@@ -1451,39 +1333,39 @@ pub const OXIDATION_STATES: [Option<[Option<i8>; 9]>; 119] = [
         None,
     ]), //PO
     Some([Some(-1), Some(1), None, None, None, None, None, None, None]), //AT
-    Some([Some(2), None, None, None, None, None, None, None, None]), //RN
-    Some([Some(1), None, None, None, None, None, None, None, None]), //FR
-    Some([Some(2), None, None, None, None, None, None, None, None]), //RA
-    Some([Some(3), None, None, None, None, None, None, None, None]), //AC
-    Some([Some(4), None, None, None, None, None, None, None, None]), //TH
-    Some([Some(5), None, None, None, None, None, None, None, None]), //PA
-    Some([Some(4), Some(6), None, None, None, None, None, None, None]), //U
-    Some([Some(5), None, None, None, None, None, None, None, None]), //NP
-    Some([Some(4), None, None, None, None, None, None, None, None]), //PU
-    Some([Some(3), None, None, None, None, None, None, None, None]), //AM
-    Some([Some(3), None, None, None, None, None, None, None, None]), //CM
-    Some([Some(3), None, None, None, None, None, None, None, None]), //BK
-    Some([Some(3), None, None, None, None, None, None, None, None]), //CF
-    Some([Some(3), None, None, None, None, None, None, None, None]), //ES
-    Some([Some(3), None, None, None, None, None, None, None, None]), //FM
-    Some([Some(3), None, None, None, None, None, None, None, None]), //MD
-    Some([Some(2), None, None, None, None, None, None, None, None]), //NO
-    Some([Some(3), None, None, None, None, None, None, None, None]), //LR
-    Some([Some(4), None, None, None, None, None, None, None, None]), //RF
-    Some([Some(5), None, None, None, None, None, None, None, None]), //DB
-    Some([Some(6), None, None, None, None, None, None, None, None]), //SG
-    Some([Some(7), None, None, None, None, None, None, None, None]), //BH
-    Some([Some(8), None, None, None, None, None, None, None, None]), //HS
-    None, //MT
-    None, //DS
-    None, //RG
-    Some([Some(2), None, None, None, None, None, None, None, None]), //CN
-    None, //NH
-    None, //FL
-    None, //MC
-    None, //LV
-    None, //TS
-    None, //OG
+    Some([Some(2), None, None, None, None, None, None, None, None]),     //RN
+    Some([Some(1), None, None, None, None, None, None, None, None]),     //FR
+    Some([Some(2), None, None, None, None, None, None, None, None]),     //RA
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //AC
+    Some([Some(4), None, None, None, None, None, None, None, None]),     //TH
+    Some([Some(5), None, None, None, None, None, None, None, None]),     //PA
+    Some([Some(4), Some(6), None, None, None, None, None, None, None]),  //U
+    Some([Some(5), None, None, None, None, None, None, None, None]),     //NP
+    Some([Some(4), None, None, None, None, None, None, None, None]),     //PU
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //AM
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //CM
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //BK
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //CF
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //ES
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //FM
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //MD
+    Some([Some(2), None, None, None, None, None, None, None, None]),     //NO
+    Some([Some(3), None, None, None, None, None, None, None, None]),     //LR
+    Some([Some(4), None, None, None, None, None, None, None, None]),     //RF
+    Some([Some(5), None, None, None, None, None, None, None, None]),     //DB
+    Some([Some(6), None, None, None, None, None, None, None, None]),     //SG
+    Some([Some(7), None, None, None, None, None, None, None, None]),     //BH
+    Some([Some(8), None, None, None, None, None, None, None, None]),     //HS
+    None,                                                                //MT
+    None,                                                                //DS
+    None,                                                                //RG
+    Some([Some(2), None, None, None, None, None, None, None, None]),     //CN
+    None,                                                                //NH
+    None,                                                                //FL
+    None,                                                                //MC
+    None,                                                                //LV
+    None,                                                                //TS
+    None,                                                                //OG
 ];
 
 // This array provides all known oxidation states for each element based on the wikipedia entry
@@ -3255,7 +3137,6 @@ impl Iterator for ValencyIter {
     }
 }
 
-
 // This is to shorten the isotopes array
 const fn iso(mass: f64, abundance: f64) -> Isotope {
     Isotope { mass, abundance }
@@ -3767,7 +3648,6 @@ pub trait ElementProperties {
         self.atomic_number()
             .and_then(|n| COVALENT_RADII.get(n as usize).copied())
     }
-
 }
 
 impl ElementProperties for &str {
