@@ -291,125 +291,125 @@ pub const COVALENT_RADII: [f64; 119] = [
 // The following values were taken from rdkit and are subject to change
 // Source: <https://raw.githubusercontent.com/rdkit/rdkit/9e1dbd2f336b8c381d4e7ef8d8ce8b9641ec3bc8/Code/GraphMol/atomic_data.cpp>
 pub const VALENCIES: [Option<[Option<i8>; 4]>; 119] = [
-    None,                              //Padding
-    Some([Some(1), None, None, None]), //H
-    Some([Some(0), None, None, None]), //HE
-    Some([Some(1), Some(-1), None, None]), //LI
-    Some([Some(2), None, None, None]), //BE
-    Some([Some(3), None, None, None]), //B
-    Some([Some(4), None, None, None]), //C
-    Some([Some(3), None, None, None]), //N
-    Some([Some(2), None, None, None]), //O
-    Some([Some(1), None, None, None]), //F
-    Some([Some(0), None, None, None]), //NE
-    Some([Some(1), Some(-1), None, None]), //NA
-    Some([Some(2), Some(-1), None, None]), //MG
-    Some([Some(3), Some(6), None, None]), //AL
-    Some([Some(4), Some(6), None, None]), //SI
-    Some([Some(3), Some(5), Some(7), None]), //P
-    Some([Some(2), Some(4), Some(6), None]), //S
-    Some([Some(1), None, None, None]), //CL
-    Some([Some(0), None, None, None]), //AR
-    Some([Some(1), Some(-1), None, None]), //K
-    Some([Some(2), Some(-1), None, None]), //CA
-    None,                              //SC
-    None,                              //TI
-    None,                              //V
-    None,                              //CR
-    None,                              //MN
-    None,                              //FE
-    None,                              //CO
-    None,                              //NI
-    None,                              //CU
-    None,                              //ZN
-    Some([Some(3), None, None, None]), //GA
-    Some([Some(4), None, None, None]), //GE
-    Some([Some(3), Some(5), Some(7), None]), //AS
-    Some([Some(2), Some(4), Some(6), None]), //SE
-    Some([Some(1), None, None, None]), //BR
-    Some([Some(0), None, None, None]), //KR
-    Some([Some(1), None, None, None]), //RB
-    Some([Some(2), Some(-1), None, None]), //SR
-    None,                              //Y
-    None,                              //ZR
-    None,                              //NB
-    None,                              //MO
-    None,                              //TC
-    None,                              //RU
-    None,                              //RH
-    None,                              //PD
-    None,                              //AG
-    None,                              //CD
-    Some([Some(3), None, None, None]), //IN
-    Some([Some(2), Some(4), None, None]), //SN
-    Some([Some(3), Some(5), Some(7), None]), //SB
-    Some([Some(2), Some(4), Some(6), None]), //TE
-    Some([Some(1), Some(3), Some(5), None]), //I
+    None,                                       //Padding
+    Some([Some(1), None, None, None]),          //H
+    Some([Some(0), None, None, None]),          //HE
+    Some([Some(1), Some(-1), None, None]),      //LI
+    Some([Some(2), None, None, None]),          //BE
+    Some([Some(3), None, None, None]),          //B
+    Some([Some(4), None, None, None]),          //C
+    Some([Some(3), None, None, None]),          //N
+    Some([Some(2), None, None, None]),          //O
+    Some([Some(1), None, None, None]),          //F
+    Some([Some(0), None, None, None]),          //NE
+    Some([Some(1), Some(-1), None, None]),      //NA
+    Some([Some(2), Some(-1), None, None]),      //MG
+    Some([Some(3), Some(6), None, None]),       //AL
+    Some([Some(4), Some(6), None, None]),       //SI
+    Some([Some(3), Some(5), Some(7), None]),    //P
+    Some([Some(2), Some(4), Some(6), None]),    //S
+    Some([Some(1), None, None, None]),          //CL
+    Some([Some(0), None, None, None]),          //AR
+    Some([Some(1), Some(-1), None, None]),      //K
+    Some([Some(2), Some(-1), None, None]),      //CA
+    None,                                       //SC
+    None,                                       //TI
+    None,                                       //V
+    None,                                       //CR
+    None,                                       //MN
+    None,                                       //FE
+    None,                                       //CO
+    None,                                       //NI
+    None,                                       //CU
+    None,                                       //ZN
+    Some([Some(3), None, None, None]),          //GA
+    Some([Some(4), None, None, None]),          //GE
+    Some([Some(3), Some(5), Some(7), None]),    //AS
+    Some([Some(2), Some(4), Some(6), None]),    //SE
+    Some([Some(1), None, None, None]),          //BR
+    Some([Some(0), None, None, None]),          //KR
+    Some([Some(1), None, None, None]),          //RB
+    Some([Some(2), Some(-1), None, None]),      //SR
+    None,                                       //Y
+    None,                                       //ZR
+    None,                                       //NB
+    None,                                       //MO
+    None,                                       //TC
+    None,                                       //RU
+    None,                                       //RH
+    None,                                       //PD
+    None,                                       //AG
+    None,                                       //CD
+    Some([Some(3), None, None, None]),          //IN
+    Some([Some(2), Some(4), None, None]),       //SN
+    Some([Some(3), Some(5), Some(7), None]),    //SB
+    Some([Some(2), Some(4), Some(6), None]),    //TE
+    Some([Some(1), Some(3), Some(5), None]),    //I
     Some([Some(0), Some(2), Some(4), Some(6)]), //XE
-    Some([Some(1), None, None, None]), //CS
-    Some([Some(2), Some(-1), None, None]), //BA
-    None,                              //LA
-    None,                              //CE
-    None,                              //PR
-    None,                              //ND
-    None,                              //PM
-    None,                              //SM
-    None,                              //EU
-    None,                              //GD
-    None,                              //TB
-    None,                              //DY
-    None,                              //HO
-    None,                              //ER
-    None,                              //TM
-    None,                              //YB
-    None,                              //LU
-    None,                              //HF
-    None,                              //TA
-    None,                              //W
-    None,                              //RE
-    None,                              //OS
-    None,                              //IR
-    None,                              //PT
-    None,                              //AU
-    None,                              //HG
-    Some([Some(3), None, None, None]), //TL
-    Some([Some(2), Some(4), None, None]), //PB
-    Some([Some(3), Some(5), Some(7), None]), //BI
-    Some([Some(2), Some(4), Some(6), None]), //PO
-    Some([Some(1), Some(3), Some(5), None]), //AT
-    Some([Some(0), None, None, None]), //RN
-    Some([Some(1), None, None, None]), //FR
-    Some([Some(2), Some(-1), None, None]), //RA
-    None,                              //AC
-    None,                              //TH
-    None,                              //PA
-    None,                              //U
-    None,                              //NP
-    None,                              //PU
-    None,                              //AM
-    None,                              //CM
-    None,                              //BK
-    None,                              //CF
-    None,                              //ES
-    None,                              //FM
-    None,                              //MD
-    None,                              //NO
-    None,                              //LR
-    None,                              //RF
-    None,                              //DB
-    None,                              //SG
-    None,                              //BH
-    None,                              //HS
-    None,                              //MT
-    None,                              //DS
-    None,                              //RG
-    None,                              //CN
-    None,                              //NH
-    None,                              //FL
-    None,                              //MC
-    None,                              //LV
-    None,                              //TS
-    None,                              //OG
+    Some([Some(1), None, None, None]),          //CS
+    Some([Some(2), Some(-1), None, None]),      //BA
+    None,                                       //LA
+    None,                                       //CE
+    None,                                       //PR
+    None,                                       //ND
+    None,                                       //PM
+    None,                                       //SM
+    None,                                       //EU
+    None,                                       //GD
+    None,                                       //TB
+    None,                                       //DY
+    None,                                       //HO
+    None,                                       //ER
+    None,                                       //TM
+    None,                                       //YB
+    None,                                       //LU
+    None,                                       //HF
+    None,                                       //TA
+    None,                                       //W
+    None,                                       //RE
+    None,                                       //OS
+    None,                                       //IR
+    None,                                       //PT
+    None,                                       //AU
+    None,                                       //HG
+    Some([Some(3), None, None, None]),          //TL
+    Some([Some(2), Some(4), None, None]),       //PB
+    Some([Some(3), Some(5), Some(7), None]),    //BI
+    Some([Some(2), Some(4), Some(6), None]),    //PO
+    Some([Some(1), Some(3), Some(5), None]),    //AT
+    Some([Some(0), None, None, None]),          //RN
+    Some([Some(1), None, None, None]),          //FR
+    Some([Some(2), Some(-1), None, None]),      //RA
+    None,                                       //AC
+    None,                                       //TH
+    None,                                       //PA
+    None,                                       //U
+    None,                                       //NP
+    None,                                       //PU
+    None,                                       //AM
+    None,                                       //CM
+    None,                                       //BK
+    None,                                       //CF
+    None,                                       //ES
+    None,                                       //FM
+    None,                                       //MD
+    None,                                       //NO
+    None,                                       //LR
+    None,                                       //RF
+    None,                                       //DB
+    None,                                       //SG
+    None,                                       //BH
+    None,                                       //HS
+    None,                                       //MT
+    None,                                       //DS
+    None,                                       //RG
+    None,                                       //CN
+    None,                                       //NH
+    None,                                       //FL
+    None,                                       //MC
+    None,                                       //LV
+    None,                                       //TS
+    None,                                       //OG
 ];
 
 // Taken from: <https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses>
@@ -707,7 +707,7 @@ pub fn atomic_numbers(symbol: &str) -> Option<u8> {
    ( "CA", 20),
    ( "SC", 21),
    ( "TI", 22),
-   ( "V" ,23),
+   ( "V" , 23),
    ( "CR", 24),
    ( "MN", 25),
    ( "FE", 26),
@@ -723,7 +723,7 @@ pub fn atomic_numbers(symbol: &str) -> Option<u8> {
    ( "KR", 36),
    ( "RB", 37),
    ( "SR", 38),
-   ( "Y" ,39),
+   ( "Y" , 39),
    ( "ZR", 40),
    ( "NB", 41),
    ( "MO", 42),
@@ -737,7 +737,7 @@ pub fn atomic_numbers(symbol: &str) -> Option<u8> {
    ( "SN", 50),
    ( "SB", 51),
    ( "TE", 52),
-   ( "I" ,53),
+   ( "I" , 53),
    ( "XE", 54),
    ( "CS", 55),
    ( "BA", 56),
@@ -758,7 +758,7 @@ pub fn atomic_numbers(symbol: &str) -> Option<u8> {
    ( "LU", 71),
    ( "HF", 72),
    ( "TA", 73),
-   ( "W" ,74),
+   ( "W" , 74),
    ( "RE", 75),
    ( "OS", 76),
    ( "IR", 77),
@@ -776,7 +776,7 @@ pub fn atomic_numbers(symbol: &str) -> Option<u8> {
    ( "AC", 89),
    ( "TH", 90),
    ( "PA", 91),
-   ( "U" ,92),
+   ( "U" , 92),
    ( "NP", 93),
    ( "PU", 94),
    ( "AM", 95),
@@ -3143,6 +3143,7 @@ const fn iso(mass: f64, abundance: f64) -> Isotope {
 }
 // Taken from: <https://physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&all=all&ascii=ascii&isotype=some>
 // Zero padding is used to make the array index match the atomic number
+// They are sorted by their abundance
 pub const ISOTOPES: [[Option<Isotope>; 4]; 119] = [
     [None, None, None, None], // Padding
     [
@@ -3647,6 +3648,11 @@ pub trait ElementProperties {
     fn covalent_radius(&self) -> Option<f64> {
         self.atomic_number()
             .and_then(|n| COVALENT_RADII.get(n as usize).copied())
+    }
+    fn most_abundant_isotope(&self) -> Option<u16> {
+        self.isotopes()
+            .and_then(|mut isotopes| isotopes.next())
+            .and_then(|isotope| Some(isotope.mass as u16))
     }
 }
 
