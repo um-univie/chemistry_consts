@@ -2,41 +2,51 @@
 // <https://www.physics.nist.gov/cgi-bin/cuu/Value?eshbar|search_for=elecmag_in!>
 // Physicochemical constants
 // <https://www.physics.nist.gov/cgi-bin/cuu/Value?na|search_for=physchem_in!>
-pub const AVOGADRO: f64 = 6.022_140_76e23; // mol^-1
-pub const BOLTZMANN: f64 = 1.380_649e-23; // J K^-1 pub const GAS_CONSTANT: f64 = 8.31446261815324; // J K^-1 mol^-1 (Molar gas constant) pub const MOLAR_VOLUME: f64 = 22.413_969_9e-3; // m^3 mol^-1 (Molar volume of an ideal gas at 0°C and 1 atm)
-pub const MOLAR_MASS: f64 = 0.999_999_999_65; // kg mol^-1 (Molar mass of a substance)
-pub const MOLAR_PLANCK: f64 = 3.990_312_71e-10; // J s mol^-1 (Molar Planck constant)
-pub const AMU: f64 = 1.660_539_066_60e-27; // kg
+pub const AVOGADRO_PER_MOL: f64 = 6.022_140_76e23; // mol^-1
+pub const BOLTZMANN_J_PER_K: f64 = 1.380_649e-23; // J K^-1
+pub const GAS_CONSTANT_J_PER_MOL_K: f64 = 8.314_462_618_153_24; // J K^-1 mol^-1
+pub const MOLAR_VOLUME_M3_PER_MOL: f64 = 22.413_969_9e-3; // m^3 mol^-1 (ideal gas at 0°C and 1 atm)
+pub const MOLAR_MASS_KG_PER_MOL: f64 = 0.999_999_999_65e-3; // kg mol^-1
+pub const MOLAR_PLANCK_J_S_PER_MOL: f64 = 3.990_312_71e-10; // J s mol^-1
+pub const AMU_KG: f64 = 1.660_539_066_60e-27; // kg
 
 // Atomic constants
 // <https:// www.physics.nist.gov/cgi-bin/cuu/Value?bohrrada0|search_for=atomnuc!>
-pub const HARTREE: f64 = 4.359_744_722_207_1; // eV
+pub const HARTREE_J: f64 = 4.359_744_722_207_1e-18; // J
 pub const HARTREE_EV: f64 = 27.211_386_245_988; // eV
-pub const BOHR_MAGNETON: f64 = 9.274_009_994_57e-24; // J T^-1
-pub const BOHR_RADIUS: f64 = 5.291_772_109_03e-11; // m
-pub const NEUTRON_MASS: f64 = 1.674_927_498_04e-27; // kg
-pub const PROTON_MASS: f64 = 1.672_621_923_69e-27; // kg
-pub const ELECTRON_MASS: f64 = 9.109_383_701_5e-31; // kg
-pub const FINE_STRUCTURE: f64 = 7.297_352_569_3e-3; // Dimensionless
-pub const RYDBERG: f64 = 10_973_731.568_160; // m^-1
+pub const BOHR_MAGNETON_J_PER_T: f64 = 9.274_010_078_3e-24; // J T^-1
+pub const BOHR_RADIUS_M: f64 = 5.291_772_109_03e-11; // m
+pub const NEUTRON_MASS_KG: f64 = 1.674_927_498_04e-27; // kg
+pub const NEUTRON_MASS_AMU: f64 = NEUTRON_MASS_KG / AMU_KG;
+pub const PROTON_MASS_KG: f64 = 1.672_621_923_69e-27; // kg
+pub const PROTON_MASS_AMU: f64 = PROTON_MASS_KG / AMU_KG;
+pub const ELECTRON_MASS_KG: f64 = 9.109_383_701_5e-31; // kg
+pub const ELECTRON_MASS_AMU: f64 = ELECTRON_MASS_KG / AMU_KG;
+pub const FINE_STRUCTURE: f64 = 7.297_352_569_3e-3; // dimensionless
+pub const RYDBERG_PER_M: f64 = 10_973_731.568_160; // m^-1
 
 // Fundamental physical constants
 // <https:// physics.nist.gov/cgi-bin/cuu/Value?c|search_for=universal_in!>
-pub const PLANCK: f64 = 6.626_070_15e-34; // J s
-pub const HBAR: f64 = 1.0545718e-34; // J s reduced Planck constant
-pub const PLANCK_LENGTH: f64 = 1.616255e-35; // m
-pub const PLANCK_MASS: f64 = 2.176434e-8; // kg
-pub const PLANCK_TIME: f64 = 5.391247e-44; // s
-pub const SPEED_OF_LIGHT: f64 = 299_792_458.0; // m s^-1
-pub const VACUUM_PERMITTIVITY: f64 = 8.854_187_812_8e-12; // F m^-1
-pub const VACUUM_PERMEABILITY: f64 = 1.256_637_062_12e-6; // N A^-2
-pub const STANDARD_GRAVITY: f64 = 9.806_65; // m s^-2
-pub const ELEMENTARY_CHARGE: f64 = 1.602_176_634e-19; // C (Electric charge of a single electron)
-pub const ELECTRON_VOLT: f64 = 1.602_176_634e-19; // J
-pub const FARADAY: f64 = 96_485.332_12; // C mol^-1
-pub const COULOMB: f64 = 8.987_551_787_368_176e9; // N m^2 C^-2
-pub const CALORIE: f64 = 4.184; // J
-pub const ATMOSPHERE: f64 = 101_325.0; // Pa
+pub const PLANCK_J_S: f64 = 6.626_070_15e-34; // J s
+pub const HBAR_J_S: f64 = PLANCK_J_S / (2.0 * std::f64::consts::PI); // J s (reduced Planck constant)
+pub const PLANCK_LENGTH_M: f64 = 1.616255e-35; // m
+pub const PLANCK_MASS_KG: f64 = 2.176434e-8; // kg
+pub const PLANCK_TIME_S: f64 = 5.391247e-44; // s
+pub const SPEED_OF_LIGHT_M_PER_S: f64 = 299_792_458.0; // m s^-1
+pub const VACUUM_PERMITTIVITY_F_PER_M: f64 = 8.854_187_812_8e-12; // F m^-1
+pub const VACUUM_PERMEABILITY_N_PER_A2: f64 = 1.256_637_062_12e-6; // N A^-2
+pub const STANDARD_GRAVITY_M_PER_S2: f64 = 9.806_65; // m s^-2
+pub const ELEMENTARY_CHARGE_C: f64 = 1.602_176_634e-19; // C
+pub const ELECTRON_VOLT_J: f64 = 1.602_176_634e-19; // J
+pub const FARADAY_C_PER_MOL: f64 = 96_485.332_12; // C mol^-1
+pub const COULOMB_N_M2_PER_C2: f64 = 1.0 / (4.0 * std::f64::consts::PI * VACUUM_PERMITTIVITY_F_PER_M); // N m^2 C^-2 (Coulomb's constant)
+pub const CALORIE_J: f64 = 4.184; // J
+pub const ATMOSPHERE_PA: f64 = 101_325.0; // Pa
+pub const ZERO_CELSIUS_K: f64 = 273.15; // K
+pub const ANGSTROM_M: f64 = 1e-10; // m
+pub const STEFAN_BOLTZMANN_W_PER_M2_K4: f64 = 5.670_374_419e-8; // W m^-2 K^-4
+pub const NUCLEAR_MAGNETON_J_PER_T: f64 = 5.050_783_746e-27; // J T^-1
+pub const HARTREE_KJ_PER_MOL: f64 = HARTREE_J * AVOGADRO_PER_MOL * 1e-3; // kJ mol^-1
 
 // The values are taken from: <https:// physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&isotype=some
 // The padding is necessary to make the array index match the atomic number
@@ -3730,5 +3740,90 @@ impl ElementProperties for u64 {
     }
     fn monoisotopic_mass(&self) -> Option<f64> {
         MONOISOTOPIC_MASSES.get(*self as usize).copied()
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Hybridization {
+    Sp3,
+    Sp2,
+    Sp,
+    /// Specific to Sulfoxides
+    So,
+    /// Specific to Sulfones
+    So2,
+    Unspecified,
+}
+
+/// Returns the Gasteiger (a, b, c) parameters based on atomic number (u8) and Hybridization.
+/// Data sourced directly from RDKit's GasteigerParams.cpp see: https://github.com/rdkit/rdkit/blob/872b054d5caa868da0ab7e8a616760ca306e95ff/Code/GraphMol/PartialCharges/GasteigerParams.cpp
+pub fn get_gasteiger_params(atomic_number: u8, mode: Hybridization) -> Option<(f64, f64, f64)> {
+    match (atomic_number, mode) {
+        // H (Hydrogen)
+        (1, Hybridization::Unspecified) => Some((7.17, 6.24, -0.56)),
+
+        // Be (Beryllium)
+        (4, Hybridization::Sp3) => Some((3.845, 6.755, 3.165)),
+        (4, Hybridization::Sp2) => Some((4.005, 6.725, 3.035)),
+
+        // B (Boron)
+        (5, Hybridization::Sp3) => Some((5.980, 6.820, 1.605)),
+        (5, Hybridization::Sp2) => Some((6.420, 6.807, 1.322)),
+
+        // C (Carbon)
+        (6, Hybridization::Sp3) => Some((7.98, 9.18, 1.88)),
+        (6, Hybridization::Sp2) => Some((8.79, 9.32, 1.51)),
+        (6, Hybridization::Sp) => Some((10.39, 9.45, 0.73)),
+
+        // N (Nitrogen)
+        (7, Hybridization::Sp3) => Some((11.54, 10.82, 1.36)),
+        (7, Hybridization::Sp2) => Some((12.87, 11.15, 0.85)),
+        (7, Hybridization::Sp) => Some((15.68, 11.7, -0.27)),
+
+        // O (Oxygen)
+        (8, Hybridization::Sp3) => Some((14.18, 12.92, 1.39)),
+        (8, Hybridization::Sp2) => Some((17.07, 13.79, 0.47)),
+
+        // F (Fluorine)
+        (9, Hybridization::Sp3) => Some((14.66, 13.85, 2.31)),
+
+        // Mg (Magnesium)
+        (12, Hybridization::Sp3) => Some((3.300, 5.587, 2.447)),
+        (12, Hybridization::Sp2) => Some((3.565, 5.572, 2.197)),
+        (12, Hybridization::Sp) => Some((4.040, 5.472, 1.823)),
+
+        // Al (Aluminum)
+        (13, Hybridization::Sp3) => Some((5.375, 4.953, 0.867)),
+        (13, Hybridization::Sp2) => Some((5.795, 5.020, 0.695)),
+
+        // Si (Silicon)
+        (14, Hybridization::Sp3) => Some((7.300, 6.567, 0.657)),
+        (14, Hybridization::Sp2) => Some((7.905, 6.748, 0.443)),
+        (14, Hybridization::Sp) => Some((9.065, 7.027, -0.002)),
+
+        // P (Phosphorus)
+        (15, Hybridization::Sp3) => Some((8.90, 8.24, 0.96)),
+        (15, Hybridization::Sp2) => Some((9.665, 8.530, 0.735)),
+
+        // S (Sulfur)
+        (16, Hybridization::Sp3) => Some((10.14, 9.13, 1.38)),
+        (16, Hybridization::Sp2) => Some((10.88, 9.49, 1.33)),
+        (16, Hybridization::So) => Some((10.14, 9.13, 1.38)),
+        (16, Hybridization::So2) => Some((12.00, 10.81, 1.20)),
+
+        // Cl (Chlorine)
+        (17, Hybridization::Sp3) => Some((11.00, 9.69, 1.35)),
+
+        // Br (Bromine)
+        (35, Hybridization::Sp3) => Some((10.08, 8.47, 1.16)),
+
+        // I (Iodine)
+        (53, Hybridization::Sp3) => Some((9.9, 7.96, 0.96)),
+
+        // X (Dummy atom, represented as atomic number 0)
+        (0, Hybridization::Unspecified) => Some((0.00, 0.00, 0.00)),
+
+        // Fallback for missing elements or unrecognized hybridization states
+        _ => None,
     }
 }
