@@ -422,129 +422,95 @@ pub const VALENCIES: [Option<[Option<i8>; 4]>; 119] = [
     None,                                       //OG
 ];
 
-// Taken from: <https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses>
-// The first element is not used, but is included for completeness
-pub const MONOISOTOPIC_MASSES: [f64; 119] = [
-    0.00000000000,  // Dummy value
-    1.00782503223,  // H
-    3.0160293201,   // HE
-    6.0151228874,   // LI
-    9.012183065,    // BE
-    10.01293695,    // B
-    12.0000000,     // C
-    14.00307400443, // N
-    15.99491461957, // O
-    18.99840316273, // F
-    19.9924401762,  // NE
-    22.989769282,   // NA
-    23.985041697,   // MG
-    26.98153853,    // AL
-    27.97692653465, // SI
-    30.97376199842, // P
-    31.9720711744,  // S
-    34.968852682,   // CL
-    35.967545105,   // AR
-    38.9637064864,  // K
-    39.962590863,   // CA
-    44.95590828,    // SC
-    45.95262772,    // TI
-    49.94715601,    // V
-    49.94604183,    // CR
-    54.93804391,    // MN
-    53.93960899,    // FE
-    58.93319429,    // CO
-    57.93534241,    // NI
-    62.92959772,    // CU
-    63.92914201,    // ZN
-    68.9255735,     // GA
-    69.92424875,    // GE
-    74.92159457,    // AS
-    73.922475934,   // SE
-    78.9183376,     // BR
-    77.92036494,    // KR
-    84.9117897379,  // RB
-    83.9134191,     // SR
-    88.9058403,     // Y
-    89.9046977,     // ZR
-    92.906373,      // NB
-    91.90680796,    // MO
-    96.9063667,     // TC
-    95.90759025,    // RU
-    102.905498,     // RH
-    101.9056022,    // PD
-    106.9050916,    // AG
-    105.9064599,    // CD
-    112.90406184,   // IN
-    111.90482387,   // SN
-    120.903812,     // SB
-    119.9040593,    // TE
-    126.9044719,    // I
-    123.905892,     // XE
-    132.905451961,  // CS
-    129.9063207,    // BA
-    137.9071149,    // LA
-    135.90712921,   // CE
-    140.9076576,    // PR
-    141.907729,     // ND
-    144.9127559,    // PM
-    143.9120065,    // SM
-    150.9198578,    // EU
-    151.9197995,    // GD
-    158.9253547,    // TB
-    155.9242847,    // DY
-    164.9303288,    // HO
-    161.9287884,    // ER
-    168.9342179,    // TM
-    167.9338896,    // YB
-    174.9407752,    // LU
-    173.9400461,    // HF
-    179.9474648,    // TA
-    179.9467108,    // W
-    184.9529545,    // RE
-    183.9524885,    // OS
-    190.9605893,    // IR
-    189.9599297,    // PT
-    196.96656879,   // AU
-    195.9658326,    // HG
-    202.9723446,    // TL
-    203.973044,     // PB
-    208.9803991,    // BI
-    208.9824308,    // PO
-    209.9871479,    // AT
-    210.9906011,    // RN
-    223.019736,     // FR
-    223.0185023,    // RA
-    227.0277523,    // AC
-    230.0331341,    // TH
-    231.0358842,    // PA
-    233.0396355,    // U
-    236.04657,      // NP
-    238.0495601,    // PU
-    241.0568293,    // AM
-    243.0613893,    // CM
-    247.0703073,    // BK
-    249.0748539,    // CF
-    252.08298,      // ES
-    257.0951061,    // FM
-    258.0984315,    // MD
-    259.10103,      // NO
-    262.10961,      // LR
-    267.12179,      // RF
-    268.12567,      // DB
-    271.13393,      // SG
-    272.13826,      // BH
-    270.13429,      // HS
-    276.15159,      // MT
-    281.16451,      // DS
-    280.16514,      // RG
-    285.17712,      // CN
-    284.17873,      // NH
-    289.19042,      // FL
-    288.19274,      // MC
-    293.20449,      // LV
-    292.20746,      // TS
-    294.21392,      // OG
+// Mass of each element's MOST ABUNDANT isotope, indexed by atomic number.
+//
+// Derived from ISOTOPES rather than written out, because the two are the same
+// fact and keeping them as two hand-maintained tables is what went wrong: this
+// array used to hold each element's LIGHTEST isotope instead, which differs
+// from the most abundant one for 39 elements. Helium read 3.0160 (helium-3,
+// abundance 0.0001%) instead of 4.0026, lithium 6.015 instead of 7.016, iron
+// 53.940 instead of 55.935. Anything computing an exact mass was wrong for
+// every molecule containing one of them, silently, because both values are
+// plausible masses for the element. Deriving it makes that class of drift
+// impossible.
+//
+// ISOTOPES is ordered by decreasing abundance, so entry 0 is the one wanted.
+// For the 34 elements with no stable isotope ISOTOPES is empty and the value
+// comes from UNSTABLE_ELEMENT_MASSES below.
+pub const MONOISOTOPIC_MASSES: [f64; 119] = build_monoisotopic_masses();
+
+// Reference nuclide masses for the elements that have no stable isotope, where
+// ISOTOPES has nothing to offer.
+//
+// The convention is the IUPAC one: the longest-lived nuclide. That is also the
+// nuclide STANDARD_ATOMIC_WEIGHTS names for these elements, and the five marked
+// below used to contradict it -- radon read Rn-211 (15 hours) where the weight
+// table says Rn-222 (3.8 days), radium Ra-223 against Ra-226, plutonium Pu-238
+// against Pu-244. Two tables in one crate naming different nuclides for the
+// same element is the same failure as the drift above, one table further out.
+//
+// Elements 95 and up have no standard atomic weight to check against, so those
+// entries stand on their existing provenance, which is not recorded.
+const UNSTABLE_ELEMENT_MASSES: [(u8, f64); 34] = [
+    (43, 97.907216),    // Tc, was Tc-97
+    (61, 144.9127559),  // Pm
+    (84, 208.9824308),  // Po
+    (85, 209.9871479),  // At
+    (86, 222.0175777),  // Rn, was Rn-211
+    (87, 223.019736),   // Fr
+    (88, 226.0254098),  // Ra, was Ra-223
+    (89, 227.0277523),  // Ac
+    (93, 237.0481734),  // Np, was Np-236
+    (94, 244.064204),   // Pu, was Pu-238
+    (95, 241.0568293),  // Am
+    (96, 243.0613893),  // Cm
+    (97, 247.0703073),  // Bk
+    (98, 249.0748539),  // Cf
+    (99, 252.08298),    // Es
+    (100, 257.0951061), // Fm
+    (101, 258.0984315), // Md
+    (102, 259.10103),   // No
+    (103, 262.10961),   // Lr
+    (104, 267.12179),   // Rf
+    (105, 268.12567),   // Db
+    (106, 271.13393),   // Sg
+    (107, 272.13826),   // Bh
+    (108, 270.13429),   // Hs
+    (109, 276.15159),   // Mt
+    (110, 281.16451),   // Ds
+    (111, 280.16514),   // Rg
+    (112, 285.17712),   // Cn
+    (113, 284.17873),   // Nh
+    (114, 289.19042),   // Fl
+    (115, 288.19274),   // Mc
+    (116, 293.20449),   // Lv
+    (117, 292.20746),   // Ts
+    (118, 294.21392),   // Og
 ];
+
+const fn build_monoisotopic_masses() -> [f64; 119] {
+    let mut masses = [0.0; 119];
+    let mut z = 1;
+    while z < 119 {
+        masses[z] = match ISOTOPES[z][0] {
+            Some(isotope) => isotope.mass,
+            None => unstable_element_mass(z as u8),
+        };
+        z += 1;
+    }
+    masses
+}
+
+const fn unstable_element_mass(atomic_number: u8) -> f64 {
+    let mut index = 0;
+    while index < UNSTABLE_ELEMENT_MASSES.len() {
+        if UNSTABLE_ELEMENT_MASSES[index].0 == atomic_number {
+            return UNSTABLE_ELEMENT_MASSES[index].1;
+        }
+        index += 1;
+    }
+    0.0
+}
 
 // These values are simply based on the respective elements group in the periodic table
 pub const VALENCE_ELECTRONS: [u8; 119] = [
@@ -3556,18 +3522,21 @@ pub const ISOTOPES: [[Option<Isotope>; 4]; 119] = [
     [None, None, None, None], // FR
     [None, None, None, None], // RA
     [None, None, None, None], // AC
-    [
-        Some(iso(230.0331341, 232.0377)),
-        Some(iso(232.0380558, 1.0)),
-        None,
-        None,
-    ], // TH
+    // Thorium and uranium each used to carry a leading entry whose abundance
+    // field held the element's STANDARD ATOMIC WEIGHT (232.0377 and 238.02891)
+    // rather than an abundance, paired with a mass that is not the dominant
+    // nuclide. Since this table is ordered by decreasing abundance, a value of
+    // 232 sorted ahead of a genuine 1.0, so everything reading the first entry
+    // -- `most_abundant_isotope`, and MONOISOTOPIC_MASSES through it -- got
+    // Th-230 and U-233 instead of Th-232 and U-238. Natural thorium is
+    // essentially all Th-232 and natural uranium 99.27% U-238.
+    [Some(iso(232.0380558, 1.0)), None, None, None], // TH
     [Some(iso(231.0358842, 1.0)), None, None, None], // PA
     [
-        Some(iso(233.0396355, 238.02891)),
         Some(iso(238.0507884, 0.992742)),
         Some(iso(235.0439301, 0.007204)),
         Some(iso(234.0409523, 5.4e-05)),
+        None,
     ], // U
     [None, None, None, None], // NP
     [None, None, None, None], // PU
@@ -3659,10 +3628,19 @@ pub trait ElementProperties {
         self.atomic_number()
             .and_then(|n| COVALENT_RADII.get(n as usize).copied())
     }
+    /// The MASS NUMBER of the element's most abundant isotope, or `None` for an
+    /// element with no stable isotope.
+    ///
+    /// A mass number is a nucleon count, so the nuclide mass has to be rounded
+    /// to it and not truncated: `as u16` cut oxygen's 15.9949 down to 15 and
+    /// fluorine's 18.9984 to 18, and because the mass defect puts almost every
+    /// nuclide just under its integer, that was wrong for 74 of the 84
+    /// elements this can answer for. It happened to be right for hydrogen and
+    /// carbon, which is presumably why it survived.
     fn most_abundant_isotope(&self) -> Option<u16> {
         self.isotopes()
             .and_then(|mut isotopes| isotopes.next())
-            .and_then(|isotope| Some(isotope.mass as u16))
+            .map(|isotope| isotope.mass.round() as u16)
     }
 }
 
@@ -3825,5 +3803,239 @@ pub fn get_gasteiger_params(atomic_number: u8, mode: Hybridization) -> Option<(f
 
         // Fallback for missing elements or unrecognized hybridization states
         _ => None,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Number of elements, ignoring the padding entry at index 0.
+    const ELEMENTS: usize = 118;
+
+    /// Every table is indexed by atomic number, so they all need the padding
+    /// entry and they all need to be the same length.
+    #[test]
+    fn every_table_is_indexed_by_atomic_number() {
+        assert_eq!(STANDARD_ATOMIC_WEIGHTS.len(), ELEMENTS + 1);
+        assert_eq!(COVALENT_RADII.len(), ELEMENTS + 1);
+        assert_eq!(VALENCIES.len(), ELEMENTS + 1);
+        assert_eq!(MONOISOTOPIC_MASSES.len(), ELEMENTS + 1);
+        assert_eq!(VALENCE_ELECTRONS.len(), ELEMENTS + 1);
+        assert_eq!(ATOMIC_SYMBOLS.len(), ELEMENTS + 1);
+        assert_eq!(ELECTRONEGATIVITIES_PAULING.len(), ELEMENTS + 1);
+        assert_eq!(ELECTRONEGATIVITIES_ALLEN.len(), ELEMENTS + 1);
+        assert_eq!(OXIDATION_STATES.len(), ELEMENTS + 1);
+        assert_eq!(OXIDATION_STATES_EXHAUSTIVE.len(), ELEMENTS + 1);
+        assert_eq!(ISOTOPES.len(), ELEMENTS + 1);
+    }
+
+    /// A symbol has to map back to the atomic number it is stored under.
+    #[test]
+    fn symbols_and_atomic_numbers_agree() {
+        for atomic_number in 1..=ELEMENTS {
+            let symbol = ATOMIC_SYMBOLS[atomic_number];
+            assert_eq!(
+                atomic_numbers(&symbol.to_uppercase()),
+                Some(atomic_number as u8),
+                "{symbol} does not map back to {atomic_number}"
+            );
+        }
+    }
+
+    /// ISOTOPES is ordered by decreasing abundance, which is the whole reason
+    /// entry 0 can be read as "the most abundant one".
+    #[test]
+    fn isotopes_are_ordered_by_decreasing_abundance() {
+        for atomic_number in 1..=ELEMENTS {
+            let mut previous = f64::INFINITY;
+            for isotope in ISOTOPES[atomic_number].iter().flatten() {
+                assert!(
+                    isotope.abundance <= previous,
+                    "{} is not ordered by abundance",
+                    ATOMIC_SYMBOLS[atomic_number]
+                );
+                previous = isotope.abundance;
+            }
+        }
+    }
+
+    /// An abundance is a fraction, and the fractions of one element cannot add
+    /// up to more than the whole.
+    ///
+    /// They are allowed to add up to *less*: the table holds at most four
+    /// isotopes and a dozen elements have more than that. What this catches is
+    /// a value that is not an abundance at all, which is exactly how thorium
+    /// and uranium were broken -- each carried a leading entry whose abundance
+    /// field held the element's standard atomic weight, so it sorted ahead of
+    /// the real most abundant nuclide and everything downstream read the wrong
+    /// isotope.
+    #[test]
+    fn abundances_are_fractions() {
+        for atomic_number in 1..=ELEMENTS {
+            let mut total = 0.0;
+            for isotope in ISOTOPES[atomic_number].iter().flatten() {
+                assert!(
+                    isotope.abundance > 0.0 && isotope.abundance <= 1.0,
+                    "{} has an abundance of {}, which is not a fraction",
+                    ATOMIC_SYMBOLS[atomic_number],
+                    isotope.abundance
+                );
+                total += isotope.abundance;
+            }
+            assert!(
+                total <= 1.0 + 1e-9,
+                "{} abundances sum to {total}",
+                ATOMIC_SYMBOLS[atomic_number]
+            );
+        }
+    }
+
+    /// A nuclide's mass is close to its nucleon count, and its nucleon count is
+    /// at least the proton count.
+    #[test]
+    fn isotope_masses_are_near_a_whole_number_of_nucleons() {
+        for atomic_number in 1..=ELEMENTS {
+            for isotope in ISOTOPES[atomic_number].iter().flatten() {
+                let nucleons = isotope.mass.round();
+                assert!(
+                    (isotope.mass - nucleons).abs() < 0.2,
+                    "{} has a nuclide mass of {}, which is not near a whole number",
+                    ATOMIC_SYMBOLS[atomic_number],
+                    isotope.mass
+                );
+                assert!(
+                    nucleons >= atomic_number as f64,
+                    "{} has a nuclide with fewer nucleons than protons",
+                    ATOMIC_SYMBOLS[atomic_number]
+                );
+            }
+        }
+    }
+
+    /// MONOISOTOPIC_MASSES is derived from ISOTOPES, and has to stay that way.
+    ///
+    /// This is the invariant that was violated for years: the two were
+    /// maintained separately and this one drifted onto each element's lightest
+    /// isotope rather than its most abundant.
+    #[test]
+    fn monoisotopic_masses_come_from_the_isotope_table() {
+        for atomic_number in 1..=ELEMENTS {
+            if let Some(isotope) = ISOTOPES[atomic_number][0] {
+                assert_eq!(
+                    MONOISOTOPIC_MASSES[atomic_number], isotope.mass,
+                    "{} disagrees with its isotope table entry",
+                    ATOMIC_SYMBOLS[atomic_number]
+                );
+            } else {
+                assert!(
+                    MONOISOTOPIC_MASSES[atomic_number] > 0.0,
+                    "{} has no mass at all",
+                    ATOMIC_SYMBOLS[atomic_number]
+                );
+            }
+        }
+    }
+
+    /// Spot checks for the elements the drift actually broke, so a regression
+    /// names itself instead of showing up as a wrong molecular mass much later.
+    #[test]
+    fn the_most_abundant_isotope_is_not_the_lightest_one() {
+        for (symbol, expected) in [
+            ("HE", 4.00260325413),
+            ("LI", 7.0160034366),
+            ("B", 11.00930536),
+            ("FE", 55.93493633),
+            ("TH", 232.0380558),
+            ("U", 238.0507884),
+        ] {
+            assert_eq!(
+                symbol.monoisotopic_mass(),
+                Some(expected),
+                "{symbol} is back on its lightest isotope"
+            );
+        }
+    }
+
+    /// A mass number is a count of nucleons, so it is the rounded nuclide mass.
+    ///
+    /// Truncating instead gave oxygen 15 and fluorine 18: the mass defect puts
+    /// almost every nuclide just below its integer.
+    #[test]
+    fn the_most_abundant_isotope_is_a_mass_number() {
+        for (symbol, expected) in [("H", 1), ("C", 12), ("O", 16), ("F", 19), ("FE", 56)] {
+            assert_eq!(symbol.most_abundant_isotope(), Some(expected), "{symbol}");
+        }
+        for atomic_number in 1..=ELEMENTS as u8 {
+            let Some(mass_number) = atomic_number.most_abundant_isotope() else {
+                continue;
+            };
+            assert_eq!(
+                f64::from(mass_number),
+                MONOISOTOPIC_MASSES[atomic_number as usize].round(),
+                "{} mass number does not match its mass",
+                ATOMIC_SYMBOLS[atomic_number as usize]
+            );
+        }
+    }
+
+    /// An element with no stable isotope cannot report a most abundant one.
+    #[test]
+    fn unstable_elements_have_no_most_abundant_isotope() {
+        for symbol in ["TC", "PM", "PO", "RN", "PU", "OG"] {
+            assert_eq!(symbol.most_abundant_isotope(), None, "{symbol}");
+            assert!(symbol.monoisotopic_mass().is_some_and(|m| m > 0.0), "{symbol}");
+        }
+    }
+
+    /// For an element with several isotopes the most abundant one sits near the
+    /// standard atomic weight, which is the abundance-weighted average.
+    ///
+    /// The bound is loose on purpose. The most abundant nuclide need not be the
+    /// one nearest the average: tellurium's Te-130 is 2.3 units above a weight
+    /// of 127.6 because six of its eight isotopes are lighter, and neodymium
+    /// sits 2.3 below for the mirror-image reason. What this still catches is a
+    /// nuclide several mass units out, which is what picking the lightest
+    /// isotope produced -- helium was off by one, iron by two, uranium by five.
+    #[test]
+    fn monoisotopic_masses_track_the_standard_atomic_weights() {
+        for atomic_number in 1..=ELEMENTS {
+            let Some(weight) = STANDARD_ATOMIC_WEIGHTS[atomic_number] else {
+                continue;
+            };
+            if ISOTOPES[atomic_number][0].is_none() {
+                continue; // handled exactly by the next test
+            }
+            let mass = MONOISOTOPIC_MASSES[atomic_number];
+            assert!(
+                (mass - weight).abs() < 3.0,
+                "{}: most abundant isotope {mass} is far from its atomic weight {weight}",
+                ATOMIC_SYMBOLS[atomic_number]
+            );
+        }
+    }
+
+    /// An element with no stable isotope has no average to be near, so the two
+    /// tables have to name the same nuclide outright.
+    ///
+    /// Radon disagreed by eleven mass units, naming Rn-211 here and Rn-222
+    /// there, and radium, technetium, neptunium and plutonium disagreed too.
+    #[test]
+    fn unstable_elements_name_one_nuclide_in_both_tables() {
+        for atomic_number in 1..=ELEMENTS {
+            if ISOTOPES[atomic_number][0].is_some() {
+                continue;
+            }
+            let Some(weight) = STANDARD_ATOMIC_WEIGHTS[atomic_number] else {
+                continue; // element 95 and up: no weight to check against
+            };
+            assert_eq!(
+                MONOISOTOPIC_MASSES[atomic_number].round(),
+                weight.round(),
+                "{}: nuclide {} here, {weight} in the atomic weights",
+                ATOMIC_SYMBOLS[atomic_number],
+                MONOISOTOPIC_MASSES[atomic_number]
+            );
+        }
     }
 }
