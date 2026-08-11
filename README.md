@@ -115,30 +115,26 @@ masses in both kg and amu, fine structure, Rydberg), the fundamental set
 and the everyday conversions (calorie, atmosphere, zero Celsius, angstrom).
 Values from NIST CODATA.
 
-## Gotcha: element symbols must be uppercase
+## Symbols are case-insensitive
 
-The `&str` implementation matches `"HE"`, not `"He"`:
-
-```rust
-use chemistry_consts::*;
-
-assert_eq!("HE".atomic_number(), Some(2));
-assert_eq!("He".atomic_number(), None);
-```
-
-`ATOMIC_SYMBOLS` and `atomic_symbol()` return the conventional mixed case, so
-what the crate hands you does not round-trip back into it. Uppercase before
-looking up:
+Files write `Fe`, `FE` and occasionally `fe`. All three work, and the symbol
+the crate hands you goes straight back into it:
 
 ```rust
 use chemistry_consts::*;
+
+assert_eq!("Fe".atomic_number(), Some(26));
+assert_eq!("FE".atomic_number(), Some(26));
+assert_eq!("fe".atomic_number(), Some(26));
 
 let symbol = 26u8.atomic_symbol().unwrap();          // "Fe"
-assert_eq!(symbol.to_uppercase().as_str().atomic_number(), Some(26));
+assert_eq!(symbol.atomic_number(), Some(26));
 ```
 
-This is a wart and will be fixed; treating it as one for now is better than
-finding out at runtime that half your symbols silently became `None`.
+Free, as far as anything is: a symbol is one or two ASCII letters, so the
+uppercase form is built in two bytes on the stack and compared as a byte
+string. Nothing allocates. Measure it with
+`cargo run --release --example symbol_bench`.
 
 ## Also in the box
 
@@ -182,8 +178,12 @@ If you compute exact masses, they will move. `MONOISOTOPIC_MASSES` previously
 held each element's *lightest* isotope for 39 elements, thorium and uranium had
 corrupt entries in `ISOTOPES`, and `most_abundant_isotope()` truncated where it
 should have rounded, so it was wrong for 74 of the 84 elements it answers for —
-oxygen returned 15. No API changed; the numbers did. See the commit for the
-details.
+oxygen returned 15. No API changed; the numbers did.
+
+Symbol lookup also became case-insensitive, which can only turn a `None` into a
+`Some`. If you were uppercasing before calling in, you can stop: it is now a
+wasted allocation, and the lookup itself got about twice as fast in the
+process.
 
 ## Not here yet
 

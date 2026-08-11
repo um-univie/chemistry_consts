@@ -659,126 +659,153 @@ macro_rules! generate_match {
     };
 }
 
+/// The atomic number of an element symbol, in any capitalisation.
+///
+/// `"Fe"`, `"FE"` and `"fe"` all give iron. It used to accept only the
+/// uppercase form, which meant the crate would not take back the symbol it had
+/// just handed out -- `ATOMIC_SYMBOLS` and [`ElementProperties::atomic_symbol`]
+/// return the conventional mixed case -- and every caller wrapped this in a
+/// `to_uppercase()` that allocated a `String` per lookup.
+///
+/// Folding case here costs nothing instead. An element symbol is one or two
+/// ASCII letters, so the uppercase form fits in two bytes on the stack, and the
+/// comparison happens against byte strings rather than `&str`. Anything longer
+/// than two bytes, or not ASCII, cannot be a symbol and returns `None` before
+/// the table is consulted.
 pub fn atomic_numbers(symbol: &str) -> Option<u8> {
-    generate_match!(symbol;
-   ("H" ,1),
-   ("HE", 2),
-   ("LI", 3),
-   ( "BE", 4),
-   ( "B" ,5),
-   ( "C" ,6),
-   ( "N" ,7),
-   ( "O" ,8),
-   ( "F" ,9),
-   ( "NE", 10),
-    ("NA", 11),
-   ( "MG", 12),
-   ( "AL", 13),
-   ( "SI", 14),
-   ( "P" , 15),
-   ( "S" , 16),
-   ( "CL", 17),
-   ( "AR", 18),
-   ( "K" , 19),
-   ( "CA", 20),
-   ( "SC", 21),
-   ( "TI", 22),
-   ( "V" , 23),
-   ( "CR", 24),
-   ( "MN", 25),
-   ( "FE", 26),
-   ( "CO", 27),
-   ( "NI", 28),
-   ( "CU", 29),
-   ( "ZN", 30),
-   ( "GA", 31),
-   ( "GE", 32),
-   ( "AS", 33),
-   ( "SE", 34),
-   ( "BR", 35),
-   ( "KR", 36),
-   ( "RB", 37),
-   ( "SR", 38),
-   ( "Y" , 39),
-   ( "ZR", 40),
-   ( "NB", 41),
-   ( "MO", 42),
-   ( "TC", 43),
-   ( "RU", 44),
-   ( "RH", 45),
-   ( "PD", 46),
-   ( "AG", 47),
-   ( "CD", 48),
-   ( "IN", 49),
-   ( "SN", 50),
-   ( "SB", 51),
-   ( "TE", 52),
-   ( "I" , 53),
-   ( "XE", 54),
-   ( "CS", 55),
-   ( "BA", 56),
-   ( "LA", 57),
-   ( "CE", 58),
-   ( "PR", 59),
-   ( "ND", 60),
-   ( "PM", 61),
-   ( "SM", 62),
-   ( "EU", 63),
-   ( "GD", 64),
-   ( "TB", 65),
-   ( "DY", 66),
-   ( "HO", 67),
-   ( "ER", 68),
-   ( "TM", 69),
-   ( "YB", 70),
-   ( "LU", 71),
-   ( "HF", 72),
-   ( "TA", 73),
-   ( "W" , 74),
-   ( "RE", 75),
-   ( "OS", 76),
-   ( "IR", 77),
-   ( "PT", 78),
-   ( "AU", 79),
-   ( "HG", 80),
-   ( "TL", 81),
-   ( "PB", 82),
-   ( "BI", 83),
-   ( "PO", 84),
-   ( "AT", 85),
-   ( "RN", 86),
-   ( "FR", 87),
-   ( "RA", 88),
-   ( "AC", 89),
-   ( "TH", 90),
-   ( "PA", 91),
-   ( "U" , 92),
-   ( "NP", 93),
-   ( "PU", 94),
-   ( "AM", 95),
-   ( "CM", 96),
-   ( "BK", 97),
-   ( "CF", 98),
-   ( "ES", 99),
-   ( "FM", 100),
-   ( "MD", 101),
-   ( "NO", 102),
-   ( "LR", 103),
-   ( "RF", 104),
-   ( "DB", 105),
-   ( "SG", 106),
-   ( "BH", 107),
-   ( "HS", 108),
-   ( "MT", 109),
-   ( "DS", 110),
-   ( "RG", 111),
-   ( "CN", 112),
-   ( "NH", 113),
-   ( "FL", 114),
-   ( "MC", 115),
-   ( "LV", 116),
-   ( "TS", 117),
-   ( "OG", 118),)
+    let mut uppercase = [0u8; 2];
+    let length = match *symbol.as_bytes() {
+        [first] => {
+            uppercase[0] = first.to_ascii_uppercase();
+            1
+        }
+        [first, second] => {
+            uppercase[0] = first.to_ascii_uppercase();
+            uppercase[1] = second.to_ascii_uppercase();
+            2
+        }
+        _ => return None,
+    };
+
+    generate_match!(&uppercase[..length];
+   (b"H", 1),
+   (b"HE", 2),
+   (b"LI", 3),
+   (b"BE", 4),
+   (b"B", 5),
+   (b"C", 6),
+   (b"N", 7),
+   (b"O", 8),
+   (b"F", 9),
+   (b"NE", 10),
+    (b"NA", 11),
+   (b"MG", 12),
+   (b"AL", 13),
+   (b"SI", 14),
+   (b"P", 15),
+   (b"S", 16),
+   (b"CL", 17),
+   (b"AR", 18),
+   (b"K", 19),
+   (b"CA", 20),
+   (b"SC", 21),
+   (b"TI", 22),
+   (b"V", 23),
+   (b"CR", 24),
+   (b"MN", 25),
+   (b"FE", 26),
+   (b"CO", 27),
+   (b"NI", 28),
+   (b"CU", 29),
+   (b"ZN", 30),
+   (b"GA", 31),
+   (b"GE", 32),
+   (b"AS", 33),
+   (b"SE", 34),
+   (b"BR", 35),
+   (b"KR", 36),
+   (b"RB", 37),
+   (b"SR", 38),
+   (b"Y", 39),
+   (b"ZR", 40),
+   (b"NB", 41),
+   (b"MO", 42),
+   (b"TC", 43),
+   (b"RU", 44),
+   (b"RH", 45),
+   (b"PD", 46),
+   (b"AG", 47),
+   (b"CD", 48),
+   (b"IN", 49),
+   (b"SN", 50),
+   (b"SB", 51),
+   (b"TE", 52),
+   (b"I", 53),
+   (b"XE", 54),
+   (b"CS", 55),
+   (b"BA", 56),
+   (b"LA", 57),
+   (b"CE", 58),
+   (b"PR", 59),
+   (b"ND", 60),
+   (b"PM", 61),
+   (b"SM", 62),
+   (b"EU", 63),
+   (b"GD", 64),
+   (b"TB", 65),
+   (b"DY", 66),
+   (b"HO", 67),
+   (b"ER", 68),
+   (b"TM", 69),
+   (b"YB", 70),
+   (b"LU", 71),
+   (b"HF", 72),
+   (b"TA", 73),
+   (b"W", 74),
+   (b"RE", 75),
+   (b"OS", 76),
+   (b"IR", 77),
+   (b"PT", 78),
+   (b"AU", 79),
+   (b"HG", 80),
+   (b"TL", 81),
+   (b"PB", 82),
+   (b"BI", 83),
+   (b"PO", 84),
+   (b"AT", 85),
+   (b"RN", 86),
+   (b"FR", 87),
+   (b"RA", 88),
+   (b"AC", 89),
+   (b"TH", 90),
+   (b"PA", 91),
+   (b"U", 92),
+   (b"NP", 93),
+   (b"PU", 94),
+   (b"AM", 95),
+   (b"CM", 96),
+   (b"BK", 97),
+   (b"CF", 98),
+   (b"ES", 99),
+   (b"FM", 100),
+   (b"MD", 101),
+   (b"NO", 102),
+   (b"LR", 103),
+   (b"RF", 104),
+   (b"DB", 105),
+   (b"SG", 106),
+   (b"BH", 107),
+   (b"HS", 108),
+   (b"MT", 109),
+   (b"DS", 110),
+   (b"RG", 111),
+   (b"CN", 112),
+   (b"NH", 113),
+   (b"FL", 114),
+   (b"MC", 115),
+   (b"LV", 116),
+   (b"TS", 117),
+   (b"OG", 118),)
 }
 
 // Electronegativities baused on the Pauling scale, scaled by a factor of 100 to avoid floating point errors
@@ -3604,9 +3631,7 @@ pub trait ElementProperties {
     }
     fn oxidation_states_exhaustive(&self) -> Option<OxidationStateExhaustiveIter> {
         self.atomic_number().map(|n| {
-            let Some(oxidation_states) = OXIDATION_STATES_EXHAUSTIVE[n as usize] else {
-                return None;
-            };
+            let oxidation_states = OXIDATION_STATES_EXHAUSTIVE[n as usize]?;
             Some(OxidationStateExhaustiveIter::new(oxidation_states))
         })?
     }
@@ -3618,9 +3643,7 @@ pub trait ElementProperties {
     }
     fn valencies(&self) -> Option<ValencyIter> {
         self.atomic_number().map(|n| {
-            let Some(valencies) = VALENCIES[n as usize] else {
-                return None;
-            };
+            let valencies = VALENCIES[n as usize]?;
             Some(ValencyIter::new(valencies))
         })?
     }
@@ -3831,15 +3854,46 @@ mod tests {
     }
 
     /// A symbol has to map back to the atomic number it is stored under.
+    ///
+    /// Exactly as handed out, with no uppercasing on the way in. The lookup
+    /// used to accept only the uppercase form while `ATOMIC_SYMBOLS` returns
+    /// the conventional mixed case, so the crate would not take back its own
+    /// output and this test had to launder it through `to_uppercase()` to
+    /// pass -- which hid the problem rather than catching it.
     #[test]
     fn symbols_and_atomic_numbers_agree() {
-        for atomic_number in 1..=ELEMENTS {
-            let symbol = ATOMIC_SYMBOLS[atomic_number];
+        for (atomic_number, symbol) in ATOMIC_SYMBOLS.iter().enumerate().skip(1) {
             assert_eq!(
-                atomic_numbers(&symbol.to_uppercase()),
+                atomic_numbers(symbol),
                 Some(atomic_number as u8),
                 "{symbol} does not map back to {atomic_number}"
             );
+        }
+    }
+
+    /// Capitalisation does not change which element a symbol names.
+    #[test]
+    fn symbol_lookup_ignores_case() {
+        for (atomic_number, symbol) in ATOMIC_SYMBOLS.iter().enumerate().skip(1) {
+            let expected = Some(atomic_number as u8);
+            assert_eq!(atomic_numbers(&symbol.to_uppercase()), expected, "{symbol}");
+            assert_eq!(atomic_numbers(&symbol.to_lowercase()), expected, "{symbol}");
+            assert_eq!(symbol.atomic_number(), expected, "{symbol}");
+        }
+        // Including the mixed case nobody writes, since nothing distinguishes it.
+        assert_eq!(atomic_numbers("hE"), Some(2));
+        assert_eq!(atomic_numbers("fE"), Some(26));
+    }
+
+    /// Anything that is not one or two ASCII letters is not a symbol.
+    ///
+    /// The multi-byte cases matter: uppercasing runs over raw bytes, so a
+    /// character that does not fit in one must be rejected rather than folded
+    /// into something that accidentally matches.
+    #[test]
+    fn non_symbols_are_rejected() {
+        for input in ["", "Xx", "Q", "Zzz", "H2", "  ", "\u{e9}", "\u{4e2d}", "H\u{e9}"] {
+            assert_eq!(atomic_numbers(input), None, "{input:?} was taken for an element");
         }
     }
 
