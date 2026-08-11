@@ -3734,7 +3734,7 @@ pub enum Hybridization {
 }
 
 /// Returns the Gasteiger (a, b, c) parameters based on atomic number (u8) and Hybridization.
-/// Data sourced directly from RDKit's GasteigerParams.cpp see: https://github.com/rdkit/rdkit/blob/872b054d5caa868da0ab7e8a616760ca306e95ff/Code/GraphMol/PartialCharges/GasteigerParams.cpp
+/// Data sourced directly from RDKit's GasteigerParams.cpp see: <https://github.com/rdkit/rdkit/blob/872b054d5caa868da0ab7e8a616760ca306e95ff/Code/GraphMol/PartialCharges/GasteigerParams.cpp>
 pub fn get_gasteiger_params(atomic_number: u8, mode: Hybridization) -> Option<(f64, f64, f64)> {
     match (atomic_number, mode) {
         // H (Hydrogen)
