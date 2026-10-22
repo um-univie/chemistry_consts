@@ -15,6 +15,8 @@ pub const AMU_KG: f64 = 1.660_539_066_60e-27; // kg
 pub const HARTREE_J: f64 = 4.359_744_722_207_1e-18; // J
 pub const HARTREE_EV: f64 = 27.211_386_245_988; // eV
 pub const BOHR_MAGNETON_J_PER_T: f64 = 9.274_010_078_3e-24; // J T^-1
+/// Bohr radius in angstroms, using the same CODATA value as `BOHR_RADIUS_M`.
+pub const BOHR_RADIUS_ANGSTROM: f64 = 0.529_177_210_903;
 pub const BOHR_RADIUS_M: f64 = 5.291_772_109_03e-11; // m
 pub const NEUTRON_MASS_KG: f64 = 1.674_927_498_04e-27; // kg
 pub const NEUTRON_MASS_AMU: f64 = NEUTRON_MASS_KG / AMU_KG;
@@ -39,7 +41,8 @@ pub const STANDARD_GRAVITY_M_PER_S2: f64 = 9.806_65; // m s^-2
 pub const ELEMENTARY_CHARGE_C: f64 = 1.602_176_634e-19; // C
 pub const ELECTRON_VOLT_J: f64 = 1.602_176_634e-19; // J
 pub const FARADAY_C_PER_MOL: f64 = 96_485.332_12; // C mol^-1
-pub const COULOMB_N_M2_PER_C2: f64 = 1.0 / (4.0 * std::f64::consts::PI * VACUUM_PERMITTIVITY_F_PER_M); // N m^2 C^-2 (Coulomb's constant)
+pub const COULOMB_N_M2_PER_C2: f64 =
+    1.0 / (4.0 * std::f64::consts::PI * VACUUM_PERMITTIVITY_F_PER_M); // N m^2 C^-2 (Coulomb's constant)
 pub const CALORIE_J: f64 = 4.184; // J
 pub const ATMOSPHERE_PA: f64 = 101_325.0; // Pa
 pub const ZERO_CELSIUS_K: f64 = 273.15; // K
@@ -3565,32 +3568,32 @@ pub const ISOTOPES: [[Option<Isotope>; 4]; 119] = [
         Some(iso(234.0409523, 5.4e-05)),
         None,
     ], // U
-    [None, None, None, None], // NP
-    [None, None, None, None], // PU
-    [None, None, None, None], // AM
-    [None, None, None, None], // CM
-    [None, None, None, None], // BK
-    [None, None, None, None], // CF
-    [None, None, None, None], // ES
-    [None, None, None, None], // FM
-    [None, None, None, None], // MD
-    [None, None, None, None], // NO
-    [None, None, None, None], // LR
-    [None, None, None, None], // RF
-    [None, None, None, None], // DB
-    [None, None, None, None], // SG
-    [None, None, None, None], // BH
-    [None, None, None, None], // HS
-    [None, None, None, None], // MT
-    [None, None, None, None], // DS
-    [None, None, None, None], // RG
-    [None, None, None, None], // CN
-    [None, None, None, None], // NH
-    [None, None, None, None], // FL
-    [None, None, None, None], // MC
-    [None, None, None, None], // LV
-    [None, None, None, None], // TS
-    [None, None, None, None], // OG
+    [None, None, None, None],                        // NP
+    [None, None, None, None],                        // PU
+    [None, None, None, None],                        // AM
+    [None, None, None, None],                        // CM
+    [None, None, None, None],                        // BK
+    [None, None, None, None],                        // CF
+    [None, None, None, None],                        // ES
+    [None, None, None, None],                        // FM
+    [None, None, None, None],                        // MD
+    [None, None, None, None],                        // NO
+    [None, None, None, None],                        // LR
+    [None, None, None, None],                        // RF
+    [None, None, None, None],                        // DB
+    [None, None, None, None],                        // SG
+    [None, None, None, None],                        // BH
+    [None, None, None, None],                        // HS
+    [None, None, None, None],                        // MT
+    [None, None, None, None],                        // DS
+    [None, None, None, None],                        // RG
+    [None, None, None, None],                        // CN
+    [None, None, None, None],                        // NH
+    [None, None, None, None],                        // FL
+    [None, None, None, None],                        // MC
+    [None, None, None, None],                        // LV
+    [None, None, None, None],                        // TS
+    [None, None, None, None],                        // OG
 ];
 
 pub trait ElementProperties {
@@ -3829,6 +3832,23 @@ pub fn get_gasteiger_params(atomic_number: u8, mode: Hybridization) -> Option<(f
     }
 }
 
+/// Bondi-style van der Waals radii in angstroms, keyed by atomic number.
+/// This sparse table covers common organic elements. Hydrogen uses 1.20 Å,
+/// not the smaller crystal-contact revision. Missing elements have no entry;
+/// choosing a fallback radius is the caller's policy.
+pub const BONDI_VDW_RADII_ANGSTROM: &[(u8, f64)] = &[
+    (1, 1.20),  // H
+    (6, 1.70),  // C
+    (7, 1.55),  // N
+    (8, 1.52),  // O
+    (9, 1.47),  // F
+    (15, 1.80), // P
+    (16, 1.80), // S
+    (17, 1.75), // Cl
+    (35, 1.85), // Br
+    (53, 1.98), // I
+];
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -3892,8 +3912,14 @@ mod tests {
     /// into something that accidentally matches.
     #[test]
     fn non_symbols_are_rejected() {
-        for input in ["", "Xx", "Q", "Zzz", "H2", "  ", "\u{e9}", "\u{4e2d}", "H\u{e9}"] {
-            assert_eq!(atomic_numbers(input), None, "{input:?} was taken for an element");
+        for input in [
+            "", "Xx", "Q", "Zzz", "H2", "  ", "\u{e9}", "\u{4e2d}", "H\u{e9}",
+        ] {
+            assert_eq!(
+                atomic_numbers(input),
+                None,
+                "{input:?} was taken for an element"
+            );
         }
     }
 
@@ -4038,7 +4064,10 @@ mod tests {
     fn unstable_elements_have_no_most_abundant_isotope() {
         for symbol in ["TC", "PM", "PO", "RN", "PU", "OG"] {
             assert_eq!(symbol.most_abundant_isotope(), None, "{symbol}");
-            assert!(symbol.monoisotopic_mass().is_some_and(|m| m > 0.0), "{symbol}");
+            assert!(
+                symbol.monoisotopic_mass().is_some_and(|m| m > 0.0),
+                "{symbol}"
+            );
         }
     }
 

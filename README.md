@@ -1,12 +1,13 @@
 # chemistry_consts
 
-Periodic table data and physical constants for Rust, as plain `const` arrays
-indexed by atomic number.
+Periodic table data, physical constants and molecular-model reference
+parameters for Rust.
 
-There is no builder, no lazy static, no lookup at runtime. An element property
-is an array index, so the compiler can fold most of it away and none of it
-allocates. That is the whole design: the data has been the same since 1869 and
-does not need a type system wrapped around it.
+Elemental properties are plain `const` arrays indexed by atomic number, so
+an element-property query is an array access and can often be folded at
+compile time. Molecular-model tables provide allocation-free lookup functions
+for atom types and parameter combinations. No builder or lazy initialization
+is required.
 
 ```toml
 [dependencies]
@@ -148,6 +149,38 @@ use chemistry_consts::*;
 assert_eq!(get_gasteiger_params(6, Hybridization::Sp3), Some((7.98, 9.18, 1.88)));
 ```
 
+## Molecular reference data
+
+`crippen::CrippenType` supplies Wildman-Crippen log P/refractivity contributions;
+`polar_surface` supplies Ertl polar-surface-area tables with documented
+atom-environment keys. Oxidane retains the atom-typing algorithms.
+
+`uff` and `mmff` expose reference parameter rows and lookup functions, plus
+model-specific coefficients with documented units. Unsupported types return
+`None` from direct lookups; MMFF equivalence and fallback lookups follow the
+rules documented on each function. Atom typing and energy evaluation belong
+to the consuming toolkit. These tables retain the original fitted precision:
+UFF's electrostatic prefactor and MMFF's are deliberately different.
+
+```rust
+use chemistry_consts::{uff, mmff, get_qeq_params};
+
+assert_eq!(uff::lookup("C_3").unwrap().label, "C_3");
+assert_eq!(mmff::properties(1).unwrap().atomic_number, 6);
+assert!(get_qeq_params(6).is_some());
+assert!(get_qeq_params(0).is_none());
+```
+
+`QEQ_PARAMETERS` contains the sparse QEq table and `get_qeq_params` returns
+`(electronegativity_eV, hardness_eV, radius_angstrom, principal_n)`.
+`BONDI_VDW_RADII_ANGSTROM` is a sparse `(atomic_number, radius)` table for
+common organic elements, with Bondi's 1.20 Å hydrogen radius. Neither table
+invents values for unsupported elements. `BOHR_RADIUS_ANGSTROM` complements
+`BOHR_RADIUS_M` for molecular coordinates.
+
+The tables and coefficients were moved from Oxidane in 0.3.1 without changing
+their values. See [THIRD_PARTY.md](THIRD_PARTY.md) for attribution and licences.
+
 ## Sources
 
 - Atomic weights, isotope masses and abundances: NIST, [Atomic Weights and
@@ -193,4 +226,6 @@ source attached.
 
 ## Licence
 
-MIT.
+Original code is MIT. Included RDKit-derived reference data and lookup code
+are BSD-3-Clause; cheq-derived material is MIT. The package therefore uses
+`MIT AND BSD-3-Clause`. See [THIRD_PARTY.md](THIRD_PARTY.md) for the notices.

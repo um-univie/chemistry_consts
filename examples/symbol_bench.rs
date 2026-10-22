@@ -13,7 +13,10 @@ fn main() {
         .map(|z| z.atomic_symbol().unwrap().to_string())
         .collect();
     let upper: Vec<String> = mixed.iter().map(|s| s.to_uppercase()).collect();
-    let misses: Vec<String> = ["Xx", "Q", "Zzz", ""].iter().map(|s| s.to_string()).collect();
+    let misses: Vec<String> = ["Xx", "Q", "Zzz", ""]
+        .iter()
+        .map(|s| s.to_string())
+        .collect();
 
     let run = |name: &str, corpus: &[String]| {
         let rounds = 200_000;
@@ -52,5 +55,9 @@ fn main() {
         let per = start.elapsed().as_secs_f64() / (rounds * mixed.len()) as f64;
         best = best.min(per);
     }
-    println!("{:<34} {:>6.2} ns/lookup", "via to_uppercase() as callers did", best * 1e9);
+    println!(
+        "{:<34} {:>6.2} ns/lookup",
+        "via to_uppercase() as callers did",
+        best * 1e9
+    );
 }
